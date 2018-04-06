@@ -1,0 +1,213 @@
+package com.web.web;
+
+import com.web.dao.ResourceShareMapper;
+import com.web.po.FileDto;
+import com.web.po.Foleder;
+import com.web.po.ResourceShare;
+import com.web.po.UserInfo;
+import com.web.service.FileService;
+import com.web.utils.*;
+import org.apache.commons.fileupload.disk.DiskFileItem;
+import org.omg.CORBA.INTERNAL;
+import org.springframework.beans.BeanUtils;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.context.annotation.Bean;
+import org.springframework.stereotype.Controller;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.multipart.MultipartFile;
+import org.springframework.web.multipart.commons.CommonsMultipartFile;
+
+import javax.annotation.Resource;
+import javax.servlet.http.HttpServletRequest;
+import java.io.File;
+import java.io.IOException;
+import java.util.*;
+
+@Controller
+@RequestMapping("file")
+public class FileController {
+    @Resource
+    FileService fileService;
+    @Resource
+    TxCloudUtil txCloudUtil;
+    @Autowired
+    ResourceShareMapper resourceShareMapper;
+    private final static String url = "https://test-1256150574.cos.ap-beijing.myqcloud.com/";
+
+    @RequestMapping("uploadFile")
+    @ResponseBody
+    public Object uploadFile(MultipartFile file, Long folderId, HttpServletRequest request, Integer tagId) {
+        UserInfo userInfo = (UserInfo) request.getSession().getAttribute("userInfo");
+        File file1 = null;
+        try {
+            file1 = multipartToFile(file);
+            txCloudUtil.updload(file.getOriginalFilename(), file1);
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+        //上传之后将链接存入数据库
+        if (folderId != null) {
+            ServiceResult<Boolean> file2 = fileService.createFile(file.getOriginalFilename(), url + file.getOriginalFilename(), folderId, userInfo.getId(), tagId);
+            if (file2.getSuccess()) {
+                return new BaseResult(file2.getMessage(), true);
+            }
+        }
+        return new BaseResult(false, "文件上传失败，请重新上传", 20001);
+    }
+
+    @RequestMapping("mkdirFolder")
+    @ResponseBody
+    public Object crateNewFolder(String folderName, Long fatherId, HttpServletRequest request) {
+        UserInfo userInfo = (UserInfo) request.getSession().getAttribute("userInfo");
+        fileService.createFolder(folderName, fatherId, userInfo.getId());
+        //创建文件夹
+        return new BaseResult("存储成功", true);
+    }
+
+    @RequestMapping("saveMyFile")
+    @ResponseBody
+    public Object saveMyFile(Long fileId, Long folderId, HttpServletRequest rquest) {
+        com.web.po.File file = fileService.selectFileById(fileId);
+        UserInfo userInfo = (UserInfo) rquest.getSession().getAttribute("userInfo");
+        fileService.createFile(file.getFile_name(), file.getFile_url(), folderId, userInfo.getId(), file.getFile_tag());
+        return new BaseResult("保存成功", true);
+    }
+
+    @RequestMapping("queryFileByCondition")
+    @ResponseBody
+    public Object queryFileByCondition(String fileName) {
+        List<FileDto> newList = new ArrayList<>();
+        if (StringUtil.isEmpty(fileName)) {
+            List<com.web.po.File> list = fileService.selectFileByList();
+            for (com.web.po.File file : list) {
+                if (file.getFolder_id() == null) {
+                    FileDto fileDto = converByFile(file);
+                    newList.add(fileDto);
+                } else {
+                    Foleder foleder = fileService.selectFolderById(file.getFolder_id());
+                    if (null != foleder.getFolder_password()) {
+                        FileDto fileDto = converByFile(file);
+                        newList.add(fileDto);
+                    }
+                }
+            }
+            return new BaseResult(newList, true);
+        }
+        com.web.po.File file = fileService.selectFileByName(fileName);
+        Foleder foleder = fileService.selectFolderByName(fileName);
+        if (file != null) {
+            FileDto fileDto = converByFile(file);
+            newList.add(fileDto);
+        }
+        if (foleder != null) {
+            FileDto fileDto = converByFolder(foleder);
+            List<com.web.po.File> files = fileService.selectFilesByFolderId(foleder.getId());
+            fileDto.setSonFiles(files);
+            newList.add(fileDto);
+        }
+        return new BaseResult(newList, true);
+    }
+
+    @RequestMapping("queryFilesByFolder")
+    @ResponseBody
+    public Object queryFilesByFolder(Long folderId) {
+        List<com.web.po.File> files = fileService.selectFilesByFolderId(folderId);
+        return new BaseResult(files, true);
+    }
+
+    @RequestMapping("folderEncryption")
+    @ResponseBody
+    public Object folderEncryption(Long folderId, String password) {
+        Foleder foleder = fileService.selectFolderById(folderId);
+        foleder.setFolder_password(password);
+        fileService.updateFoleder(foleder);
+        return new BaseResult<>("成功", true);
+    }
+
+    @RequestMapping("ResourceShare")
+    @ResponseBody
+    public Object ResourceShare(Long fileId, Integer type, String password) {
+
+        ResourceShare resourceShare = new ResourceShare();
+
+        if (type == 1) {
+            //为自动生成密码 随机生成6位密码
+            password = getStringRandom(6);
+        }
+        resourceShare.setFile_id(fileId);
+        resourceShare.setPassword(password);
+        resourceShare.setGmt_create(new Date());
+        resourceShareMapper.insertSelective(resourceShare);
+        return new BaseResult<>("成功", true);
+    }
+
+    //生成随机数字和字母,
+    public String getStringRandom(int length) {
+
+        String val = "";
+        Random random = new Random();
+        //length为几位密码
+        for (int i = 0; i < length; i++) {
+            String charOrNum = random.nextInt(2) % 2 == 0 ? "char" : "num";
+            //输出字母还是数字
+            if ("char".equalsIgnoreCase(charOrNum)) {
+                //输出是大写字母还是小写字母
+                int temp = random.nextInt(2) % 2 == 0 ? 65 : 97;
+                val += (char) (random.nextInt(26) + temp);
+            } else if ("num".equalsIgnoreCase(charOrNum)) {
+                val += String.valueOf(random.nextInt(10));
+            }
+        }
+        return val;
+    }
+
+    private FileDto converByFile(com.web.po.File file) {
+        FileDto fileDto = new FileDto();
+        BeanUtils.copyProperties(file, fileDto);
+        fileDto.setFolder(false);
+        return fileDto;
+    }
+
+    //            fileService.selectFileById();
+    //    @ResponseBody
+    //        //如果folderId为空 则是最外层文件夹
+    //        if (folderId == null) {
+//        }
+//        return null;
+//    }
+    @RequestMapping("FolderEncrypt")
+    @ResponseBody
+    public Object FolderEncrypt(String password, Long folderId) {
+        if (StringUtil.isEmpty(password) || StringUtil.isEmpty(String.valueOf(folderId))) {
+            return new BaseResult("参数异常", false);
+        }
+        Foleder foleder = fileService.selectFolderById(folderId);
+        foleder.setFolder_password(password);
+        fileService.updateFoleder(foleder);
+        return new BaseResult("设置成功", true);
+    }
+
+    private File multipartToFile(MultipartFile multfile) throws IOException {
+        CommonsMultipartFile cf = (CommonsMultipartFile) multfile;
+        //这个myfile是MultipartFile的
+        DiskFileItem fi = (DiskFileItem) cf.getFileItem();
+        File file = fi.getStoreLocation();
+        //手动创建临时文件
+        if (file.length() > 2048) {
+            File tmpFile = new File(System.getProperty("java.io.tmpdir") + System.getProperty("file.separator") +
+                    file.getName());
+            multfile.transferTo(tmpFile);
+            return tmpFile;
+        }
+        return file;
+    }
+    //    @RequestMapping("queryMyFile")
+
+    private FileDto converByFolder(Foleder file) {
+        FileDto fileDto = new FileDto();
+        BeanUtils.copyProperties(file, fileDto);
+        fileDto.setFolder(true);
+        return fileDto;
+    }
+}

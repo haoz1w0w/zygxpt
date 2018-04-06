@@ -1,0 +1,155 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.web.dao.FileMapper">
+    <resultMap id="BaseResultMap" type="com.web.po.File">
+        <id column="id" property="id" jdbcType="BIGINT"/>
+        <result column="file_name" property="file_name" jdbcType="VARCHAR"/>
+        <result column="file_url" property="file_url" jdbcType="VARCHAR"/>
+        <result column="file_tag" property="file_tag" jdbcType="INTEGER"/>
+        <result column="folder_id" property="folder_id" jdbcType="BIGINT"/>
+        <result column="is_del" property="is_del" jdbcType="INTEGER"/>
+        <result column="gmt_create" property="gmt_create" jdbcType="DATE"/>
+        <result column="gmt_modify" property="gmt_modify" jdbcType="DATE"/>
+        <result column="is_encrypt" property="is_encrypt" jdbcType="VARCHAR"/>
+        <result column="user_id" property="user_id" jdbcType="BIGINT"/>
+    </resultMap>
+    <sql id="Base_Column_List">
+    id, file_name, file_url, file_tag, folder_id, is_del, gmt_create, gmt_modify, is_encrypt, 
+    user_id
+  </sql>
+    <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Long">
+        select
+        <include refid="Base_Column_List"/>
+        from file
+        where id = #{id,jdbcType=BIGINT}
+    </select>
+    <delete id="deleteByPrimaryKey" parameterType="java.lang.Long">
+    delete from file
+    where id = #{id,jdbcType=BIGINT}
+  </delete>
+    <insert id="insert" parameterType="com.web.po.File">
+    insert into file (id, file_name, file_url, 
+      file_tag, folder_id, is_del, 
+      gmt_create, gmt_modify, is_encrypt, 
+      user_id)
+    values (#{id,jdbcType=BIGINT}, #{file_name,jdbcType=VARCHAR}, #{file_url,jdbcType=VARCHAR}, 
+      #{file_tag,jdbcType=INTEGER}, #{folder_id,jdbcType=BIGINT}, #{is_del,jdbcType=INTEGER}, 
+      #{gmt_create,jdbcType=DATE}, #{gmt_modify,jdbcType=DATE}, #{is_encrypt,jdbcType=VARCHAR}, 
+      #{user_id,jdbcType=BIGINT})
+  </insert>
+    <insert id="insertSelective" parameterType="com.web.po.File">
+        insert into file
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test="id != null">
+                id,
+            </if>
+            <if test="file_name != null">
+                file_name,
+            </if>
+            <if test="file_url != null">
+                file_url,
+            </if>
+            <if test="file_tag != null">
+                file_tag,
+            </if>
+            <if test="folder_id != null">
+                folder_id,
+            </if>
+            <if test="is_del != null">
+                is_del,
+            </if>
+            <if test="gmt_create != null">
+                gmt_create,
+            </if>
+            <if test="gmt_modify != null">
+                gmt_modify,
+            </if>
+
+            <if test="user_id != null">
+                user_id,
+            </if>
+        </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides=",">
+            <if test="id != null">
+                #{id,jdbcType=BIGINT},
+            </if>
+            <if test="file_name != null">
+                #{file_name,jdbcType=VARCHAR},
+            </if>
+            <if test="file_url != null">
+                #{file_url,jdbcType=VARCHAR},
+            </if>
+            <if test="file_tag != null">
+                #{file_tag,jdbcType=INTEGER},
+            </if>
+            <if test="folder_id != null">
+                #{folder_id,jdbcType=BIGINT},
+            </if>
+            <if test="is_del != null">
+                #{is_del,jdbcType=INTEGER},
+            </if>
+            <if test="gmt_create != null">
+                #{gmt_create,jdbcType=DATE},
+            </if>
+            <if test="gmt_modify != null">
+                #{gmt_modify,jdbcType=DATE},
+            </if>
+
+            <if test="user_id != null">
+                #{user_id,jdbcType=BIGINT},
+            </if>
+        </trim>
+    </insert>
+    <update id="updateByPrimaryKeySelective" parameterType="com.web.po.File">
+        update file
+        <set>
+            <if test="file_name != null">
+                file_name = #{file_name,jdbcType=VARCHAR},
+            </if>
+            <if test="file_url != null">
+                file_url = #{file_url,jdbcType=VARCHAR},
+            </if>
+            <if test="file_tag != null">
+                file_tag = #{file_tag,jdbcType=INTEGER},
+            </if>
+            <if test="folder_id != null">
+                folder_id = #{folder_id,jdbcType=BIGINT},
+            </if>
+            <if test="is_del != null">
+                is_del = #{is_del,jdbcType=INTEGER},
+            </if>
+            <if test="gmt_create != null">
+                gmt_create = #{gmt_create,jdbcType=DATE},
+            </if>
+            <if test="gmt_modify != null">
+                gmt_modify = #{gmt_modify,jdbcType=DATE},
+            </if>
+            <if test="user_id != null">
+                user_id = #{user_id,jdbcType=BIGINT},
+            </if>
+        </set>
+        where id = #{id,jdbcType=BIGINT}
+    </update>
+    <update id="updateByPrimaryKey" parameterType="com.web.po.File">
+    update file
+    set file_name = #{file_name,jdbcType=VARCHAR},
+      file_url = #{file_url,jdbcType=VARCHAR},
+      file_tag = #{file_tag,jdbcType=INTEGER},
+      folder_id = #{folder_id,jdbcType=BIGINT},
+      is_del = #{is_del,jdbcType=INTEGER},
+      gmt_create = #{gmt_create,jdbcType=DATE},
+      gmt_modify = #{gmt_modify,jdbcType=DATE},
+      is_encrypt = #{is_encrypt,jdbcType=VARCHAR},
+      user_id = #{user_id,jdbcType=BIGINT}
+    where id = #{id,jdbcType=BIGINT}
+  </update>
+    <select id="selectFileByList" resultType="com.web.po.File">
+    select * from file ORDER by gmt_create desc limit 0,10
+  </select>
+    <select id="selectFileByName" parameterType="java.lang.String" resultType="com.web.po.File">
+        select * from file where file_name=#{fileName}
+    </select>
+    <select id="selectFilesByFolrderId" parameterType="java.lang.Long" resultType="com.web.po.File" >
+        select * from file where folder_if=#{folderId}
+    </select>
+</mapper>
