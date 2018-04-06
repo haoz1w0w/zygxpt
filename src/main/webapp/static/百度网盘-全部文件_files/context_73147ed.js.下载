@@ -1,0 +1,1 @@
+define("interface-widget-1:mainSmallBanner/context.js",function(t,n,e){var o={context:null};e.exports={getContext:function(){return o.context},setContext:function(t){o.context||(o.context=t)}}});
