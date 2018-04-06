@@ -37,8 +37,8 @@ public class FileController {
     @RequestMapping("fileList")
     @ResponseBody
     public Object fileList(HttpServletRequest request) {
-        UserInfo userInfo = (UserInfo) request.getSession().getAttribute("userInfo");
-        List<Foleder> foleders = fileService.slectFolderByUserId(userInfo.getId());
+//        UserInfo userInfo = (UserInfo) request.getSession().getAttribute("userInfo");
+        List<Foleder> foleders = fileService.slectFolderByUserId(1L);
         return foleders;
     }
 
