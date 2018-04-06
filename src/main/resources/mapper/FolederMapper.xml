@@ -117,4 +117,7 @@
     <select id="selectFolederByName" parameterType="java.lang.String" resultType="com.web.po.Foleder">
 select * from foleder where folder_name=#{folderName}
   </select>
+    <select id="findFolederListByUserId" parameterType="java.lang.Long" resultType="com.web.po.Foleder">
+        select * from foleder where user_id=#{userId}
+    </select>
 </mapper>

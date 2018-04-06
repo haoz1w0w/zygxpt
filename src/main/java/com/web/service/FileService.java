@@ -32,4 +32,7 @@ public interface FileService {
     public List<File> selectFilesByFolderId(Long folderId);
 
     public void updateFoleder(Foleder foleder);
+
+    public List<Foleder> slectFolderByUserId(Long userId);
+
 }

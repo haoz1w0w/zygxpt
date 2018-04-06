@@ -100,4 +100,9 @@ public class FileServiceImpl implements FileService {
     public void updateFoleder(Foleder foleder) {
         folederMapper.updateByPrimaryKey(foleder);
     }
+
+    @Override
+    public List<Foleder> slectFolderByUserId(Long userId) {
+        return folederMapper.findFolederListByUserId(userId);
+    }
 }

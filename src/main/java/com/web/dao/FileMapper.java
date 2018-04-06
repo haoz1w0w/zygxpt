@@ -1,6 +1,7 @@
 package com.web.dao;
 
 import com.web.po.File;
+import com.web.po.Foleder;
 
 import java.util.List;
 
@@ -22,5 +23,6 @@ public interface FileMapper {
     File selectFileByName(String fileName);
 
     List<File> selectFilesByFolrderId(Long folderId);
+
 
 }

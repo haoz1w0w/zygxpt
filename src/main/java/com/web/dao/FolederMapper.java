@@ -2,6 +2,8 @@ package com.web.dao;
 
 import com.web.po.Foleder;
 
+import java.util.List;
+
 public interface FolederMapper {
     int deleteByPrimaryKey(Long id);
 
@@ -16,4 +18,7 @@ public interface FolederMapper {
     int updateByPrimaryKey(Foleder record);
 
     Foleder selectFolederByName(String folderName);
+
+    List<Foleder> findFolederListByUserId(Long userId);
+
 }

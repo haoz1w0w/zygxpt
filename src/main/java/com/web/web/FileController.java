@@ -34,6 +34,13 @@ public class FileController {
     @Autowired
     ResourceShareMapper resourceShareMapper;
     private final static String url = "https://test-1256150574.cos.ap-beijing.myqcloud.com/";
+    @RequestMapping("fileList")
+    @ResponseBody
+    public Object fileList(HttpServletRequest request) {
+        UserInfo userInfo = (UserInfo) request.getSession().getAttribute("userInfo");
+        List<Foleder> foleders = fileService.slectFolderByUserId(userInfo.getId());
+        return foleders;
+    }
 
     @RequestMapping("uploadFile")
     @ResponseBody
