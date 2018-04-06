@@ -26,14 +26,14 @@ public class UserController {
 
     @RequestMapping("/register")
     @ResponseBody
-    public Object register(@RequestBody UserInfo userInfo) {
-        if (userInfo == null) {
-            return new BaseResult<String>("输入错误", false);
-        }
-        if (StringUtil.isEmpty(userInfo.getAccount()) || StringUtil.isEmpty(userInfo.getPassword()) || StringUtil.isEmpty(Integer.toString(userInfo.getRole()))) {
-            return new BaseResult<String>("必填项不能为空", false);
+    public Object register(String account, String password, String passwordtwo) {
+        if (!password.equals(passwordtwo)) {
+            return null;
         }
         try {
+            UserInfo userInfo = new UserInfo();
+            userInfo.setPassword(password);
+            userInfo.setAccount(account);
             userInfo.setPassword(MD5Util.md5Encode(userInfo.getPassword()));
             ServiceResult<Boolean> serviceResult = userService.registerUserInfo(userInfo);
             if (serviceResult.getResult() != null && serviceResult.getResult()) {
@@ -55,7 +55,8 @@ public class UserController {
         try {
             ServiceResult serviceResult = userService.CheckUserInfo(account, password);
             if (serviceResult.getSuccess()) {
-                httpServletRequest.getSession().setAttribute("account", account);
+                UserInfo userInfo = userService.selectUserInfoByAccount(account);
+                httpServletRequest.getSession().setAttribute("userInfo", userInfo);
             }
             return new BaseResult(serviceResult.getResult(), serviceResult.getSuccess());
         } catch (Exception e) {

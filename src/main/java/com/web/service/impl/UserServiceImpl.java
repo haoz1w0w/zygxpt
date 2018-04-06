@@ -82,4 +82,9 @@ public class UserServiceImpl implements UserService {
         serviceResult.setSuccess(true);
         return serviceResult;
     }
+
+    @Override
+    public UserInfo selectUserInfoByAccount(String account) {
+        return userInfoMapper.selectUserInfoByAccount(account);
+    }
 }
