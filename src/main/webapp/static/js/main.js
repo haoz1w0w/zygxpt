@@ -2,11 +2,24 @@
  * Created by caoxudong on 2018/4/6.
  */
 $(function () {
+    $("#fileTemple").on({
+        mouseover : function(){
+            $(this).css("background-color","blue");
+            $(this).addClass("fileItem");
+        } ,
+        mouseout : function(){
+            $(this).css("background-color","white");
+            $(this).removeClass("fileItem");
+        }
+    }) ;
+
+
+
     //请求文件列表  append class = vdAfKMb
     var fileListUrl = "/file/fileList";
     $.get(fileListUrl, function (data) {
         for (var d = 0; d < data.length; d++) {
-            var fileTemple = $("#fileTemple").clone();
+            var fileTemple = $("#fileTemple").clone(true);
 
             var fileTempleHtml = fileTemple.html();
             fileTempleHtml = fileTempleHtml
@@ -15,6 +28,7 @@ $(function () {
                 .replace("fileDate", new Date());
             fileTemple.html(fileTempleHtml);
             fileTemple.removeAttr("id", "");
+            fileTemple.attr("fileId",1)
             fileTemple.show();
             $(".vdAfKMb").append(fileTemple);
         }
@@ -23,12 +37,11 @@ $(function () {
 function uploadFilesss(obj, type) {
 
     $.ajaxFileUpload({
-        url : "http://localhost:8080/file/uploadFile",
+        url : "/file/uploadFile",
         secureuri : false,// 一般设置为false
-        fileElementId : "fileUpload"+type,// 文件上传表单的id <input type="file" id="fileUpload" name="file" />
+        fileElementId : "fileUpload",// 文件上传表单的id <input type="file" id="fileUpload" name="file" />
         dataType : 'json',// 返回值类型 一般设置为json
         data: {'type': type},
-
         success : function(data) // 服务器成功响应处理函数
         {
         },
