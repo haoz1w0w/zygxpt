@@ -18,7 +18,10 @@
     <link rel="dns-prefetch" href="https://webpush.pan.baidu.com/">
     <link rel="dns-prefetch" href="https://hm.baidu.com/">
     <link rel="shortcut icon" href="https://pan.baidu.com/box-static/disk-system/images/favicon.ico">
-    <title>百度网盘-全部文件</title>
+    <title>
+        <我的></我的>
+        文件
+    </title>
     <script type="text/javascript">
         var dpPage = '221_116';
         var dpCustomMetrics = 'c_pd';
@@ -172,7 +175,6 @@
         background-repeat: no-repeat;
     }
 
-
     .NHcGw .AuPKyz {
         position: relative;
         height: 44px;
@@ -182,28 +184,35 @@
         text-overflow: ellipsis;
         background: #FFF;
     }
+
     .global-clearfix, .g-clearfix {
         zoom: 1;
     }
+
     body, div, dl, dt, dd, ul, ol, li, h1, h2, h3, h4, h5, h6, pre, code, form, textarea, select, optgroup, option, fieldset, legend, p, blockquote, th, td {
         margin: 0;
         padding: 0;
     }
+
     user agent stylesheet
     dd {
         display: block;
         -webkit-margin-start: 40px;
     }
+
     .KPDwCE .vdAfKMb {
-        font: 12px/1.5 tahoma,arial;
+        font: 12px/1.5 tahoma, arial;
     }
+
     body, button, input, select, textarea {
-        font: 12px/1.5 "Microsoft YaHei",arial,SimSun,"宋体";
+        font: 12px/1.5 "Microsoft YaHei", arial, SimSun, "宋体";
         color: #666;
     }
+
     body, button, input, select, textarea {
         color: #666;
     }
+
     .global-clearfix:after, .g-clearfix:after {
         content: '.';
         display: block;
@@ -213,10 +222,12 @@
         font-size: 0;
         clear: both;
     }
+
     -webkit-scrollbar {
         width: 12px;
         height: 10px;
     }
+
     -webkit-scrollbar-thumb {
         height: 30px;
         background-color: #999;
@@ -225,6 +236,7 @@
         outline-offset: -2px;
         border: 2px solid #fff;
     }
+
     -webkit-scrollbar-track-piece {
         background-color: #fff;
         -webkit-border-radius: 3px;
@@ -239,17 +251,21 @@
         left: 43px;
         top: 10px;
     }
+
     .dir-card-small {
         background: url(https://pan.baidu.com/box-static/file-widget-1/sysIcon/img/card_24_ff51176.png) center no-repeat;
     }
+
     body, div, dl, dt, dd, ul, ol, li, h1, h2, h3, h4, h5, h6, pre, code, form, textarea, select, optgroup, option, fieldset, legend, p, blockquote, th, td {
         margin: 0;
         padding: 0;
     }
+
     user agent stylesheet
     div {
         display: block;
     }
+
     .NHcGw .AuPKyz {
         position: relative;
         height: 44px;
@@ -259,20 +275,25 @@
         text-overflow: ellipsis;
         background: #FFF;
     }
+
     .KPDwCE .vdAfKMb {
-        font: 12px/1.5 tahoma,arial;
+        font: 12px/1.5 tahoma, arial;
     }
+
     body, button, input, select, textarea {
-        font: 12px/1.5 "Microsoft YaHei",arial,SimSun,"宋体";
+        font: 12px/1.5 "Microsoft YaHei", arial, SimSun, "宋体";
         color: #666;
     }
+
     body, button, input, select, textarea {
         color: #666;
     }
+
     -webkit-scrollbar {
         width: 12px;
         height: 10px;
     }
+
     -webkit-scrollbar-thumb {
         height: 30px;
         background-color: #999;
@@ -281,6 +302,7 @@
         outline-offset: -2px;
         border: 2px solid #fff;
     }
+
     -webkit-scrollbar-track-piece {
         background-color: #fff;
         -webkit-border-radius: 3px;
@@ -1036,7 +1058,7 @@
                                         </li>
                                         <li node-type="amzmjgLy" data-key="pic" class="iicszX45">
                                             <a node-type="aqjyNL" class="nzr0YdW" hidefocus="true"
-                                               href="https://pan.baidu.com/disk/timeline">
+                                            >
 <span class="text">
 <span node-type="dysqzlMZ">图片</span>
 </span>
@@ -1044,31 +1066,28 @@
                                         </li>
                                         <li node-type="amzmjgLy" data-key="doc" class="iicszX45">
                                             <a node-type="aqjyNL" cat="4" class="nzr0YdW" hidefocus="true"
-                                               href="javascript:void(0);">
-<span class="text">
+                                            ">
+                                            <span class="text">
 <span node-type="dysqzlMZ">文档</span>
 </span>
                                             </a>
                                         </li>
                                         <li node-type="amzmjgLy" data-key="video" class="iicszX45">
-                                            <a node-type="aqjyNL" cat="1" class="nzr0YdW" hidefocus="true"
-                                               href="javascript:void(0);">
+                                            <a node-type="aqjyNL" cat="1" class="nzr0YdW" hidefocus="true">
 <span class="text">
 <span node-type="dysqzlMZ">视频</span>
 </span>
                                             </a>
                                         </li>
                                         <li node-type="amzmjgLy" data-key="mbt" class="iicszX45">
-                                            <a node-type="aqjyNL" cat="7" class="nzr0YdW" hidefocus="true"
-                                               href="javascript:void(0);">
+                                            <a node-type="aqjyNL" cat="7" class="nzr0YdW" hidefocus="true">
 <span class="text">
 <span node-type="dysqzlMZ">种子</span>
 </span>
                                             </a>
                                         </li>
                                         <li node-type="amzmjgLy" data-key="music" class="iicszX45">
-                                            <a node-type="aqjyNL" cat="2" class="nzr0YdW" hidefocus="true"
-                                               href="javascript:void(0);">
+                                            <a node-type="aqjyNL" cat="2" class="nzr0YdW" hidefocus="true">
 <span class="text">
 <span node-type="dysqzlMZ">音乐</span>
 </span>
@@ -1076,7 +1095,7 @@
                                         </li>
                                         <li node-type="amzmjgLy" data-key="other" class="iicszX45">
                                             <a node-type="aqjyNL" cat="6" class="nzr0YdW" hidefocus="true"
-                                               href="javascript:void(0);">
+                                            >
 <span class="text">
 <span node-type="dysqzlMZ">其它</span>
 </span>
@@ -1091,18 +1110,17 @@
                                              style="position:absolute;top:0;line-height:normal;padding-top:0px;">
                                             <div style="display:none;width:100%;height:100%;z-index:30;position:absolute;top:0;left:0;"></div>
                                             <a class="g-button" data-button-id="b1" data-button-index="8"
-                                               href="javascript:;" title="我的分享"><span class="g-button-right"><em
+                                               title="我的分享"><span class="g-button-right"><em
                                                     class="icon icon-my-share" title="我的分享"></em><span class="text"
                                                                                                        style="width: auto;">我的分享</span></span></a><span
                                                 class="g-dropdown-button tools-more" style="display: none;"><a
                                                 class="g-button" data-button-id="b3" data-button-index=""
-                                                href="javascript:;" title="更多"><span class="g-button-right"><em
+                                                title="更多"><span class="g-button-right"><em
                                                 class="icon icon-more" title="更多"></em><span class="text"
                                                                                              style="width: auto;">更多</span></span></a><span
                                                 class="menu" style="width: 112px;"><a style="display:none;"
                                                                                       data-menu-id="b-menu0"
-                                                                                      class="g-button-menu g-menu-hasIcon"
-                                                                                      href="javascript:;"><em
+                                                                                      class="g-button-menu g-menu-hasIcon"><em
                                                 class="icon icon-my-share"></em>我的分享</a></span></span></div>
                                     </ul>
                                     <div class="he03G0" style="display: block;"></div>
@@ -1113,18 +1131,18 @@
                                              style="position:absolute;top:0;line-height:normal;padding-top:0px;">
                                             <div style="display:none;width:100%;height:100%;z-index:30;position:absolute;top:0;left:0;"></div>
                                             <a class="g-button" data-button-id="b5" data-button-index="9"
-                                               href="javascript:;" title="回收站"><span class="g-button-right"><em
+                                               title="回收站"><span class="g-button-right"><em
                                                     class="icon icon-delete" title="回收站"></em><span class="text"
                                                                                                     style="width: auto;">回收站</span></span></a><span
                                                 class="g-dropdown-button tools-more" style="display: none;"><a
                                                 class="g-button" data-button-id="b7" data-button-index=""
-                                                href="javascript:;" title="更多"><span class="g-button-right"><em
+                                                title="更多"><span class="g-button-right"><em
                                                 class="icon icon-more" title="更多"></em><span class="text"
                                                                                              style="width: auto;">更多</span></span></a><span
                                                 class="menu" style="width: 112px;"><a style="display:none;"
                                                                                       data-menu-id="b-menu0"
                                                                                       class="g-button-menu g-menu-hasIcon"
-                                                                                      href="javascript:;"><em
+                                        ><em
                                                 class="icon icon-delete"></em>回收站</a></span></span></div>
                                     </ul>
                                     <div class="aside-absolute-container"
@@ -1136,7 +1154,6 @@
                                             <div node-type="ezAXQm" class="QGOvsxb" style="_visibility:visible;">
                                                 <div node-type="pjzwP5Zw" class="JGDHAe">
                                                     <div class="get-capacity"><span><a node-type="nerA2pP"
-                                                                                       href="https://yun.baidu.com/buy/center?tag=1&amp;from=kr2t"
                                                                                        target="_blank">           开通会员，升至2T永久容量</a></span>
                                                     </div>
                                                 </div>
@@ -1148,20 +1165,6 @@
                                                     <a class="quota-over-btn"
                                                        href="https://pan.baidu.com/disk/home?"></a> <em
                                                             class="quota-over-bg"></em></div>
-                                                <ul class="tDuODs">
-                                                    <li class="g-clearfix bar">
-                                                        <div node-type="eolemrlw" class="remainingSpaceUi"><span
-                                                                node-type="dtgP6rP" class="remainingSpaceUi_span"
-                                                                style="background: rgb(146, 239, 85); transition-duration: 0.311485s; width: 20.7656%;"></span>
-                                                        </div>
-                                                        <div class="DIeHPCb remaining-space"><span node-type="mjmpQP"
-                                                                                                   class="bold">428.4G</span>/<span
-                                                                node-type="pupzAnom">2063G</span></div>
-                                                        <div class="GELdyA"><a node-type="mbbfwDZm" target="_blank"
-                                                                               href="https://yun.baidu.com/buy/center?tag=8&amp;from=kr">扩容至5T</a>
-                                                        </div>
-                                                    </li>
-                                                </ul>
                                             </div>
                                         </div>
                                         <div data-index="2" node-type="layout-absolute-box"
@@ -1281,13 +1284,16 @@
                                                     <span class="g-dropdown-button"><a
                                                             class="g-button g-button-blue blue-upload upload-wrapper"
                                                             data-button-id="b31" data-button-index="1"
-                                                            href="javascript:;" title="上传"><span class="g-button-right"><em
+                                                            href="up" title="上传"><span class="g-button-right"><em
                                                             class="icon icon-upload" title="上传"></em><span class="text"
-                                                                                                           style="width: 40px;">上传</span></span><form
-                                                            class="h5-uploader-form" action="javascript:void(0);"><input
-                                                            title="点击选择文件" id="h5Input0" multiple="" accept="*/*"
-                                                            type="file" name="html5uploader"
-                                                            style="position:absolute;opacity:0;top:0;left:0;width:100%;height:100%;cursor:pointer;"></form></a><span
+                                                                                                           style="width: 40px;">上传</span></span>
+                                                        <form class="h5-uploader-form" action="/file/uploadFile">
+                                                            <input title="点击选择文件" id="h5Input0" multiple="" accept="*/*"
+                                                            type="file" name="html5uploader" onchange ="uploadFilesss(this,1)"
+                                                            style="position:absolute;opacity:0;top:0;left:0;width:100%;height:100%;cursor:pointer;"/>
+                                                      <input class="btn btn-primary" value="提交" type="submit" />
+                                                    </form>
+                                                    </a><span
                                                             class="menu" style="width: 84px;"><a data-menu-id="b-menu0"
                                                                                                  class="g-button-menu  upload-wrapper"
                                                                                                  href="javascript:;">上传文件<form
@@ -1306,20 +1312,6 @@
                                                         style="display: inline-block;"><span class="g-button-right"><em
                                                         class="icon icon-newfolder" title="新建文件夹"></em><span
                                                         class="text" style="width: auto;">新建文件夹</span></span></a><span
-                                                        class="g-dropdown-button last-button"
-                                                        style="display: inline-block;"><a class="g-button"
-                                                                                          data-button-id="b37"
-                                                                                          data-button-index="4"
-                                                                                          href="javascript:;"
-                                                                                          title="我的设备"><span
-                                                        class="g-button-right"><em class="icon icon-device"
-                                                                                   title="我的设备"></em><span class="text"
-                                                                                                           style="width: auto;">我的设备</span></span></a><span
-                                                        class="menu" style="width: 96px;"><a data-menu-id="b-menu0"
-                                                                                             class="g-button-menu "
-                                                                                             href="javascript:;">推送任务列表</a><a
-                                                        data-menu-id="b-menu1" class="g-button-menu "
-                                                        href="javascript:;">添加设备</a></span></span><span
                                                         class="g-dropdown-button tools-more" style="display: none;"><a
                                                         class="g-button" data-button-id="b39" data-button-index=""
                                                         href="javascript:;" title="更多"><span class="g-button-right"><em
@@ -1552,7 +1544,8 @@
                                                 <div node-type="NHcGw" class="NHcGw"
                                                      style="overflow-y: auto; height: 715px;">
                                                     <div class="vdAfKMb" style="height: auto;">
-                                                        <dd id="fileTemple" style="display: none;" class="g-clearfix AuPKyz open-enable" _position="0"
+                                                        <dd id="fileTemple" style="display: none;"
+                                                            class="g-clearfix AuPKyz open-enable" _position="0"
                                                             _cmd_installed="1" _installed="1"><span node-type="EOGexf"
                                                                                                     class="EOGexf gxvMIQ"><span
                                                                 class="icon NbKJexb"></span></span>
@@ -1560,7 +1553,7 @@
                                                             <div class="file-name" style="width:60%">
                                                                 <div class="text"><a href="javascript:void(0);"
                                                                                      class="xlytjQoP"
-                                                                                    >fileName</a></div>
+                                                                >fileName</a></div>
                                                                 <div class="operate">
                                                                     <div class="button-box-mark"
                                                                          style="display:inline-block;*display:inline;*zoom:1;width:1px;height:1px;line-height:0;"></div>
@@ -1572,7 +1565,8 @@
                                                             </div>
                                                             <div class="cwlz9JR" style="width:16%">fileSize</div>
                                                             <div class="avv0n1A" style="width:23%">fileDate</div>
-                                                            <div class="ihjxDO" style="width:0%"><span class="dud8NNZ" node-type="qcf8PQk"></span>
+                                                            <div class="ihjxDO" style="width:0%"><span class="dud8NNZ"
+                                                                                                       node-type="qcf8PQk"></span>
                                                             </div>
                                                         </dd>
                                                     </div>
@@ -1618,77 +1612,7 @@
             </div>
         </div>
     </div>
-    <div id="layoutHeader">
-        <div node-type="module" class="module-header">
-            <div node-type="module-header-wrapper" class="module-header-wrapper" style="height: 62px;">
-                <dl class="xtJbHcb">
-                    <dt class="EHazOI"><a href="https://pan.baidu.com/" target="_self" title="百度网盘"></a></dt>
-                    <dd class="vyQHNyb" node-type="header-link"><span class="cMEMEF wGMtMgb" node-type="disk-home"><a
-                            href="https://pan.baidu.com/disk/home" target="_self" title="网盘"
-                            node-type="item-title">网盘</a><span class="gICyHO"></span></span><span class="cMEMEF "
-                                                                                                  node-type="mbox-homepage"><a
-                            href="https://pan.baidu.com/mbox/homepage" target="_self" title="分享" node-type="item-title">分享</a><span
-                            class="gICyHO"></span></span><span class="cMEMEF " node-type="find-apps"><a
-                            href="https://pan.baidu.com/disk/discovery" target="_self" title="更多"
-                            node-type="item-title">更多</a><span class="gICyHO"></span><i
-                            class="find-light-icon"></i></span></dd>
-                    <dd class="CDaavKb" node-type="header-apps"><span class="DIcOFyb" node-type="app-user-info"><span
-                            class="user-photo-box"><i class="user-photo"
-                                                      style="background-image:url(https://ss0.bdstatic.com/7Ls0a8Sm1A5BphGlnYG/sys/portrait/item/9fca2605.jpg);filter: progid:DXImageTransform.Microsoft.AlphaImageLoader(src=&#39;https://ss0.bdstatic.com/7Ls0a8Sm1A5BphGlnYG/sys/portrait/item/9fca2605.jpg&#39;, sizingMethod=&#39;scale&#39;);"></i></span><span
-                            class="user-name">张京京</span><span class="animate-start animate-level-0"><i
-                            class="star start-left"></i><i class="bar-bling"></i><i class="bar-bling2"></i><i
-                            class="star start-right"></i></span><a class="JS-user-level level-0"
-                                                                   node-type="app-user-level"
-                                                                   href="https://pan.baidu.com/buy/center?tag=8&amp;from=hicon"
-                                                                   target="_blank"></a><i node-type="img-ico"
-                                                                                          class="NxuPcOb icon icon-dropdown-arrow"></i><dl
-                            class="PvsOgyb" node-type="app-user-box"><dt class="OMDFeH level-0"><i
-                            class="desc-arrow"></i><i class="desc-layer"></i><span class="desc-header"><span
-                            class="user-photo-box"><i class="user-photo"
-                                                      style="background-image:url(https://ss0.bdstatic.com/7Ls0a8Sm1A5BphGlnYG/sys/portrait/item/9fca2605.jpg);filter: progid:DXImageTransform.Microsoft.AlphaImageLoader(src=&#39;https://ss0.bdstatic.com/7Ls0a8Sm1A5BphGlnYG/sys/portrait/item/9fca2605.jpg&#39;, sizingMethod=&#39;scale&#39;);"></i></span><span
-                            class="user-info" title="张京京"><span class="username">张京京</span><a
-                            class="JS-user-level level-0" node-type="app-user-level"
-                            href="https://pan.baidu.com/buy/center?tag=8&amp;from=hicon"
-                            target="_blank"></a></span></span></dt><dd class="desc-box"><div class="vip-notice">超级会员尊享15项特权：<a
-                            href="https://pan.baidu.com/buy/center?tag=8&amp;from=card" target="_blank" class="eQyIbEb">开通超级会员</a></div><div
-                            class="vip-privilege"><a target="_blank"
-                                                     href="https://pan.baidu.com/buy/center?tag=4#question=vip-space"
-                                                     class="JS-privilege-icon icon-capacity-5t" title="5T超大空间"></a><a
-                            target="_blank" href="https://pan.baidu.com/buy/center?tag=4#question=vip-speed"
-                            class="JS-privilege-icon icon-download-speed-raising" title="极速下载"></a><a target="_blank"
-                                                                                                      href="https://pan.baidu.com/buy/center?tag=4#question=cloud-unzip"
-                                                                                                      class="JS-privilege-icon icon-cloud-unzip"
-                                                                                                      title="在线云解压"></a><a
-                            target="_blank" href="https://pan.baidu.com/buy/center?tag=4#question=save-files"
-                            class="JS-privilege-icon icon-file-limit-5000" title="一键转存50000文件"></a><a target="_blank"
-                                                                                                      href="https://pan.baidu.com/buy/center?tag=8&amp;from=cardmore"
-                                                                                                      class="JS-privilege-icon icon-know-more"
-                                                                                                      title="了解更多"></a></div><ul
-                            class="QgxQAN"><li class="cMEMEF"><a href="https://passport.baidu.com/center"
-                                                                 node-type="user-info-btn" target="_blank">个人资料</a></li><li
-                            class="cMEMEF password"><a href="https://pan.baidu.com/sbox/page/modifypwd"
-                                                       node-type="pwd-init-btn">修改二级密码</a></li><li class="cMEMEF"><a
-                            href="https://yun.baidu.com/disk/help" node-type="help-center-btn" target="_blank">帮助中心</a></li><li
-                            class="cMEMEF"><a href="javascript:;"
-                                              node-type="login-out">退出</a></li></ul></dd></dl></span><i
-                            class="Ebdyswb"></i><a href="http://pan.baidu.com/download" target="_blank"
-                                                   class="app-download" title="客户端下载">客户端下载</a><a
-                            href="https://pan.baidu.com/pcloud/msg" target="_blank"
-                            class="icon app-notice icon-notice app-notice app-icon" title="系统通知"><i
-                            class="app-notice-light" node-type="app-notice-light"></i></a><a
-                            href="http://help.baidu.com/newadd?prod_id=29&amp;category=2&amp;ptype=48" target="_blank"
-                            class="icon icon-feedback app-feedback app-icon" title="意见反馈"></a><a
-                            href="javascript:void(0);" target="_self" class="icon icon-theme app-theme app-icon"
-                            title="皮肤中心"><span class="newIcon"></span></a><a
-                            href="https://pan.baidu.com/buy/center?tag=8&amp;from=homepage" target="_blank"
-                            class="KQcHyA" title="会员中心">会员中心</a></dd>
-                    <dd class="gOIbzPb" node-type="header-union"><a
-                            href="https://yun.baidu.com/buy/center?tag=8&amp;from=wzl#/svip" target="_blank"
-                            class="BHgeMdb" title="超级会员 超低价">超级会员 超低价</a></dd>
-                </dl>
-            </div>
-        </div>
-    </div>
+
 </div>
 <script type="text/javascript">
     //TODO: 百度云首页 名字
@@ -1706,8 +1630,8 @@
 
 </div>
 <%--<div class="module-yun-tip red-yun-tips" style="top: 74px; left: 50%; margin-left: -66.5px;">--%>
-    <%--<div class="tip-inner"><span class="tip-icon icon icon-tips-caution"></span><span class="tip-msg">列表加载失败</span><span--%>
-            <%--class="tip-close tip-icon icon icon-tips-close"></span></div>--%>
+<%--<div class="tip-inner"><span class="tip-icon icon icon-tips-caution"></span><span class="tip-msg">列表加载失败</span><span--%>
+<%--class="tip-close tip-icon icon icon-tips-close"></span></div>--%>
 <%--</div>--%>
 <div class="dialog dialog-web-uploader   dialog-blue h5-uploader" id="web-uploader" style="width: 633px;">
     <div class="dialog-header"><h3><span class="dialog-header-title"><em class="select-text">文件上传</em></span></h3>
@@ -1722,7 +1646,7 @@
         <div class="tips" style="display: block;">
             <div class="resident-caution"><span class="caution-title">警告</span><span class="caution-text">严禁利用百度网盘上传、传播暴力恐怖、色情违法及其他违法信息，一经发现将严格按照相关法律法规处理。</span><em
                     class="arrow-outer"></em><em class="arrow-inner"></em></div>
-            <a class="g-button" href="javascript:void(0);"><span class="g-button-right">立即下载</span></a>
+            <a class="g-button" ><span class="g-button-right">立即下载</span></a>
             <div class="text"></div>
             <em class="close">×</em></div>
     </div>
@@ -1738,7 +1662,7 @@
             <div class="tips" style="display: block;">
                 <div class="resident-caution"><span class="caution-title">警告</span><span class="caution-text">严禁利用百度网盘上传、传播暴力恐怖、色情违法及其他违法信息，一经发现将严格按照相关法律法规处理。</span><em
                         class="arrow-outer"></em><em class="arrow-inner"></em></div>
-                <a class="g-button" href="javascript:void(0);"><span class="g-button-right">立即下载</span></a>
+                <a class="g-button"><span class="g-button-right">立即下载</span></a>
                 <div class="text"></div>
                 <em class="close">×</em></div>
             <div class="uploader-list">

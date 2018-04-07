@@ -39,7 +39,7 @@ public class FileController {
     @ResponseBody
     public Object fileList(HttpServletRequest request) {
 //        UserInfo userInfo = (UserInfo) request.getSession().getAttribute("userInfo");
-        List<Foleder> foleders = fileService.slectFolderByUserId(1L);
+        List<Foleder> foleders = fileService.slectFolderByUserId(2L);
         return foleders;
     }
 

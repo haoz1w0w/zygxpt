@@ -47,7 +47,6 @@ public class UserController {
     }
 
     @RequestMapping("/login")
-    @ResponseBody
     public Object login(@RequestParam(required = true) String account, @RequestParam(required = true) String password, HttpServletRequest httpServletRequest) {
         if (StringUtil.isEmpty(account) || StringUtil.isEmpty(password)) {
             return new BaseResult<String>("账号或密码不能为空", false);
@@ -57,6 +56,7 @@ public class UserController {
             if (serviceResult.getSuccess()) {
                 UserInfo userInfo = userService.selectUserInfoByAccount(account);
                 httpServletRequest.getSession().setAttribute("userInfo", userInfo);
+                return "/main/baiduyunmain";
             }
             return new BaseResult(serviceResult.getResult(), serviceResult.getSuccess());
         } catch (Exception e) {
