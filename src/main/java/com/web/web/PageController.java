@@ -15,7 +15,12 @@ public class PageController {
     @RequestMapping("/main")
     public String toBaiDuYunMain(){
 
-        return "/main/baiduyunmain";
+        return "/main/shouye";
+    }
+    @RequestMapping("/allSource")
+    public String allSource(){
+
+        return "/main/allsource";
     }
 
 }

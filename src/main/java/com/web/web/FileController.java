@@ -39,8 +39,13 @@ public class FileController {
     @ResponseBody
     public Object fileList(HttpServletRequest request) {
 //        UserInfo userInfo = (UserInfo) request.getSession().getAttribute("userInfo");
-        List<Foleder> foleders = fileService.slectFolderByUserId(1L);
-        return foleders;
+        List<Foleder> foleders = fileService.slectFolderByUserId(2l);
+        LayUiResponse layUiResponse = new LayUiResponse();
+        layUiResponse.setCode(0);
+        layUiResponse.setData(foleders);
+        layUiResponse.setCount(foleders.size());
+        layUiResponse.setMsg(" ");
+        return layUiResponse;
     }
 
     @RequestMapping("uploadFile")

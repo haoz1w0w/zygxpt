@@ -1506,8 +1506,8 @@
                                         <!--[if IE]>
                                         <iframe id="historyIFrameEmulator" style="display: none"></iframe><![endif]-->
                                         <div node-type="KPDwCE" class="KPDwCE" style="height: 773px;">
-                                            <div node-type="JDeHdxb" class="JDeHdxb"><span
-                                                    class="EgMMec">全部文件</span><span class="FcucHsb">已全部加载，共0个</span>
+                                            <div node-type="JDeHdxb" class="JDeHdxb"><s pan
+                                                    class="EgMMec">全部文件</span><span class="FcucHsb"></span>
                                                 <ul class="FuIxtL" node-type="FuIxtL" style="display: none;">
                                                     <li><a data-deep="-1" href="javascript:;">返回上一级</a><span
                                                             class="EKIHPEb">|</span></li>
@@ -1554,7 +1554,7 @@
                                                 <div node-type="NHcGw" class="NHcGw"
                                                      style="overflow-y: auto; height: 715px;">
                                                     <div class="vdAfKMb" style="height: auto;">
-                                                        <dd id="fileTemple" style="display: block;"
+                                                        <dd id="fileTemple" style="display: none;"
                                                             class="g-clearfix AuPKyz open-enable fileItem" _position="0"
                                                             _cmd_installed="1" _installed="1"><span node-type="EOGexf"
                                                                                                     class="EOGexf gxvMIQ"><span
