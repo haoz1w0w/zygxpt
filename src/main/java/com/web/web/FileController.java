@@ -61,7 +61,7 @@ public class FileController {
         }
         //上传之后将链接存入数据库
         if (folderId != null) {
-            ServiceResult<Boolean> file2 = fileService.createFile(file.getOriginalFilename(), url + file.getOriginalFilename(), folderId, userInfo.getId(), tagId);
+            ServiceResult<Boolean> file2 = fileService.createFile(file.getOriginalFilename(), url + file.getOriginalFilename(), folderId, 2l, tagId);
             if (file2.getSuccess()) {
                 return new BaseResult(file2.getMessage(), true);
             }
@@ -141,9 +141,7 @@ public class FileController {
     @RequestMapping("ResourceShare")
     @ResponseBody
     public Object ResourceShare(Long fileId, Integer type, String password) {
-
         ResourceShare resourceShare = new ResourceShare();
-
         if (type == 1) {
             //为自动生成密码 随机生成6位密码
             password = getStringRandom(6);
@@ -207,13 +205,13 @@ public class FileController {
         DiskFileItem fi = (DiskFileItem) cf.getFileItem();
         File file = fi.getStoreLocation();
         //手动创建临时文件
-        if (file.length() > 2048) {
+//        if (file.length() > 2048) {
             File tmpFile = new File(System.getProperty("java.io.tmpdir") + System.getProperty("file.separator") +
                     file.getName());
             multfile.transferTo(tmpFile);
             return tmpFile;
-        }
-        return file;
+//        }
+//        return file;
     }
     //    @RequestMapping("queryMyFile")
 

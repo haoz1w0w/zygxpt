@@ -66,13 +66,13 @@
         var table = layui.table,form = layui.form;;
         table.render({
             elem: '#tableLay'
-            ,url:'http://localhost:8080/file/fileList'
+            ,url:'http://localhost:8084/file/fileList'
             ,cellMinWidth: 80
             ,cols: [[
                  {type:'numbers'}
                 ,{type: 'checkbox'}
-                ,{field:'id', width:80, title: 'ID', sort: true}
-                ,{field:'folder_name', title:'文件名', templet: '#usernameTpl',edit: 'text'}
+                ,{field:'id', width:80, title: 'ID', sort: true, event: 'setSign'}
+                ,{field:'folder_name', title:'文件名', templet: '#usernameTpl'}
                 ,{field: 'gmt_create', title: '创建时间', templet: '<div>{{ layui.laytpl.toDateString(d.gmt_create) }}</div>'}
             ]]
             ,page: true
@@ -82,48 +82,59 @@
         table.on('checkbox(demo)', function(obj){
             console.log(obj)
         });
-        //监听单元格编辑
-        table.on('edit(demo)', function(obj){
-            var value = obj.value //得到修改后的值
-                ,data = obj.data //得到所在行所有键值
-                ,field = obj.field; //得到字段
-            layer.msg('[ID: '+ data.id +'] ' + field + ' 字段更改为：'+ value);
-            $.ajax({
-                url:"http://localhost:8080/file/fileList"
-
-            })
-        });
-        //监听工具条
+//        //监听单元格编辑
+//        table.on('edit(demo)', function(obj){
+//            var value = obj.value //得到修改后的值
+//                ,data = obj.data //得到所在行所有键值
+//                ,field = obj.field; //得到字段
+//            layer.msg('[ID: '+ data.id +'] ' + field + ' 字段更改为：'+ value);
+//            $.ajax({
+//                url:"http://localhost:8080/file/fileList"
+//
+//            })
+//        });
+//        //监听工具条
+//        table.on('tool(demo)', function(obj){
+//            var data = obj.data;
+//            if(obj.event === 'detail'){
+//                layer.msg('ID：'+ data.id + ' 的查看操作');
+//            } else if(obj.event === 'del'){
+//                layer.confirm('真的删除行么', function(index){
+//                    obj.del();
+//                    layer.close(index);
+//                });
+//            } else if(obj.event === 'edit'){
+//                layer.alert('编辑行：<br>'+ JSON.stringify(data))
+//            }
+//        });
+        //监听单元格事件
         table.on('tool(demo)', function(obj){
             var data = obj.data;
-            if(obj.event === 'detail'){
-                layer.msg('ID：'+ data.id + ' 的查看操作');
-            } else if(obj.event === 'del'){
-                layer.confirm('真的删除行么', function(index){
-                    obj.del();
-                    layer.close(index);
+            if(obj.event === 'setSign'){
+                table.reload('tableLay', {
+                    url: 'http://localhost:8084/file/queryFilesByFolder'
+                    ,where: {} //设定异步数据接口的额外参数
+                    //,height: 300
                 });
-            } else if(obj.event === 'edit'){
-                layer.alert('编辑行：<br>'+ JSON.stringify(data))
             }
         });
 
-        var $ = layui.$, active = {
-            getCheckData: function(){ //获取选中数据
-                var checkStatus = table.checkStatus('tableLay')
-                    ,data = checkStatus.data;
-                layer.alert(JSON.stringify(data));
-            }
-            ,getCheckLength: function(){ //获取选中数目
-                var checkStatus = table.checkStatus('tableLay')
-                    ,data = checkStatus.data;
-                layer.msg('选中了：'+ data.length + ' 个');
-            }
-            ,isAll: function(){ //验证是否全选
-                var checkStatus = table.checkStatus('tableLay');
-                layer.msg(checkStatus.isAll ? '全选': '未全选')
-            }
-        };
+//        var $ = layui.$, active = {
+//            getCheckData: function(){ //获取选中数据
+//                var checkStatus = table.checkStatus('tableLay')
+//                    ,data = checkStatus.data;
+//                layer.alert(JSON.stringify(data));
+//            }
+//            ,getCheckLength: function(){ //获取选中数目
+//                var checkStatus = table.checkStatus('tableLay')
+//                    ,data = checkStatus.data;
+//                layer.msg('选中了：'+ data.length + ' 个');
+//            }
+//            ,isAll: function(){ //验证是否全选
+//                var checkStatus = table.checkStatus('tableLay');
+//                layer.msg(checkStatus.isAll ? '全选': '未全选')
+//            }
+//        };
 
         $('.demoTable .layui-btn').on('click', function(){
             var type = $(this).data('type');
@@ -172,8 +183,9 @@
         //普通图片上传
         var uploadInst =  upload.render({
             elem: '#test1'
-            ,url: '/upload/'
+            ,url: 'http://localhost:8084/file/uploadFile'
             ,accept: 'file' //普通文件
+            ,data:{folderId:123}
             ,done: function(res){
                 console.log(res)
             }

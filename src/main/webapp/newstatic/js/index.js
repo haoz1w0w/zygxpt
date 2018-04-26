@@ -11,7 +11,7 @@ $(document).ready(function () {
 
     //引入全部资源页
     $('.all-source').click(function(){
-        $('.right-text').load('http://localhost:8080/allSource',function(){
+        $('.right-text').load('http://localhost:8084/allSource',function(){
 
         })
     });
