@@ -1,10 +1,7 @@
 package com.web.web;
 
 import com.web.dao.ResourceShareMapper;
-import com.web.po.FileDto;
-import com.web.po.Foleder;
-import com.web.po.ResourceShare;
-import com.web.po.UserInfo;
+import com.web.po.*;
 import com.web.service.FileService;
 import com.web.utils.*;
 import org.apache.commons.fileupload.disk.DiskFileItem;
@@ -37,15 +34,30 @@ public class FileController {
 
     @RequestMapping("fileList")
     @ResponseBody
-    public Object fileList(HttpServletRequest request) {
+    public Object fileList(HttpServletRequest request, Long folederId) {
 //        UserInfo userInfo = (UserInfo) request.getSession().getAttribute("userInfo");
-        List<Foleder> foleders = fileService.slectFolderByUserId(2l);
-        LayUiResponse layUiResponse = new LayUiResponse();
-        layUiResponse.setCode(0);
-        layUiResponse.setData(foleders);
-        layUiResponse.setCount(foleders.size());
-        layUiResponse.setMsg(" ");
-        return layUiResponse;
+        List<FilesDTO> list = new ArrayList<>();
+        if (folederId == null) {
+            List<Foleder> foleders = fileService.slectFolderByUserId(2l);
+            for (Foleder foleder : foleders) {
+                FilesDTO filesDTO = new FilesDTO();
+                filesDTO.setId(foleder.getId());
+                filesDTO.setFileName(foleder.getFolder_name());
+                filesDTO.setGmtCreate(foleder.getGmt_create());
+                filesDTO.setIsFile(1);
+            }else{
+
+            }
+            LayUiResponse layUiResponse = new LayUiResponse();
+            layUiResponse.setCode(0);
+            layUiResponse.setData(list);
+            layUiResponse.setCount(list.size());
+            layUiResponse.setMsg(" ");
+            return layUiResponse;
+        } else {
+
+        }
+        return null;
     }
 
     @RequestMapping("uploadFile")
@@ -126,7 +138,20 @@ public class FileController {
     @ResponseBody
     public Object queryFilesByFolder(Long folderId) {
         List<com.web.po.File> files = fileService.selectFilesByFolderId(folderId);
-        return new BaseResult(files, true);
+        List<Foleder> foleders = new ArrayList<>();
+        for (com.web.po.File file : files) {
+            Foleder foleder = new Foleder();
+            foleder.setFolder_name(file.getFile_name());
+            foleder.setId(file.getId());
+            foleder.setGmt_create(file.getGmt_create());
+            foleders.add(foleder);
+        }
+        LayUiResponse layUiResponse = new LayUiResponse();
+        layUiResponse.setCode(0);
+        layUiResponse.setData(foleders);
+        layUiResponse.setCount(foleders.size());
+        layUiResponse.setMsg(" ");
+        return layUiResponse;
     }
 
     @RequestMapping("folderEncryption")
@@ -206,10 +231,10 @@ public class FileController {
         File file = fi.getStoreLocation();
         //手动创建临时文件
 //        if (file.length() > 2048) {
-            File tmpFile = new File(System.getProperty("java.io.tmpdir") + System.getProperty("file.separator") +
-                    file.getName());
-            multfile.transferTo(tmpFile);
-            return tmpFile;
+        File tmpFile = new File(System.getProperty("java.io.tmpdir") + System.getProperty("file.separator") +
+                file.getName());
+        multfile.transferTo(tmpFile);
+        return tmpFile;
 //        }
 //        return file;
     }

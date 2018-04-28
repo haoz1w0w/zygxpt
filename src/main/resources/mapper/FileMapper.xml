@@ -150,6 +150,6 @@
         select * from file where file_name=#{fileName}
     </select>
     <select id="selectFilesByFolrderId" parameterType="java.lang.Long" resultType="com.web.po.File" >
-        select * from file where folder_if=#{folderId}
+        select * from file where folder_id=#{folderId}
     </select>
 </mapper>
