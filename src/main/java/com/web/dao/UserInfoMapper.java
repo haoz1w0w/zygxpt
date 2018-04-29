@@ -2,6 +2,8 @@ package com.web.dao;
 
 import com.web.po.UserInfo;
 
+import java.util.List;
+
 public interface UserInfoMapper {
     int deleteByPrimaryKey(Long id);
 
@@ -16,4 +18,6 @@ public interface UserInfoMapper {
     int updateByPrimaryKey(UserInfo record);
 
     UserInfo selectUserInfoByAccount(String account);
+
+    List<UserInfo> findTeacherList();
 }

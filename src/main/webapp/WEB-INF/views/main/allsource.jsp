@@ -22,15 +22,6 @@
 <body class="layui-bg-green">
 
 
-<div class="layui-btn-group demoTable">
-    <button class="layui-btn" data-type="getCheckData">获取选中行数据</button>
-    <button class="layui-btn" data-type="getCheckLength">获取选中数目</button>
-    <button class="layui-btn" data-type="isAll">验证是否全选</button>
-    <button type="button" class="layui-btn" id="test1">
-        <i class="layui-icon">&#xe67c;</i>上传图片
-    </button>
-</div>
-
 <table class="layui-table" id="tableLay" lay-filter="demo">
     <%--<thead>--%>
     <%--<tr>--%>

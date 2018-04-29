@@ -156,4 +156,7 @@
       college = #{college,jdbcType=VARCHAR}
     where id = #{id,jdbcType=BIGINT}
   </update>
+    <select id="findTeacherList" resultMap="BaseResultMap">
+        SELECT * from user_info where role = 2 ORDER BY gmt_create
+    </select>
 </mapper>

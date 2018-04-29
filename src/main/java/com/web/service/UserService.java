@@ -3,6 +3,8 @@ package com.web.service;
 import com.web.po.UserInfo;
 import com.web.utils.ServiceResult;
 
+import java.util.List;
+
 public interface UserService {
     public ServiceResult<Boolean> registerUserInfo(UserInfo userInfo);
 
@@ -14,4 +16,5 @@ public interface UserService {
 
     public UserInfo selectUserInfoByAccount(String account);
 
+    public List<UserInfo> findTeacherList();
 }
