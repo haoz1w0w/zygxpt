@@ -53,9 +53,8 @@
 
 <script type="text/html" id="barDemo">
     <a class="layui-btn layui-btn-primary layui-btn-xs" lay-event="detail">查看</a>
-    <a class="layui-btn layui-btn-xs" lay-event="edit">编辑</a>
-    <a class="layui-btn layui-btn-danger layui-btn-xs" lay-event="del">删除</a>
-
+    <a class="layui-btn layui-btn-xs" lay-event="edit">下载</a>
+    <a class="layui-btn layui-btn-danger layui-btn-xs" lay-event="del">分享</a>
 </script>
 
 
@@ -67,12 +66,11 @@
         ;
         table.render({
             elem: '#tableLay'
-            , url: 'http://localhost:8084/file/fileList'
+            , url: 'http://localhost:8080/file/fileList'
             , cellMinWidth: 80
             , cols: [[
-                 {type: 'checkbox'}
-                , {field: 'id', width: 80, title: 'ID', sort: true, event: 'setSign'}
-                , {field: 'fileName', title: '文件名', templet: '#usernameTpl'}
+                {field: 'pic', title: '类型', width: 150,templet:'<div><img src="https://test-1256150574.cos.ap-beijing.myqcloud.com/%E6%96%87%E4%BB%B6%E5%A4%B9%20(2).png"></div>'}
+                , {field: 'fileName', title: '文件名', templet: '#usernameTpl',event: 'setSign'}
                 , {
                     field: 'gmtCreate',
                     title: '创建时间',
@@ -97,49 +95,64 @@
 //
 //            })
 //        });
-        //监听工具条
-        table.on('tool(demo)', function(obj){
-            var data = obj.data;
-            if(obj.event === 'detail'){
-                layer.msg('ID：'+ data.id + ' 的查看操作');
-            } else if(obj.event === 'del'){
-                layer.confirm('真的删除行么', function(index){
-                    obj.del();
-                    layer.close(index);
-                });
-            } else if(obj.event === 'edit'){
-                layer.alert('编辑行：<br>'+ JSON.stringify(data))
-            }
-        });
+
         //监听单元格事件
-        //监听单元格事件
-        table.on('tool(demo)', function(obj){
+        table.on('tool(demo)', function (obj) {
             var data = obj.data;
-            if(obj.event === 'setSign'){
-               if(data.isFile==1){
-                   table.reload('tableLay', {
-                       url: 'http://localhost:8084/file/queryFilesByFolder'
-                       ,where: {folderId:data.id} //设定异步数据接口的额外参数
-                       //,height: 300
-                   });
-               }
+            if (obj.event === 'setSign') {
+                if (data.isFile == 1) {
+                    table.render({
+                        elem: '#tableLay'
+                        , url: 'http://localhost:8080/file/fileList'
+                        , cellMinWidth: 80
+                        , cols: [[
+                            {type: 'checkbox'},
+                            {field: 'pic', title: '类型', width: 150,templet:'<div><img src="https://test-1256150574.cos.ap-beijing.myqcloud.com/%E6%96%87%E4%BB%B6.png"></div>'}
+                            , {field: 'fileName', title: '文件名', templet: '#usernameTpl'}
+                            , {
+                                field: 'gmtCreate',
+                                title: '创建时间',
+                                templet: '<div>{{ layui.laytpl.toDateString(d.gmtCreate) }}</div>'
+                            }
+                            , {
+                                fixed: 'right', width: 178, align: 'center', toolbar: '#barDemo'
+                            }
+                        ]]
+                        , page: true
+                        , where: {folederId: data.id}
+                    });
+                    //监听工具条
+                    table.on('tool(demo)', function (obj) {
+                        var data = obj.data;
+                        if (obj.event === 'detail') {
+                            layer.msg('ID：' + data.id + ' 的查看操作');
+                        } else if (obj.event === 'del') {
+                            layer.confirm('分享', function (index) {
+                                obj.del();
+                                layer.close(index);
+                            });
+                        } else if (obj.event === 'edit') {
+                            window.location.href=data.url;
+                        }
+                    });
+                }
             }
         });
 
         var $ = layui.$, active = {
-            getCheckData: function(){ //获取选中数据
+            getCheckData: function () { //获取选中数据
                 var checkStatus = table.checkStatus('tableLay')
-                    ,data = checkStatus.data;
+                    , data = checkStatus.data;
                 layer.alert(JSON.stringify(data));
             }
-            ,getCheckLength: function(){ //获取选中数目
+            , getCheckLength: function () { //获取选中数目
                 var checkStatus = table.checkStatus('tableLay')
-                    ,data = checkStatus.data;
-                layer.msg('选中了：'+ data.length + ' 个');
+                    , data = checkStatus.data;
+                layer.msg('选中了：' + data.length + ' 个');
             }
-            ,isAll: function(){ //验证是否全选
+            , isAll: function () { //验证是否全选
                 var checkStatus = table.checkStatus('tableLay');
-                layer.msg(checkStatus.isAll ? '全选': '未全选')
+                layer.msg(checkStatus.isAll ? '全选' : '未全选')
             }
         };
 
@@ -190,7 +203,7 @@
         //普通图片上传
         var uploadInst = upload.render({
             elem: '#test1'
-            , url: 'http://localhost:8084/file/uploadFile'
+            , url: 'http://localhost:8080/file/uploadFile'
             , accept: 'file' //普通文件
             , data: {folderId: 123}
             , done: function (res) {
@@ -200,6 +213,12 @@
     });
 
 </script>
+<style type="text/css">.layui-table-fixed-r td{height:58px!important;}
+.laytable-cell-1-pic{  /*最后的pic为字段的field*/
+    height: 100%;
+    max-width: 100%;
+}
 
+</style>
 </body>
 </html>

@@ -55,6 +55,7 @@ public class FileController {
                 filesDTO.setFileName(file.getFile_name());
                 filesDTO.setGmtCreate(file.getGmt_create());
                 filesDTO.setIsFile(1);
+                filesDTO.setUrl(file.getFile_url());
                 list.add(filesDTO);
             }
         }
@@ -65,6 +66,7 @@ public class FileController {
         layUiResponse.setMsg(" ");
         return layUiResponse;
     }
+
     @RequestMapping("uploadFile")
     @ResponseBody
     public Object uploadFile(MultipartFile file, Long folderId, HttpServletRequest request, Integer tagId) {

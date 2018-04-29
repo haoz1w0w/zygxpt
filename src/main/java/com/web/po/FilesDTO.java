@@ -11,6 +11,7 @@ public class FilesDTO implements Serializable {
     private String fileName;
     private Date gmtCreate;
     private Integer isFile;
+    private String url;
 
     public Long getId() {
         return id;
@@ -42,5 +43,13 @@ public class FilesDTO implements Serializable {
 
     public void setIsFile(Integer isFile) {
         this.isFile = isFile;
+    }
+
+    public String getUrl() {
+        return url;
+    }
+
+    public void setUrl(String url) {
+        this.url = url;
     }
 }
