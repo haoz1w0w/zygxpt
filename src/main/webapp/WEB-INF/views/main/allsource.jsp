@@ -116,12 +116,13 @@
         table.on('tool(demo)', function(obj){
             var data = obj.data;
             if(obj.event === 'setSign'){
-
-                table.reload('tableLay', {
-                    url: 'http://localhost:8084/file/queryFilesByFolder'
-                    ,where: {folderId:data.id} //设定异步数据接口的额外参数
-                    //,height: 300
-                });
+               if(data.isFile==1){
+                   table.reload('tableLay', {
+                       url: 'http://localhost:8084/file/queryFilesByFolder'
+                       ,where: {folderId:data.id} //设定异步数据接口的额外参数
+                       //,height: 300
+                   });
+               }
             }
         });
 
