@@ -72,11 +72,11 @@
             , cols: [[
                  {type: 'checkbox'}
                 , {field: 'id', width: 80, title: 'ID', sort: true, event: 'setSign'}
-                , {field: 'folder_name', title: '文件名', templet: '#usernameTpl'}
+                , {field: 'fileName', title: '文件名', templet: '#usernameTpl'}
                 , {
-                    field: 'gmt_create',
+                    field: 'gmtCreate',
                     title: '创建时间',
-                    templet: '<div>{{ layui.laytpl.toDateString(d.gmt_create) }}</div>'
+                    templet: '<div>{{ layui.laytpl.toDateString(d.gmtCreate) }}</div>'
                 }
             ]]
             , page: true

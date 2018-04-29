@@ -45,21 +45,26 @@ public class FileController {
                 filesDTO.setFileName(foleder.getFolder_name());
                 filesDTO.setGmtCreate(foleder.getGmt_create());
                 filesDTO.setIsFile(1);
-            }else{
-
+                list.add(filesDTO);
             }
-            LayUiResponse layUiResponse = new LayUiResponse();
-            layUiResponse.setCode(0);
-            layUiResponse.setData(list);
-            layUiResponse.setCount(list.size());
-            layUiResponse.setMsg(" ");
-            return layUiResponse;
         } else {
-
+            List<com.web.po.File> files = fileService.selectFilesByFolderId(folederId);
+            for (com.web.po.File file : files) {
+                FilesDTO filesDTO = new FilesDTO();
+                filesDTO.setId(file.getId());
+                filesDTO.setFileName(file.getFile_name());
+                filesDTO.setGmtCreate(file.getGmt_create());
+                filesDTO.setIsFile(1);
+                list.add(filesDTO);
+            }
         }
-        return null;
+        LayUiResponse layUiResponse = new LayUiResponse();
+        layUiResponse.setCode(0);
+        layUiResponse.setData(list);
+        layUiResponse.setCount(list.size());
+        layUiResponse.setMsg(" ");
+        return layUiResponse;
     }
-
     @RequestMapping("uploadFile")
     @ResponseBody
     public Object uploadFile(MultipartFile file, Long folderId, HttpServletRequest request, Integer tagId) {
