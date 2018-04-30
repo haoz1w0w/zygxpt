@@ -25,26 +25,11 @@
     <button type="button" class="layui-btn" id="test1"style="display: none">
         <i class="layui-icon">&#xe67c;</i>上传图片
     </button>
-    <input type="hidden" name="field＿name" value="" id="flId">
+    <input type="hidden" id="flId" value="10">
 </div>
-<table class="layui-table" id="tableLay" lay-filter="demo">
-    <%--<thead>--%>
-    <%--<tr>--%>
-    <%--&lt;%&ndash;<th lay-data="{type:'checkbox', fixed: 'right',align :'center'}"></th>&ndash;%&gt;--%>
-    <%--&lt;%&ndash;<th lay-data=""></th>&ndash;%&gt;--%>
-    <%--&lt;%&ndash;<th lay-data="{type:field:'id', width:200, sort: true, fixed: true,height:100,}">ID</th>&ndash;%&gt;--%>
-    <%--<th lay-data="{field:'folder_name', width:400,height:100}">文件名</th>--%>
-    <%--&lt;%&ndash;<th lay-data="{field:'gmt_create', width:80, sort: true,templet: '#createTime'}}">创建时间</th>&ndash;%&gt;--%>
-    <%--<th lay-data="{field:'city', width:400}">上次修改时间</th>--%>
-    <%--&lt;%&ndash;<th lay-data="{field:'sign', width:200}">签名</th>&ndash;%&gt;--%>
-    <%--&lt;%&ndash;<th lay-data="{field:'experience', width:80, sort: true}">积分</th>&ndash;%&gt;--%>
 
-    <%--&lt;%&ndash;<th lay-data="{field:'classify', width:80}">职业</th>&ndash;%&gt;--%>
-    <%--&lt;%&ndash;<th lay-data="{field:'wealth', width:135, sort: true}">财富</th>&ndash;%&gt;--%>
-    <%--&lt;%&ndash;<th lay-data="{field:'score', width:80, sort: true, fixed: 'right'}">评分</th>&ndash;%&gt;--%>
-    <%--&lt;%&ndash;<th lay-data="{fixed: 'right', width:178, align:'center', toolbar: '#barDemo'}"></th>&ndash;%&gt;--%>
-    <%--</tr>--%>
-    <%--</thead>--%>
+
+<table class="layui-table" id="tableLay" lay-filter="demo">
 </table>
 
 <script type="text/html" id="barDemo">
@@ -59,7 +44,6 @@
 <script>
     layui.use('table', function () {
         var table = layui.table, form = layui.form;
-        ;
         table.render({
             elem: '#tableLay'
             , url: 'http://localhost:8080/file/fileList'
@@ -175,6 +159,7 @@
                         }
                     });
                 }
+
             }
         });
 
@@ -238,26 +223,26 @@
             }
             return num < Math.pow(10, length) ? str + (num | 0) : num;
         };
-
-    });
-    layui.use('upload', function () {
-        var upload = layui.upload;
-        //执行实例
-        var uploadInst = upload.render({
-            elem: '#test1' //绑定元素
-            , url: 'http://localhost:8080/file/uploadFile' //上传接口
-            , done: function (res) {
-                //上传完毕回调
-            }
-            , error: function () {
-                //请求异常回调
-            }
-            , accept: 'file'
-            ,data: {
-                folderId: $("#flId").val()
-            }
+        layui.use('upload', function () {
+            var upload = layui.upload;
+            //执行实例
+            var uploadInst = upload.render({
+                elem: '#test1' //绑定元素
+                , url: 'http://localhost:8080/file/uploadFile' //上传接口
+                , done: function (res) {
+                    //上传完毕回调
+                }
+                , error: function () {
+                    //请求异常回调
+                }
+                , accept: 'file'
+                ,data: {
+                    folderId: $("#flId").val()
+                }
+            });
         });
     });
+
 
 </script>
 <style type="text/css">.layui-table-fixed-r td {
