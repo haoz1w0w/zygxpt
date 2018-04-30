@@ -21,7 +21,12 @@
 </head>
 <body class="layui-bg-green">
 
-
+<div class="layui-btn-group demoTable">
+    <button type="button" class="layui-btn" id="test1"style="display: none">
+        <i class="layui-icon">&#xe67c;</i>上传图片
+    </button>
+    <input type="hidden" name="field＿name" value="" id="flId">
+</div>
 <table class="layui-table" id="tableLay" lay-filter="demo">
     <%--<thead>--%>
     <%--<tr>--%>
@@ -58,10 +63,24 @@
         table.render({
             elem: '#tableLay'
             , url: 'http://localhost:8080/file/fileList'
+            ,response: {
+                statusName: 'code' //数据状态的字段名称，默认：code
+                ,statusCode: 0 //成功的状态码，默认：0
+                ,msgName: 'msg' //状态信息的字段名称，默认：msg
+                ,countName: 'count' //数据总数的字段名称，默认：count
+                ,dataName: 'data' //数据列表的字段名称，默认：data
+                ,folederId:1
+            }
             , cellMinWidth: 80
             , cols: [[
-                {field: 'pic', title: '类型', width: 150,templet:'<div><img src="https://test-1256150574.cos.ap-beijing.myqcloud.com/%E6%96%87%E4%BB%B6%E5%A4%B9%20(2).png"></div>'}
-                , {field: 'fileName', title: '文件名', templet: '#usernameTpl',event: 'setSign'}
+                {type: 'checkbox'},
+                {
+                    field: 'pic',
+                    title: '类型',
+                    width: 150,
+                    templet: '<div><img src="https://test-1256150574.cos.ap-beijing.myqcloud.com/%E6%96%87%E4%BB%B6%E5%A4%B9%20(2).png"></div>'
+                }
+                , {field: 'fileName', title: '文件名', templet: '#usernameTpl', event: 'setSign'}
                 , {
                     field: 'gmtCreate',
                     title: '创建时间',
@@ -69,11 +88,12 @@
                 }
             ]]
             , page: true
+
         });
 
         //监听表格复选框选择
         table.on('checkbox(demo)', function (obj) {
-            console.log(obj)
+
         });
 //        //监听单元格编辑
 //        table.on('edit(demo)', function(obj){
@@ -92,13 +112,27 @@
             var data = obj.data;
             if (obj.event === 'setSign') {
                 if (data.isFile == 1) {
+                    $("#test1").css("display","block");
                     table.render({
                         elem: '#tableLay'
                         , url: 'http://localhost:8080/file/fileList'
+                        ,response: {
+                            statusName: 'code' //数据状态的字段名称，默认：code
+                            ,statusCode: 0 //成功的状态码，默认：0
+                            ,msgName: 'msg' //状态信息的字段名称，默认：msg
+                            ,countName: 'count' //数据总数的字段名称，默认：count
+                            ,dataName: 'data' //数据列表的字段名称，默认：data
+                            ,folederId:1
+                        }
                         , cellMinWidth: 80
                         , cols: [[
                             {type: 'checkbox'},
-                            {field: 'pic', title: '类型', width: 150,templet:'<div><img src="https://test-1256150574.cos.ap-beijing.myqcloud.com/%E6%96%87%E4%BB%B6.png"></div>'}
+                            {
+                                field: 'pic',
+                                title: '类型',
+                                width: 150,
+                                templet: '<div><img src="https://test-1256150574.cos.ap-beijing.myqcloud.com/%E6%96%87%E4%BB%B6.png"></div>'
+                            }
                             , {field: 'fileName', title: '文件名', templet: '#usernameTpl'}
                             , {
                                 field: 'gmtCreate',
@@ -111,6 +145,16 @@
                         ]]
                         , page: true
                         , where: {folederId: data.id}
+                        ,done: function(res, curr, count) {
+                            //如果是异步请求数据方式，res即为你接口返回的信息。
+                            //如果是直接赋值的方式，res即为：{data: [], count: 99} data为当前页数据、count为数据总长度
+                            console.log(res.folederId);
+                            //得到当前页码
+                            console.log(curr);
+                            //得到数据总量
+                            console.log(count);
+                            $("#flId").val(res.folederId);
+                        }
                     });
                     //监听工具条
                     table.on('tool(demo)', function (obj) {
@@ -118,12 +162,16 @@
                         if (obj.event === 'detail') {
                             layer.msg('ID：' + data.id + ' 的查看操作');
                         } else if (obj.event === 'del') {
-                            layer.confirm('分享', function (index) {
-                                obj.del();
-                                layer.close(index);
+                            layer.open({
+                                type: 2,
+                                title: '分享',
+                                shadeClose: true,
+                                shade: 0.8,
+                                area: ['380px', '90%'],
+                                content: 'http://localhost:8080/fenxiang?id=' + data.id //iframe的url
                             });
                         } else if (obj.event === 'edit') {
-                            window.location.href=data.url;
+                            window.location.href = data.url;
                         }
                     });
                 }
@@ -131,9 +179,14 @@
         });
 
         var $ = layui.$, active = {
-            getCheckData: function () { //获取选中数据
+            getCheckData: function () { //上传文件
                 var checkStatus = table.checkStatus('tableLay')
                     , data = checkStatus.data;
+                if (data.length > 1 || data.length < 1) {
+                    layer.alert("必须选择至多一个");
+                    return;
+                }
+
                 layer.alert(JSON.stringify(data));
             }
             , getCheckLength: function () { //获取选中数目
@@ -187,25 +240,31 @@
         };
 
     });
-
     layui.use('upload', function () {
-        var $ = layui.jquery
-            , upload = layui.upload;
-        //普通图片上传
+        var upload = layui.upload;
+        //执行实例
         var uploadInst = upload.render({
-            elem: '#test1'
-            , url: 'http://localhost:8080/file/uploadFile'
-            , accept: 'file' //普通文件
-            , data: {folderId: 123}
+            elem: '#test1' //绑定元素
+            , url: 'http://localhost:8080/file/uploadFile' //上传接口
             , done: function (res) {
-                console.log(res)
+                //上传完毕回调
+            }
+            , error: function () {
+                //请求异常回调
+            }
+            , accept: 'file'
+            ,data: {
+                folderId: $("#flId").val()
             }
         });
     });
 
 </script>
-<style type="text/css">.layui-table-fixed-r td{height:58px!important;}
-.laytable-cell-1-pic{  /*最后的pic为字段的field*/
+<style type="text/css">.layui-table-fixed-r td {
+    height: 58px !important;
+}
+
+.laytable-cell-1-pic { /*最后的pic为字段的field*/
     height: 100%;
     max-width: 100%;
 }

@@ -8,6 +8,7 @@ public class LayUiResponse<T> implements Serializable {
     private String msg;
     private Integer count;
     private List<T> data;
+    private Long folederId;
 
     public Integer getCode() {
         return code;
@@ -39,5 +40,13 @@ public class LayUiResponse<T> implements Serializable {
 
     public void setData(List<T> data) {
         this.data = data;
+    }
+
+    public Long getFolederId() {
+        return folederId;
+    }
+
+    public void setFolederId(Long folederId) {
+        this.folederId = folederId;
     }
 }

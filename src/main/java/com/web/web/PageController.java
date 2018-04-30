@@ -22,5 +22,11 @@ public class PageController {
 
         return "/main/allsource";
     }
+    @RequestMapping("/fenxiang")
+    public String fenxiang(){
+
+
+        return "/main/fenxiang";
+    }
 
 }

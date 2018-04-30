@@ -52,4 +52,6 @@ public class FilesDTO implements Serializable {
     public void setUrl(String url) {
         this.url = url;
     }
+
+
 }
