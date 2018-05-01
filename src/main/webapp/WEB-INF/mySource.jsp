@@ -20,6 +20,11 @@
     <!-- 注意：如果你直接复制所有代码到本地，上述css路径需要改成你本地的 -->
 </head>
 <body>
+<div class="layui-btn-group demoTable" style="display: none" id="contr">
+    <button class="layui-btn" data-type="getCheckData">获取选中行数据</button>
+    <button class="layui-btn" data-type="getCheckLength">获取选中数目</button>
+    <button class="layui-btn" data-type="isAll">验证是否全选</button>
+</div>
 <table class="layui-table" id="tableLay" lay-filter="demo">
 </table>
 
@@ -33,6 +38,7 @@
 <!-- 注意：如果你直接复制所有代码到本地，上述js路径需要改成你本地的 -->
 <script>
     layui.use('table', function () {
+        var $ = layui.$;
         var table = layui.table, form = layui.form;
 
         table.render({
@@ -69,6 +75,7 @@
 
         //监听表格复选框选择
         table.on('checkbox(demo)', function (obj) {
+            layer.alert(JSON.stringify(obj.data));
 
         });
 //        //监听单元格编辑
@@ -89,6 +96,7 @@
                 if (data.isFile == 1) {
                     console.log("sadasdsa");
                     $("#test1").css("display", "block");
+                    $("#contr").css("display","block");
                     table.render({
                         elem: '#tableLay'
                         , url: 'file/fileList'
@@ -153,31 +161,33 @@
                             window.location.href = data.url;
                         }
                     });
+                    active = {
+                        getCheckData: function () { //上传文件
+                            var checkStatus = table.checkStatus('tableLay')
+                                , data = checkStatus.data;
+                            layer.alert(JSON.stringify(data));
+                            if (data.length > 1 || data.length < 1) {
+                                layer.alert("必须选择至多一个");
+                                return;
+                            }
+                            layer.alert(JSON.stringify(data));
+                        }
+                        , getCheckLength: function () { //获取选中数目
+                            var checkStatus = table.checkStatus('tableLay')
+                                , data = checkStatus.data;
+                            layer.msg('选中了：' + data.length + ' 个');
+                        }
+                        , isAll: function () { //验证是否全选
+                            var checkStatus = table.checkStatus('tableLay');
+                            layer.msg(checkStatus.isAll ? '全选' : '未全选')
+                        }
+                    };
                 }
             }
 
 
         });
-        var $ = layui.$, active = {
-            getCheckData: function () { //上传文件
-                var checkStatus = table.checkStatus('tableLay')
-                    , data = checkStatus.data;
-                if (data.length > 1 || data.length < 1) {
-                    layer.alert("必须选择至多一个");
-                    return;
-                }
-                layer.alert(JSON.stringify(data));
-            }
-            , getCheckLength: function () { //获取选中数目
-                var checkStatus = table.checkStatus('tableLay')
-                    , data = checkStatus.data;
-                layer.msg('选中了：' + data.length + ' 个');
-            }
-            , isAll: function () { //验证是否全选
-                var checkStatus = table.checkStatus('tableLay');
-                layer.msg(checkStatus.isAll ? '全选' : '未全选')
-            }
-        };
+
         $('.demoTable .layui-btn').on('click', function () {
             var type = $(this).data('type');
             active[type] ? active[type].call(this) : '';

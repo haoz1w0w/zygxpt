@@ -40,6 +40,9 @@ public class FileController {
         if (folederId == null) {
             List<Foleder> foleders = fileService.selectAllFoleder();
             for (Foleder foleder : foleders) {
+                if (!StringUtil.isEmpty(foleder.getFolder_password())) {
+                    continue;
+                }
                 FilesDTO filesDTO = new FilesDTO();
                 filesDTO.setId(foleder.getId());
                 filesDTO.setFileName(foleder.getFolder_name());
