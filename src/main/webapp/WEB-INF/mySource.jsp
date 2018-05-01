@@ -81,16 +81,17 @@
 //                url:"http://localhost:8080/file/fileList"
 //
 //            })
-//        });
+//        });5
         //监听单元格事件
         table.on('tool(demo)', function (obj) {
             var data = obj.data;
             if (obj.event === 'setSign') {
                 if (data.isFile == 1) {
+                    console.log("sadasdsa");
                     $("#test1").css("display", "block");
                     table.render({
                         elem: '#tableLay'
-                        , url: 'http://localhost:8080/file/fileList'
+                        , url: 'file/fileList'
                         , response: {
                             statusName: 'code' //数据状态的字段名称，默认：code
                             , statusCode: 0 //成功的状态码，默认：0
@@ -100,6 +101,7 @@
                             , folederId: 1
                         }
                         , cellMinWidth: 80
+                        ,cellMinHeight:400
                         , cols: [[
                             {checkbox: 'true'},
                             {
@@ -153,6 +155,8 @@
                     });
                 }
             }
+
+
         });
         var $ = layui.$, active = {
             getCheckData: function () { //上传文件

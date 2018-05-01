@@ -24,5 +24,7 @@ public interface FileMapper {
 
     List<File> selectFilesByFolrderId(Long folderId);
 
+    List<File> findFilesByTag(Long tagId);
+
 
 }

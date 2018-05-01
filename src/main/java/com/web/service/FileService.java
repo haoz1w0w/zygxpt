@@ -2,6 +2,7 @@ package com.web.service;
 
 import com.web.po.File;
 import com.web.po.Foleder;
+import com.web.po.Tag;
 import com.web.utils.ServiceResult;
 
 import java.util.List;
@@ -37,4 +38,7 @@ public interface FileService {
 
     public List<Foleder> selectAllFoleder();
 
+    public List<File> findSubjectFiles(Long tagId);
+
+    public List<Tag> findAllTag();
 }

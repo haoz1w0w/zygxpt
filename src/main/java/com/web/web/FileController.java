@@ -54,7 +54,7 @@ public class FileController {
                 filesDTO.setId(file.getId());
                 filesDTO.setFileName(file.getFile_name());
                 filesDTO.setGmtCreate(file.getGmt_create());
-                filesDTO.setIsFile(1);
+                filesDTO.setIsFile(2);
                 filesDTO.setUrl(file.getFile_url());
                 list.add(filesDTO);
             }
@@ -67,31 +67,33 @@ public class FileController {
         layUiResponse.setFolederId(5l);
         return layUiResponse;
     }
-   @RequestMapping("findMyfile")
-   @ResponseBody
-   public Object findMyFile(HttpServletRequest request){
+
+    @RequestMapping("findMyfile")
+    @ResponseBody
+    public Object findMyFile(HttpServletRequest request) {
 //        UserInfo userInfo = (UserInfo) request.getSession().getAttribute("userInfo");
-       List<FilesDTO> list = new ArrayList<>();
-           List<Foleder> foleders = fileService.slectFolderByUserId(2l);
-           for (Foleder foleder : foleders) {
-               FilesDTO filesDTO = new FilesDTO();
-               filesDTO.setId(foleder.getId());
-               filesDTO.setFileName(foleder.getFolder_name());
-               filesDTO.setGmtCreate(foleder.getGmt_create());
-               filesDTO.setIsFile(1);
-               list.add(filesDTO);
-           }
-       LayUiResponse layUiResponse = new LayUiResponse();
-       layUiResponse.setCode(0);
-       layUiResponse.setData(list);
-       layUiResponse.setCount(list.size());
-       layUiResponse.setMsg(" ");
-       layUiResponse.setFolederId(5l);
-       return layUiResponse;
-   }
+        List<FilesDTO> list = new ArrayList<>();
+        List<Foleder> foleders = fileService.slectFolderByUserId(2l);
+        for (Foleder foleder : foleders) {
+            FilesDTO filesDTO = new FilesDTO();
+            filesDTO.setId(foleder.getId());
+            filesDTO.setFileName(foleder.getFolder_name());
+            filesDTO.setGmtCreate(foleder.getGmt_create());
+            filesDTO.setIsFile(1);
+            list.add(filesDTO);
+        }
+        LayUiResponse layUiResponse = new LayUiResponse();
+        layUiResponse.setCode(0);
+        layUiResponse.setData(list);
+        layUiResponse.setCount(list.size());
+        layUiResponse.setMsg(" ");
+        layUiResponse.setFolederId(5l);
+        return layUiResponse;
+    }
+
     @RequestMapping("findUserFile")
     @ResponseBody
-    public Object findUserFile(HttpServletRequest request,Long userId){
+    public Object findUserFile(HttpServletRequest request, Long userId) {
 //        UserInfo userInfo = (UserInfo) request.getSession().getAttribute("userInfo");
         List<FilesDTO> list = new ArrayList<>();
         List<Foleder> foleders = fileService.slectFolderByUserId(userId);
@@ -112,6 +114,37 @@ public class FileController {
         layUiResponse.setFolederId(5l);
         return layUiResponse;
     }
+
+    @RequestMapping("findSubjectFiles")
+    @ResponseBody
+    public Object findSubjectFiles(HttpServletRequest request, Long tagId) {
+//        UserInfo userInfo = (UserInfo) request.getSession().getAttribute("userInfo");
+        List<FilesDTO> list = new ArrayList<>();
+        List<com.web.po.File> files = fileService.findSubjectFiles(tagId);
+        for (com.web.po.File file : files) {
+            FilesDTO filesDTO = new FilesDTO();
+            filesDTO.setId(file.getId());
+            filesDTO.setFileName(file.getFile_name());
+            filesDTO.setGmtCreate(file.getGmt_create());
+            filesDTO.setIsFile(2);
+            list.add(filesDTO);
+        }
+        LayUiResponse layUiResponse = new LayUiResponse();
+        layUiResponse.setCode(0);
+        layUiResponse.setData(list);
+        layUiResponse.setCount(list.size());
+        layUiResponse.setMsg(" ");
+        return layUiResponse;
+    }
+
+    @RequestMapping("getAllTag")
+    @ResponseBody
+    public Object getAllTag(HttpServletRequest request) {
+//        UserInfo userInfo = (UserInfo) request.getSession().getAttribute("userInfo");
+        List<Tag> allTag = fileService.findAllTag();
+        return allTag;
+    }
+
     @RequestMapping("uploadFile")
     @ResponseBody
     public Object uploadFile(MultipartFile file, Long folderId, HttpServletRequest request, Integer tagId) {

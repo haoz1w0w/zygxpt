@@ -55,4 +55,7 @@
     set tag_name = #{tag_name,jdbcType=VARCHAR}
     where id = #{id,jdbcType=INTEGER}
   </update>
+  <select id="findTagList" resultType="com.web.po.Tag">
+    select * from tag order BY id desc
+  </select>
 </mapper>

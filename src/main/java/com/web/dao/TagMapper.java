@@ -2,6 +2,8 @@ package com.web.dao;
 
 import com.web.po.Tag;
 
+import java.util.List;
+
 public interface TagMapper {
     int deleteByPrimaryKey(Integer id);
 
@@ -14,4 +16,6 @@ public interface TagMapper {
     int updateByPrimaryKeySelective(Tag record);
 
     int updateByPrimaryKey(Tag record);
+
+    List<Tag>  findTagList();
 }

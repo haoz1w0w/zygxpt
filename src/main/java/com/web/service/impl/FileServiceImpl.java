@@ -2,8 +2,10 @@ package com.web.service.impl;
 
 import com.web.dao.FileMapper;
 import com.web.dao.FolederMapper;
+import com.web.dao.TagMapper;
 import com.web.po.File;
 import com.web.po.Foleder;
+import com.web.po.Tag;
 import com.web.service.FileService;
 import com.web.utils.ServiceResult;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -19,6 +21,9 @@ public class FileServiceImpl implements FileService {
 
     @Autowired
     private FolederMapper folederMapper;
+
+    @Autowired
+    private TagMapper tagMapper;
 
     @Override
     public ServiceResult<Boolean> createFile(String fileName, String fileUrl, Long folderId, Long userId, Integer tagId) {
@@ -109,5 +114,15 @@ public class FileServiceImpl implements FileService {
     @Override
     public List<Foleder> selectAllFoleder() {
         return folederMapper.findFolederAll();
+    }
+
+    @Override
+    public List<File> findSubjectFiles(Long tagId) {
+        return fileMapper.findFilesByTag(tagId);
+    }
+
+    @Override
+    public List<Tag> findAllTag() {
+        return tagMapper.findTagList();
     }
 }
