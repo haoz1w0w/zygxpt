@@ -28,6 +28,11 @@ public class PageController {
 
         return "/main/fenxiang";
     }
+    @RequestMapping("/mySource")
+    public String mySource(){
 
+
+        return "/mySource";
+    }
 
 }

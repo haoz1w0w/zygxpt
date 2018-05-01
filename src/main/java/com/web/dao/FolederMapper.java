@@ -21,4 +21,6 @@ public interface FolederMapper {
 
     List<Foleder> findFolederListByUserId(Long userId);
 
+    List<Foleder> findFolederAll();
+
 }

@@ -35,4 +35,6 @@ public interface FileService {
 
     public List<Foleder> slectFolderByUserId(Long userId);
 
+    public List<Foleder> selectAllFoleder();
+
 }

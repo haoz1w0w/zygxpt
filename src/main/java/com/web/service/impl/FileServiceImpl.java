@@ -105,4 +105,9 @@ public class FileServiceImpl implements FileService {
     public List<Foleder> slectFolderByUserId(Long userId) {
         return folederMapper.findFolederListByUserId(userId);
     }
+
+    @Override
+    public List<Foleder> selectAllFoleder() {
+        return folederMapper.findFolederAll();
+    }
 }

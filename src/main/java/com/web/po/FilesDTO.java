@@ -12,6 +12,7 @@ public class FilesDTO implements Serializable {
     private Date gmtCreate;
     private Integer isFile;
     private String url;
+    private String password;
 
     public Long getId() {
         return id;
@@ -53,5 +54,11 @@ public class FilesDTO implements Serializable {
         this.url = url;
     }
 
+    public String getPassword() {
+        return password;
+    }
 
+    public void setPassword(String password) {
+        this.password = password;
+    }
 }

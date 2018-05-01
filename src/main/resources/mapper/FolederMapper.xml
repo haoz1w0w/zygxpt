@@ -120,4 +120,7 @@ select * from foleder where folder_name=#{folderName}
     <select id="findFolederListByUserId" parameterType="java.lang.Long" resultType="com.web.po.Foleder">
         select * from foleder where user_id=#{userId}
     </select>
+    <select id="findFolederAll" resultType="com.web.po.Foleder">
+        select * from foleder order by gmt_create desc
+    </select>
 </mapper>
