@@ -153,6 +153,6 @@
         select * from file where folder_id=#{folderId}
     </select>
     <select id="findFilesByTag" parameterType="java.lang.Long" resultType="com.web.po.File">
-        select * from file where tag_id=#{tagId}
+        select * from file where file_tag=#{tagId}
     </select>
 </mapper>

@@ -1,6 +1,8 @@
 package com.web.po;
 
-public class Tag {
+import java.io.Serializable;
+
+public class Tag implements Serializable {
     private Integer id;
 
     private String tag_name;
