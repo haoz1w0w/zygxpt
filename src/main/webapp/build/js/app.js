@@ -188,7 +188,6 @@ layui.define(['element', 'nprogress', 'form', 'table', 'loader', 'tab', 'navbar'
                         }
                     });
                 }
-                onelevel.render();
             }
             return that;
         }

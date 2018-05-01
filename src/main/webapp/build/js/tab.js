@@ -1,7 +1,7 @@
 /** kit_admin-v1.0.4 MIT License By http://kit/zhengjinfan.cn */
 ;layui.define(["jquery", "element", "nprogress"], function (i) {
     var t = layui.jquery, e = layui.element, a = t(document), l = t(window), n = function () {
-        this.config = {elem: void 0, mainUrl: ""}, this.v = "1.0.2"
+        this.config = {elem: void 0, mainUrl: "main.html"}, this.v = "1.0.2"
     };
     (n.fn = n.prototype).set = function (i) {
         var e = this;
@@ -25,7 +25,7 @@
         createTabDom: function () {
             var i = this, e = i._config;
             if (i._parentElem = e.elem, !i.tabDomExists()) {
-                var a = ['<div class="layui-tab layui-tab-card kit-tab" lay-filter="' + i._filter + '">', '<ul class="layui-tab-title">', "</ul>", '<div class="kit-tab-tool">操作&nbsp;<i class="fa fa-caret-down"></i></div>', '<div class="kit-tab-tool-body layui-anim layui-anim-upbit">', "<ul>", '<li class="kit-item" data-target="refresh">刷新当前选项卡</li>', '<li class="kit-line"></li>', '<li class="kit-item" data-target="closeCurrent">关闭当前选项卡</li>', '<li class="kit-item" data-target="closeOther">关闭其他选项卡</li>', '<li class="kit-line"></li>', '<li class="kit-item" data-target="closeAll">关闭所有选项卡</li>', "</ul>", "</div>", '<div class="layui-tab-content">', '<div class="layui-tab-item layui-show" lay-item-id="-1"><iframe src="' + e.mainUrl + '"></iframe></div>', "</div>", "</div>"];
+                var a = ['<div class="layui-tab layui-tab-card kit-tab" lay-filter="' + i._filter + '">', '<ul class="layui-tab-title">', '<li class="layui-this" lay-id="-1"><i class="layui-icon">&#xe68e;</i> 控制面板</li>', "</ul>", '<div class="kit-tab-tool">操作&nbsp;<i class="fa fa-caret-down"></i></div>', '<div class="kit-tab-tool-body layui-anim layui-anim-upbit">', "<ul>", '<li class="kit-item" data-target="refresh">刷新当前选项卡</li>', '<li class="kit-line"></li>', '<li class="kit-item" data-target="closeCurrent">关闭当前选项卡</li>', '<li class="kit-item" data-target="closeOther">关闭其他选项卡</li>', '<li class="kit-line"></li>', '<li class="kit-item" data-target="closeAll">关闭所有选项卡</li>', "</ul>", "</div>", '<div class="layui-tab-content">', '<div class="layui-tab-item layui-show" lay-item-id="-1"><iframe src=""></iframe></div>', "</div>", "</div>"];
                 t(e.elem).html(a.join("")), i._title = t(".kit-tab ul.layui-tab-title"), i._content = t(".kit-tab div.layui-tab-content");
                 var l = t(".kit-tab-tool"), n = t(".kit-tab-tool-body");
                 l.on("click", function () {

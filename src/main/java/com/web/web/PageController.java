@@ -20,7 +20,7 @@ public class PageController {
     @RequestMapping("/allSource")
     public String allSource(){
 
-        return "/main/allsource";
+        return "/allSource";
     }
     @RequestMapping("/fenxiang")
     public String fenxiang(){
@@ -28,5 +28,6 @@ public class PageController {
 
         return "/main/fenxiang";
     }
+
 
 }
