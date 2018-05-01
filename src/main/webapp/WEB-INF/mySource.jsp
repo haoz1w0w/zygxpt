@@ -15,12 +15,12 @@
     <title>layui</title>
     <meta name="renderer" content="webkit">
     <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
-    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">y
     <link rel="stylesheet" href="/plugins/layui/css/layui.css" media="all">
     <!-- 注意：如果你直接复制所有代码到本地，上述css路径需要改成你本地的 -->
 </head>
 <body>
-<div class="layui-btn-group demoTable" style="display: none" id="contr">
+<div class="layui-btn-group demoTable">
     <button class="layui-btn" data-type="getCheckData">获取选中行数据</button>
     <button class="layui-btn" data-type="getCheckLength">获取选中数目</button>
     <button class="layui-btn" data-type="isAll">验证是否全选</button>
@@ -36,13 +36,23 @@
 
 <script src="/plugins/layui/layui.js"></script>
 <!-- 注意：如果你直接复制所有代码到本地，上述js路径需要改成你本地的 -->
+<script id="fileType" type="text/html">
+    {{#  if(d.isFile == 2){ }}
+    <div><img src="https://test-1256150574.cos.ap-beijing.myqcloud.com/%E6%96%87%E4%BB%B6.png"></div>
+    {{#  } else { }}
+    <div><img src="https://test-1256150574.cos.ap-beijing.myqcloud.com/%E6%96%87%E4%BB%B6%E5%A4%B9%20(2).png"></div>
+    {{#  } }}
+
+</script>
 <script>
     layui.use('table', function () {
-        var $ = layui.$;
-        var table = layui.table, form = layui.form;
-
-        table.render({
-            elem: '#tableLay'
+        var $ = layui.$
+        var table = layui.table,
+            form = layui.form;
+        /**用户表格加载*/
+        var tableIns = {
+            elem: '#tableLay',
+            id:'table1'
             , url: '/file/findMyfile'
             , response: {
                 statusName: 'code' //数据状态的字段名称，默认：code
@@ -54,95 +64,32 @@
             }
             , cellMinWidth: 80
             , cols: [[
-                {checkbox: 'true'},
+                {checkbox: 'true', width: 150},
                 {
                     field: 'pic',
                     title: '类型',
-                    width: 280,
-                    templet: '<div><img src="https://test-1256150574.cos.ap-beijing.myqcloud.com/%E6%96%87%E4%BB%B6%E5%A4%B9%20(2).png"></div>'
+                    width: 150,
+                    templet: '#fileType'
                 }
-                , {field: 'fileName', title: '文件名', templet: '#usernameTpl', event: 'setSign', width: 280}
+                , {field: 'fileName', width: 150, title: '文件名', templet: '#usernameTpl', event: 'setSign'}
                 , {
                     field: 'gmtCreate',
                     title: '创建时间',
+                    width: 500,
                     templet: '<div>{{ layui.laytpl.toDateString(d.gmtCreate) }}</div>'
-                    , width: 280
                 }
             ]]
             , page: true
-            ,height: 600
-        });
+        };
+        table.render(tableIns);
 
-        //监听表格复选框选择
-        table.on('checkbox(demo)', function (obj) {
-            layer.alert(JSON.stringify(obj.data));
-
-        });
-//        //监听单元格编辑
-//        table.on('edit(demo)', function(obj){
-//            var value = obj.value //得到修改后的值
-//                ,data = obj.data //得到所在行所有键值
-//                ,field = obj.field; //得到字段
-//            layer.msg('[ID: '+ data.id +'] ' + field + ' 字段更改为：'+ value);
-//            $.ajax({
-//                url:"http://localhost:8080/file/fileList"
-//
-//            })
-//        });5
         //监听单元格事件
         table.on('tool(demo)', function (obj) {
             var data = obj.data;
             if (obj.event === 'setSign') {
                 if (data.isFile == 1) {
-                    console.log("sadasdsa");
                     $("#test1").css("display", "block");
-                    $("#contr").css("display","block");
-                    table.render({
-                        elem: '#tableLay'
-                        , url: 'file/fileList'
-                        , response: {
-                            statusName: 'code' //数据状态的字段名称，默认：code
-                            , statusCode: 0 //成功的状态码，默认：0
-                            , msgName: 'msg' //状态信息的字段名称，默认：msg
-                            , countName: 'count' //数据总数的字段名称，默认：count
-                            , dataName: 'data' //数据列表的字段名称，默认：data
-                            , folederId: 1
-                        }
-                        , cellMinWidth: 80
-                        ,cellMinHeight:400
-                        , cols: [[
-                            {checkbox: 'true'},
-                            {
-                                field: 'pic',
-                                title: '类型',
-                                width: 150,
-                                templet: '<div><img src="https://test-1256150574.cos.ap-beijing.myqcloud.com/%E6%96%87%E4%BB%B6.png"></div>'
-                            }
-                            , {field: 'fileName', title: '文件名', templet: '#usernameTpl', width: 150}
-                            , {
-                                field: 'gmtCreate',
-                                title: '创建时间',
-                                templet: '<div>{{ layui.laytpl.toDateString(d.gmtCreate) }}</div>'
-                                , width: 280
-                            }
-                            , {
-                                fixed: 'right', width: 300, align: 'center', toolbar: '#barDemo'
-                            }
-                        ]]
-                        , page: true
-                        ,height: 600
-                        , where: {folederId: data.id}
-                        , done: function (res, curr, count) {
-                            //如果是异步请求数据方式，res即为你接口返回的信息。
-                            //如果是直接赋值的方式，res即为：{data: [], count: 99} data为当前页数据、count为数据总长度
-                            console.log(res.folederId);
-                            //得到当前页码
-                            console.log(curr);
-                            //得到数据总量
-                            console.log(count);
-                            $("#flId").val(res.folederId);
-                        }
-                    });
+                    tableFileClick(data.id)
                     //监听工具条
                     table.on('tool(demo)', function (obj) {
                         var data = obj.data;
@@ -161,37 +108,44 @@
                             window.location.href = data.url;
                         }
                     });
-                    active = {
-                        getCheckData: function () { //上传文件
-                            var checkStatus = table.checkStatus('tableLay')
-                                , data = checkStatus.data;
-                            layer.alert(JSON.stringify(data));
-                            if (data.length > 1 || data.length < 1) {
-                                layer.alert("必须选择至多一个");
-                                return;
-                            }
-                            layer.alert(JSON.stringify(data));
-                        }
-                        , getCheckLength: function () { //获取选中数目
-                            var checkStatus = table.checkStatus('tableLay')
-                                , data = checkStatus.data;
-                            layer.msg('选中了：' + data.length + ' 个');
-                        }
-                        , isAll: function () { //验证是否全选
-                            var checkStatus = table.checkStatus('tableLay');
-                            layer.msg(checkStatus.isAll ? '全选' : '未全选')
-                        }
-                    };
+
                 }
             }
-
-
         });
+        active = {
+            getCheckData: function(){ //获取选中数据
+                var checkStatus = table.checkStatus('table1')
+                    ,data = checkStatus.data;
+                console.log(table);
+                layer.alert(JSON.stringify(data));
+            }
+            ,getCheckLength: function(){ //获取选中数目
+                var checkStatus = table.checkStatus('table1')
+                    ,data = checkStatus.data;
+                layer.msg('选中了：'+ data.length + ' 个');
+            }
+            ,isAll: function(){ //验证是否全选
+                var checkStatus = table.checkStatus('table1');
+                layer.msg(checkStatus.isAll ? '全选': '未全选')
+            }
+        };
 
-        $('.demoTable .layui-btn').on('click', function () {
+        $('.demoTable .layui-btn').on('click', function(){
             var type = $(this).data('type');
             active[type] ? active[type].call(this) : '';
         });
+        //监听表格复选框选择
+        table.on('checkbox(demo)', function (obj) {
+            var checkStatus = table.checkStatus('tableLay');
+            console.log(checkStatus);
+        });
+
+        function tableFileClick(id) {
+            //根据ID 重新渲染 table 数据
+            tableIns.url = 'file/fileList';
+            tableIns.where = {folederId: id};
+            table.render(tableIns);}
+
         //时间戳的处理
         layui.laytpl.toDateString = function (d, format) {
             var date = new Date(d || new Date())
@@ -224,6 +178,8 @@
             return num < Math.pow(10, length) ? str + (num | 0) : num;
         };
     });
+
+
 </script>
 <style type="text/css">.layui-table-fixed-r td {
     height: 58px !important;
