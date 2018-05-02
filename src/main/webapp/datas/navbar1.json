@@ -31,12 +31,12 @@
     }]
 }, {
     "id": "2",
-    "title": "我的資源",
+    "title": "我的资源",
     "icon": "fa-cogs",
     "spread": false,
     "children": [{
         "id": "12",
-        "title": "我的資源",
+        "title": "我的资源",
         "icon": "fa-table",
         "url": "/mySource"
     }, {

@@ -152,6 +152,7 @@ public class FileController {
     @ResponseBody
     public Object uploadFile(MultipartFile file, Long folderId, HttpServletRequest request, Integer tagId) {
         UserInfo userInfo = (UserInfo) request.getSession().getAttribute("userInfo");
+        folderId = 1l;
         File file1 = null;
         try {
             file1 = multipartToFile(file);
@@ -161,7 +162,7 @@ public class FileController {
         }
         //上传之后将链接存入数据库
         if (folderId != null) {
-            ServiceResult<Boolean> file2 = fileService.createFile(file.getOriginalFilename(), url + file.getOriginalFilename(), folderId, 2l, tagId);
+            ServiceResult<Boolean> file2 = fileService.createFile(file.getOriginalFilename(), url + file.getOriginalFilename(), 1l, 2l, tagId);
             if (file2.getSuccess()) {
                 return new BaseResult(file2.getMessage(), true);
             }
@@ -264,6 +265,13 @@ public class FileController {
         resourceShare.setGmt_create(new Date());
         resourceShareMapper.insertSelective(resourceShare);
         return new BaseResult<>("成功", true);
+    }
+
+    @RequestMapping("delFile")
+    @ResponseBody
+    public Object delFile(Long fileId) {
+        fileService.delFile(fileId);
+        return true;
     }
 
     //生成随机数字和字母,

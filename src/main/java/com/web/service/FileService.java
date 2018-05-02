@@ -41,4 +41,6 @@ public interface FileService {
     public List<File> findSubjectFiles(Long tagId);
 
     public List<Tag> findAllTag();
+
+    public void delFile(Long fileId);
 }

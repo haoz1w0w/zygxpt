@@ -15,23 +15,29 @@
     <title>layui</title>
     <meta name="renderer" content="webkit">
     <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
-    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">y
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
     <link rel="stylesheet" href="/plugins/layui/css/layui.css" media="all">
     <!-- 注意：如果你直接复制所有代码到本地，上述css路径需要改成你本地的 -->
 </head>
 <body>
+
 <div class="layui-btn-group demoTable">
-    <button class="layui-btn" data-type="getCheckData">获取选中行数据</button>
-    <button class="layui-btn" data-type="getCheckLength">获取选中数目</button>
-    <button class="layui-btn" data-type="isAll">验证是否全选</button>
+    <button class="layui-btn" data-type="getCheckData">批量删除</button>
+    <button type="button" class="layui-btn" id="test3"><i class="layui-icon"></i>上传文件</button>
+
 </div>
 <table class="layui-table" id="tableLay" lay-filter="demo">
 </table>
 
 <script type="text/html" id="barDemo">
+    {{#  if(d.isFile == 2){ }}
     <a class="layui-btn layui-btn-primary layui-btn-xs" lay-event="detail">查看</a>
     <a class="layui-btn layui-btn-xs" lay-event="edit">下载</a>
     <a class="layui-btn layui-btn-danger layui-btn-xs" lay-event="del">分享</a>
+    {{#  } else { }}
+
+    {{#  } }}
+
 </script>
 
 <script src="/plugins/layui/layui.js"></script>
@@ -42,8 +48,8 @@
     {{#  } else { }}
     <div><img src="https://test-1256150574.cos.ap-beijing.myqcloud.com/%E6%96%87%E4%BB%B6%E5%A4%B9%20(2).png"></div>
     {{#  } }}
-
 </script>
+
 <script>
     layui.use('table', function () {
         var $ = layui.$
@@ -52,7 +58,7 @@
         /**用户表格加载*/
         var tableIns = {
             elem: '#tableLay',
-            id:'table1'
+            id: 'table1'
             , url: '/file/findMyfile'
             , response: {
                 statusName: 'code' //数据状态的字段名称，默认：code
@@ -63,6 +69,7 @@
                 , folederId: 1
             }
             , cellMinWidth: 80
+            ,width:1200
             , cols: [[
                 {checkbox: 'true', width: 150},
                 {
@@ -71,12 +78,15 @@
                     width: 150,
                     templet: '#fileType'
                 }
-                , {field: 'fileName', width: 150, title: '文件名', templet: '#usernameTpl', event: 'setSign'}
+                , {field: 'fileName', width: 150, title: '文件名', event: 'setSign'}
                 , {
                     field: 'gmtCreate',
                     title: '创建时间',
-                    width: 500,
+                    width: 300,
                     templet: '<div>{{ layui.laytpl.toDateString(d.gmtCreate) }}</div>'
+                },
+                {
+                    fixed: 'right', width:300, align:'center', toolbar: '#barDemo',height:300
                 }
             ]]
             , page: true
@@ -113,24 +123,30 @@
             }
         });
         active = {
-            getCheckData: function(){ //获取选中数据
+            getCheckData: function () { //批量删除
                 var checkStatus = table.checkStatus('table1')
-                    ,data = checkStatus.data;
-                console.log(table);
-                layer.alert(JSON.stringify(data));
+                    , data = checkStatus.data;
+                if (data.length == 0) {
+                    layer.alert("必须选中一个");
+                    return;
+                }
+                for (var i = 0; i < data.length; i++) {
+                    $.ajax({
+                        type: 'POST',
+                        url: 'file/delFile?fileId=' + data[i].id,
+                    });
+                }
+                tableFileClickMyFile()
             }
-            ,getCheckLength: function(){ //获取选中数目
+            , getCheckLength: function () { //批量删除
                 var checkStatus = table.checkStatus('table1')
-                    ,data = checkStatus.data;
-                layer.msg('选中了：'+ data.length + ' 个');
+                    , data = checkStatus.data;
+                layer.msg('选中了：' + data.length + ' 个');
             }
-            ,isAll: function(){ //验证是否全选
-                var checkStatus = table.checkStatus('table1');
-                layer.msg(checkStatus.isAll ? '全选': '未全选')
-            }
+
         };
 
-        $('.demoTable .layui-btn').on('click', function(){
+        $('.demoTable .layui-btn').on('click', function () {
             var type = $(this).data('type');
             active[type] ? active[type].call(this) : '';
         });
@@ -144,7 +160,14 @@
             //根据ID 重新渲染 table 数据
             tableIns.url = 'file/fileList';
             tableIns.where = {folederId: id};
-            table.render(tableIns);}
+            table.render(tableIns);
+        }
+
+        function tableFileClickMyFile() {
+            //根据ID 重新渲染 table 数据
+            tableIns.url = 'file/findMyfile';
+            table.render(tableIns);
+        }
 
         //时间戳的处理
         layui.laytpl.toDateString = function (d, format) {
@@ -177,9 +200,24 @@
             }
             return num < Math.pow(10, length) ? str + (num | 0) : num;
         };
+
     });
 
-
+    layui.use('upload', function () {
+        var upload = layui.upload;
+        //执行实例
+        var uploadInst = upload.render({
+            elem: '#test3' //绑定元素
+            , url: '/file/uploadFile' //上传接口
+            , accept: 'file'
+            , done: function (res) {
+                //上传完毕回调
+            }
+            , error: function () {
+                //请求异常回调
+            }
+        });
+    });
 </script>
 <style type="text/css">.layui-table-fixed-r td {
     height: 58px !important;

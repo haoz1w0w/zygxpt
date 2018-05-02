@@ -125,4 +125,9 @@ public class FileServiceImpl implements FileService {
     public List<Tag> findAllTag() {
         return tagMapper.findTagList();
     }
+
+    @Override
+    public void delFile(Long fileId) {
+        fileMapper.deleteByPrimaryKey(fileId);
+    }
 }
