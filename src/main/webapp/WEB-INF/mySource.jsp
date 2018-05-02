@@ -23,8 +23,7 @@
 
 <div class="layui-btn-group demoTable">
     <button class="layui-btn" data-type="getCheckData">批量删除</button>
-    <button type="button" class="layui-btn" id="test3"><i class="layui-icon"></i>上传文件</button>
-
+    <button class="layui-btn" data-type="getCheckLength">上传文件</button>
 </div>
 <table class="layui-table" id="tableLay" lay-filter="demo">
 </table>
@@ -69,7 +68,7 @@
                 , folederId: 1
             }
             , cellMinWidth: 80
-            ,width:1200
+            , width: 1200
             , cols: [[
                 {checkbox: 'true', width: 150},
                 {
@@ -86,7 +85,7 @@
                     templet: '<div>{{ layui.laytpl.toDateString(d.gmtCreate) }}</div>'
                 },
                 {
-                    fixed: 'right', width:300, align:'center', toolbar: '#barDemo',height:300
+                    fixed: 'right', width: 300, align: 'center', toolbar: '#barDemo', height: 300
                 }
             ]]
             , page: true
@@ -139,9 +138,14 @@
                 tableFileClickMyFile()
             }
             , getCheckLength: function () { //批量删除
-                var checkStatus = table.checkStatus('table1')
-                    , data = checkStatus.data;
-                layer.msg('选中了：' + data.length + ' 个');
+                layer.open({
+                    type: 2,
+                    title: '分享',
+                    shadeClose: true,
+                    shade: 0.8,
+                    area: ['400px', '90%'],
+                    content: 'http://localhost:8080/upload'
+                });
             }
 
         };
