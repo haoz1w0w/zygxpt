@@ -10,11 +10,10 @@
         <result column="is_del" property="is_del" jdbcType="INTEGER"/>
         <result column="gmt_create" property="gmt_create" jdbcType="DATE"/>
         <result column="gmt_modify" property="gmt_modify" jdbcType="DATE"/>
-        <result column="is_encrypt" property="is_encrypt" jdbcType="VARCHAR"/>
         <result column="user_id" property="user_id" jdbcType="BIGINT"/>
     </resultMap>
     <sql id="Base_Column_List">
-    id, file_name, file_url, file_tag, folder_id, is_del, gmt_create, gmt_modify, is_encrypt, 
+    id, file_name, file_url, file_tag, folder_id, is_del, gmt_create, gmt_modify,
     user_id
   </sql>
     <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Long">
@@ -30,11 +29,11 @@
     <insert id="insert" parameterType="com.web.po.File">
     insert into file (id, file_name, file_url, 
       file_tag, folder_id, is_del, 
-      gmt_create, gmt_modify, is_encrypt, 
+      gmt_create, gmt_modify,
       user_id)
     values (#{id,jdbcType=BIGINT}, #{file_name,jdbcType=VARCHAR}, #{file_url,jdbcType=VARCHAR}, 
       #{file_tag,jdbcType=INTEGER}, #{folder_id,jdbcType=BIGINT}, #{is_del,jdbcType=INTEGER}, 
-      #{gmt_create,jdbcType=DATE}, #{gmt_modify,jdbcType=DATE}, #{is_encrypt,jdbcType=VARCHAR}, 
+      #{gmt_create,jdbcType=DATE}, #{gmt_modify,jdbcType=DATE},
       #{user_id,jdbcType=BIGINT})
   </insert>
     <insert id="insertSelective" parameterType="com.web.po.File">
@@ -139,7 +138,6 @@
       is_del = #{is_del,jdbcType=INTEGER},
       gmt_create = #{gmt_create,jdbcType=DATE},
       gmt_modify = #{gmt_modify,jdbcType=DATE},
-      is_encrypt = #{is_encrypt,jdbcType=VARCHAR},
       user_id = #{user_id,jdbcType=BIGINT}
     where id = #{id,jdbcType=BIGINT}
   </update>

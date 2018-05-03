@@ -254,16 +254,16 @@ public class FileController {
 
     @RequestMapping("ResourceShare")
     @ResponseBody
-    public Object ResourceShare(Long fileId, Integer type, String password) {
-        ResourceShare resourceShare = new ResourceShare();
-        if (type == 1) {
-            //为自动生成密码 随机生成6位密码
-            password = getStringRandom(6);
-        }
-        resourceShare.setFile_id(fileId);
-        resourceShare.setPassword(password);
-        resourceShare.setGmt_create(new Date());
-        resourceShareMapper.insertSelective(resourceShare);
+    public Object ResourceShare(Long fileId, Integer method, String password, Integer encode) {
+//        ResourceShare resourceShare = new ResourceShare();
+//        if (method == 1) {
+//            //为自动生成密码 随机生成6位密码
+//            password = getStringRandom(6);
+//        }
+//        resourceShare.setFile_id(fileId);
+//        resourceShare.setPassword(password);
+//        resourceShare.setGmt_create(new Date());
+//        resourceShareMapper.insertSelective(resourceShare);
         return new BaseResult<>("成功", true);
     }
 

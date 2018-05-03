@@ -1,5 +1,6 @@
 package com.web.web;
 
+import com.web.po.File;
 import com.web.po.Foleder;
 import com.web.po.FolederDTO;
 import com.web.po.Tag;
@@ -36,10 +37,11 @@ public class PageController {
     }
 
     @RequestMapping("/fenxiang")
-    public String fenxiang() {
-
-
-        return "/main/fenxiang";
+    public ModelAndView fenxiang(Long fileId) {
+        ModelAndView modelAndView = new ModelAndView("/fenxiang");
+        File file = fileService.selectFileById(fileId);
+        modelAndView.addObject("file", file);
+        return modelAndView;
     }
 
     @RequestMapping("/mySource")
@@ -53,9 +55,9 @@ public class PageController {
     public ModelAndView upload(HttpServletRequest request) {
         ModelAndView modelAndView = new ModelAndView("/upload");
         List<Foleder> foleders = fileService.slectFolderByUserId(2l);
-        List<FolederDTO> foledersDto= new ArrayList<>();
-        for(Foleder foleder:foleders){
-            FolederDTO folederDTO=new FolederDTO();
+        List<FolederDTO> foledersDto = new ArrayList<>();
+        for (Foleder foleder : foleders) {
+            FolederDTO folederDTO = new FolederDTO();
             folederDTO.setId(foleder.getId());
             folederDTO.setFolderName(foleder.getFolder_name());
             foledersDto.add(folederDTO);

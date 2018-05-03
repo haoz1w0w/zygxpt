@@ -23,36 +23,37 @@
 
 
 <fieldset class="layui-elem-field layui-field-title" style="margin-top: 20px;">
-    <legend>上传文件</legend>
+    <legend>文件共享</legend>
 </fieldset>
-<input type="hidden" id="folderId"/>
+<input type="hidden" id="fileId" value="${file.id}"/>
 <input type="hidden" id="tagId"/>
 <form class="layui-form" action="">
     <div class="layui-form-item">
-        <label class="layui-form-label">选择文件夹</label>
+        <label class="layui-form-label">是否加密</label>
         <div class="layui-input-block">
-            <select name="folderId" lay-filter="aihao" id="folederSelect">
-                <c:forEach items="${foleders}" var="p">
-                    <option value="${p.id}">${p.folderName}</option>
-                </c:forEach>
-            </select>
+            <input type="radio" name="encode" value="0" title="公开" lay-filter="encode" checked>
+            <input type="radio" name="encode" value="1" title="加密" lay-filter="encode">
         </div>
+    </div>
+    <div class="layui-form-item" id="code" style="display: none">
+        <label class="layui-form-label">加密方式</label>
+        <div class="layui-input-block">
+            <input type="radio" name="method" value="0" title="随机生成" lay-filter="pass" checked>
+            <input type="radio" name="method" value="1" title="手动输入" lay-filter="pass">
+        </div>
+    </div>
+    <div class="layui-form-item" id="password" style="display: none">
+        <label class="layui-form-label">输入密码</label>
+        <div class="layui-input-inline">
+            <input type="password" name="password" placeholder="请输入密码" autocomplete="off" class="layui-input">
+        </div>
+        <div class="layui-form-mid layui-word-aux">请记住您的密码</div>
     </div>
     <div class="layui-form-item">
-        <label class="layui-form-label">选择标签</label>
         <div class="layui-input-block">
-            <select name="tagId" lay-filter="aihao" id="tagSelect">
-                <c:forEach items="${allTag}" var="tags">
-                    <option value="${tags.id}">${tags.tag_name}</option>
-                </c:forEach>
-            </select>
+            <button class="layui-btn" lay-submit="" lay-filter="demo1">立即提交</button>
+            <button type="reset" class="layui-btn layui-btn-primary">重置</button>
         </div>
-    </div>
-    <div class="layui-upload" style="margin-left: 70px" id="choose">
-        <button type="button" class="layui-btn" id="test8">选择文件</button>
-    </div>
-    <div class="layui-upload" style="margin-top: 30px;margin-left: 70px">
-        <button type="button" class="layui-btn" id="test9">开始上传</button>
     </div>
 </form>
 
@@ -98,46 +99,35 @@
             });
             layer.tips('温馨提示：请注意开关状态的文字可以随意定义，而不仅仅是ON|OFF', data.othis)
         });
+        form.on('radio(encode)', function (data) {
+            console.log(data.value); //被点击的radio的value值
+            if (data.value == 1) {
+                $("#code").css("display", "block");
+            }
+        });
+        form.on('radio(pass)', function (data) {
+            //被点击的radio的value值
+            if (data.value == 1) {
+                $("#password").css("display", "block");
+            }
 
+        });
         //监听提交
         form.on('submit(demo1)', function (data) {
-            layer.alert(JSON.stringify(data.field), {
+            $.ajax({
+                type: 'POST',
+                url: 'file/ResourceShare?method=' + data.field.method + "&password=" + data.field.password + "&encode=" + data.field.encode,
+                success: function (data) {
+                    alert("ok");
+                }
+            });
+            layer.alert(JSON.stringify(data.field.encode), {
                 title: '最终的提交信息'
             })
-            return false;
         });
     });
-
-    layui.use('upload', function () {
-        var folderId = 1
-        var tagId = 3;
-        upload = layui.upload;
-        //选完文件后不自动上传
-        upload.render({
-            elem: '#test8'
-            , url: '/file/uploadFile'
-            , auto: false
-            //,multiple: true
-            , bindAction: '#test9'
-            , accept: 'file'
-            , before: function (obj) {
-                layer.load(); //上传loading
-                this.data = {'folderId':$("#folederSelect").val(),'tagId':$("#tagSelect").val()};
-            }
-            , choose: function (obj) {
-                folderId = 1;
-                tagId = 3;
-                console.log(obj);
-                obj.preview(function (index, file, result) {
-                    var $h1 = $("<span class='layui-inline layui-upload-choose'>" + file.name + "</span>");
-                    $("#choose").append($h1);
-                });
-
-            }
-            , done: function (res) {
-                layer.closeAll(); //关闭loading
-             }
-        });
+    $("input:radio[name='method']").change(function () { //拨通
+        alert("asdsad");
     });
 </script>
 </body>

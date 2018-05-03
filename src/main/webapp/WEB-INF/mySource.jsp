@@ -99,28 +99,28 @@
                 if (data.isFile == 1) {
                     $("#test1").css("display", "block");
                     tableFileClick(data.id)
-                    //监听工具条
-                    table.on('tool(demo)', function (obj) {
-                        var data = obj.data;
-                        if (obj.event === 'detail') {
-                            layer.msg('ID：' + data.id + ' 的查看操作');
-                        } else if (obj.event === 'del') {
-                            layer.open({
-                                type: 2,
-                                title: '分享',
-                                shadeClose: true,
-                                shade: 0.8,
-                                area: ['380px', '90%'],
-                                content: 'http://localhost:8080/fenxiang?id=' + data.id //iframe的url
-                            });
-                        } else if (obj.event === 'edit') {
-                            window.location.href = data.url;
-                        }
-                    });
-
                 }
+                //监听工具条
+                table.on('tool(demo)', function (obj) {
+                    var data = obj.data;
+                    if (obj.event === 'detail') {
+                        layer.msg('ID：' + data.id + ' 的查看操作');
+                    } else if (obj.event === 'del') {
+                        layer.open({
+                            type: 2,
+                            title: '分享',
+                            shadeClose: true,
+                            shade: 0.8,
+                            area: ['380px', '90%'],
+                            content: '/fenxiang?fileId=' + data.id //iframe的url
+                        });
+                    } else if (obj.event === 'edit') {
+                        window.location.href = data.url;
+                    }
+                });
             }
         });
+
         active = {
             getCheckData: function () { //批量删除
                 var checkStatus = table.checkStatus('table1')
@@ -137,14 +137,14 @@
                 }
                 tableFileClickMyFile()
             }
-            , getCheckLength: function () { //批量删除
+            , getCheckLength: function () { //上传文件
                 layer.open({
                     type: 2,
-                    title: '分享',
+                    title: '上传文件',
                     shadeClose: true,
                     shade: 0.8,
                     area: ['400px', '90%'],
-                    content: 'http://localhost:8080/upload'
+                    content: '/upload'
                 });
             }
 
