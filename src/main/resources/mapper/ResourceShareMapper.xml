@@ -27,6 +27,9 @@
       #{gmt_create,jdbcType=TIMESTAMP})
   </insert>
   <insert id="insertSelective" parameterType="com.web.po.ResourceShare" >
+    <selectKey resultType="java.lang.Long" order="AFTER" keyProperty="id">
+      SELECT LAST_INSERT_ID()
+    </selectKey>
     insert into resource_share
     <trim prefix="(" suffix=")" suffixOverrides="," >
       <if test="id != null" >

@@ -255,16 +255,24 @@ public class FileController {
     @RequestMapping("ResourceShare")
     @ResponseBody
     public Object ResourceShare(Long fileId, Integer method, String password, Integer encode) {
-//        ResourceShare resourceShare = new ResourceShare();
-//        if (method == 1) {
-//            //为自动生成密码 随机生成6位密码
-//            password = getStringRandom(6);
-//        }
-//        resourceShare.setFile_id(fileId);
-//        resourceShare.setPassword(password);
-//        resourceShare.setGmt_create(new Date());
-//        resourceShareMapper.insertSelective(resourceShare);
-        return new BaseResult<>("成功", true);
+        ResourceShare resourceShare = new ResourceShare();
+        if (encode == 1) {
+            //加密
+            if (method == 0) {
+                //自动生成
+                password = getStringRandom(4);
+            }
+        }
+        resourceShare.setFile_id(fileId);
+        resourceShare.setPassword(password);
+        resourceShare.setGmt_create(new Date());
+        resourceShareMapper.insertSelective(resourceShare);
+        String url = "http://localhost:8080/fileShare?id=" + resourceShare.getId();
+        ResourceShareDto resourceShareDto = new ResourceShareDto();
+        resourceShareDto.setUrl(url);
+        resourceShareDto.setEncode(encode);
+        resourceShareDto.setPasswod(password);
+        return new BaseResult<>(resourceShareDto, true);
     }
 
     @RequestMapping("delFile")

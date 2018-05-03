@@ -1,12 +1,13 @@
 package com.web.web;
 
-import com.web.po.File;
-import com.web.po.Foleder;
-import com.web.po.FolederDTO;
-import com.web.po.Tag;
+import com.web.dao.ResourceShareMapper;
+import com.web.po.*;
 import com.web.service.FileService;
+import com.web.utils.StringUtil;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.ModelAndView;
 
 import javax.annotation.Resource;
@@ -23,6 +24,9 @@ import java.util.List;
 public class PageController {
     @Resource
     private FileService fileService;
+
+    @Autowired
+    private ResourceShareMapper resourceShareMapper;
 
     @RequestMapping("/main")
     public String toBaiDuYunMain() {
@@ -51,7 +55,21 @@ public class PageController {
         return "/mySource";
     }
 
+    @RequestMapping("/fileShare")
+    public ModelAndView fileShare(Long id) {
+        ResourceShare resourceShare = resourceShareMapper.selectByPrimaryKey(id);
+        ModelAndView modelAndView = new ModelAndView("/resourshare");
+        Integer jiami = 0;
+        if (!StringUtil.isEmpty(resourceShare.getPassword())) {
+            jiami = 1;
+        }
+        modelAndView.addObject("jiami", jiami);
+        modelAndView.addObject("share", resourceShare);
+        return new ModelAndView();
+    }
+
     @RequestMapping("/upload")
+
     public ModelAndView upload(HttpServletRequest request) {
         ModelAndView modelAndView = new ModelAndView("/upload");
         List<Foleder> foleders = fileService.slectFolderByUserId(2l);

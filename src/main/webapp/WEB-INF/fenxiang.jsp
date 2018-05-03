@@ -45,9 +45,10 @@
     <div class="layui-form-item" id="password" style="display: none">
         <label class="layui-form-label">输入密码</label>
         <div class="layui-input-inline">
-            <input type="password" name="password" placeholder="请输入密码" autocomplete="off" class="layui-input">
+            <input type="password" name="password" placeholder="请输入密码" autocomplete="off" class="layui-input"
+                   lay-verify="pass" id="very">
         </div>
-        <div class="layui-form-mid layui-word-aux">请记住您的密码</div>
+        <div class="layui-form-mid layui-word-aux">输入4位密码</div>
     </div>
     <div class="layui-form-item">
         <div class="layui-input-block">
@@ -80,17 +81,7 @@
         var editIndex = layedit.build('LAY_demo_editor');
 
         //自定义验证规则
-        form.verify({
-            title: function (value) {
-                if (value.length < 5) {
-                    return '标题至少得5个字符啊';
-                }
-            }
-            , pass: [/(.+){6,12}$/, '密码必须6到12位']
-            , content: function (value) {
-                layedit.sync(editIndex);
-            }
-        });
+
 
         //监听指定开关
         form.on('switch(switchTest)', function (data) {
@@ -109,6 +100,17 @@
             //被点击的radio的value值
             if (data.value == 1) {
                 $("#password").css("display", "block");
+                form.verify({
+                    title: function (value) {
+                        if (value.length < 5) {
+                            return '标题至少得5个字符啊';
+                        }
+                    }
+                    , pass: [/(.+){4}$/, '密码必须4位']
+                    , content: function (value) {
+                        layedit.sync(editIndex);
+                    }
+                });
             }
 
         });
@@ -116,14 +118,39 @@
         form.on('submit(demo1)', function (data) {
             $.ajax({
                 type: 'POST',
-                url: 'file/ResourceShare?method=' + data.field.method + "&password=" + data.field.password + "&encode=" + data.field.encode,
+                url: 'file/ResourceShare?method=' + data.field.method + "&password=" + data.field.password + "&encode=" + data.field.encode + "&fileId=" + $("#fileId").val(),
                 success: function (data) {
-                    alert("ok");
+                    console.log(data.data);
+                    var resourceShare = data.data;
+                    console.log(resourceShare.passwod);
+                    var srt = '<div style="padding: 50px; line-height: 22px; background-color: #393D49; color: #fff; font-weight: 300;">分享成功！<br>您的分享链接为<br>' + resourceShare.url + '<br>密码为:' + resourceShare.passwod + '</div>';
+                    if (resourceShare.encode == 1) {
+                        var srt = '<div style="padding: 50px; line-height: 22px; background-color: #393D49; color: #fff; font-weight: 300;">分享成功！<br>您的分享链接为<br>' + resourceShare.url + '<br>密码为:' + resourceShare.passwod + '</div>';
+                    }else{
+                        var srt = '<div style="padding: 50px; line-height: 22px; background-color: #393D49; color: #fff; font-weight: 300;">分享成功！<br>您的分享链接为<br>' + resourceShare.url + '</div>';
+
+                    }
+                    layer.open({
+                        type: 1
+                        , title: false //不显示标题栏
+                        , closeBtn: false
+                        , area: '350px;'
+                        , shade: 0.8
+                        , id: 'LAY_layuipro' //设定一个id，防止重复弹出
+                        , btn: ['确认']
+                        , btnAlign: 'c'
+                        , moveType: 1 //拖拽模式，0或者1
+                        , content:srt
+                        , yes: function (layero) {
+                            layer.closeAll();
+                        }
+                    });
                 }
             });
-            layer.alert(JSON.stringify(data.field.encode), {
-                title: '最终的提交信息'
-            })
+            // layer.alert(JSON.stringify(data.field.encode), {
+            //     title: '最终的提交信息'
+            // })
+            return false;
         });
     });
     $("input:radio[name='method']").change(function () { //拨通
