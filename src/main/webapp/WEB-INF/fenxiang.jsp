@@ -1,7 +1,8 @@
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
-<%@ taglib uri="http://java.sun.com/jsp/jstl/functions" prefix="fn" %><%--
+<%@ taglib uri="http://java.sun.com/jsp/jstl/functions" prefix="fn" %>
+<%--
   Created by IntelliJ IDEA.
   User: Raytine
   Date: 2018/5/2
@@ -123,11 +124,11 @@
                     console.log(data.data);
                     var resourceShare = data.data;
                     console.log(resourceShare.passwod);
-                    var srt = '<div style="padding: 50px; line-height: 22px; background-color: #393D49; color: #fff; font-weight: 300;">分享成功！<br>您的分享链接为<br>' + resourceShare.url + '<br>密码为:' + resourceShare.passwod + '</div>';
+                    var srt;
                     if (resourceShare.encode == 1) {
-                        var srt = '<div style="padding: 50px; line-height: 22px; background-color: #393D49; color: #fff; font-weight: 300;">分享成功！<br>您的分享链接为<br>' + resourceShare.url + '<br>密码为:' + resourceShare.passwod + '</div>';
-                    }else{
-                        var srt = '<div style="padding: 50px; line-height: 22px; background-color: #393D49; color: #fff; font-weight: 300;">分享成功！<br>您的分享链接为<br>' + resourceShare.url + '</div>';
+                         srt = '<div style="padding: 50px; line-height: 22px; background-color: #393D49; color: #fff; font-weight: 300;">分享成功！<br>您的分享链接为<br>' + resourceShare.url + '<br>密码为:' + resourceShare.passwod + '</div>';
+                    } else {
+                         srt = '<div style="padding: 50px; line-height: 22px; background-color: #393D49; color: #fff; font-weight: 300;">分享成功！<br>您的分享链接为<br>' + resourceShare.url + '</div>';
 
                     }
                     layer.open({
@@ -140,7 +141,7 @@
                         , btn: ['确认']
                         , btnAlign: 'c'
                         , moveType: 1 //拖拽模式，0或者1
-                        , content:srt
+                        , content: srt
                         , yes: function (layero) {
                             layer.closeAll();
                         }
@@ -152,9 +153,6 @@
             // })
             return false;
         });
-    });
-    $("input:radio[name='method']").change(function () { //拨通
-        alert("asdsad");
     });
 </script>
 </body>

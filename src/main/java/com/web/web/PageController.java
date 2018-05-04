@@ -58,14 +58,14 @@ public class PageController {
     @RequestMapping("/fileShare")
     public ModelAndView fileShare(Long id) {
         ResourceShare resourceShare = resourceShareMapper.selectByPrimaryKey(id);
-        ModelAndView modelAndView = new ModelAndView("/resourshare");
+        ModelAndView modelAndView = new ModelAndView("/fileShare");
         Integer jiami = 0;
         if (!StringUtil.isEmpty(resourceShare.getPassword())) {
             jiami = 1;
         }
         modelAndView.addObject("jiami", jiami);
         modelAndView.addObject("share", resourceShare);
-        return new ModelAndView();
+        return modelAndView;
     }
 
     @RequestMapping("/upload")
@@ -85,5 +85,10 @@ public class PageController {
         modelAndView.addObject("allTag", allTag);
         modelAndView.addObject("name", "测试");
         return modelAndView;
+    }
+
+    @RequestMapping("/tiqumima")
+    public String tiqumima() {
+        return "/tiqumima";
     }
 }
