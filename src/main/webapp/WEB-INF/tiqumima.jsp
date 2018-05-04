@@ -88,13 +88,14 @@
 
     <link rel="stylesheet" type="text/css" href="../tiqumima/default.css">
 
-
     <link rel="stylesheet" type="text/css" href="../tiqumima/system_95f8a99.css">
     <link rel="stylesheet" type="text/css" href="../tiqumima/page-ui_4ecbc8b.css">
     <script type="text/javascript" src="../tiqumima/baidu-tongji.js.下载"></script>
 </head>
 <body>
-
+<input type="hidden" value="${share.password}" id="pass">
+<input type="hidden" value="${jiami}" id="jiami">
+<input type="hidden" value="${share.file_id}" id="fileId">
 
 <link rel="stylesheet" type="text/css" href="../tiqumima/cover.css">
 <div class="docs init-docs" id="doc">
@@ -120,19 +121,14 @@
                         </dt>
                         <dd class="clearfix">
                             <input class="QKKaIE LxgeIt" id="rrdf6L46" tabindex="1" type="text">
-                            <div id="wr6YxJ"><a class="g-button g-button-blue-large" data-button-id="b1"
-                                                data-button-index="" href="javascript:;" title="提取文件"><span
-                                    class="g-button-right"><span class="text"
-                                                                 style="width: auto;">提取文件</span></span></a></div>
-                        </dd>
-                    </dl>
-                    <dl class="pickcode clearfix">
-                        <dt>
-                            验证码：
-                        </dt>
-                        <dd class="clearfix">
-                            <input class="LIztsC QKKaIE" id="zzJVkD" tabindex="2" type="text">
-                            <img alt="验证码" id="mjqvJq26"><a class="change-code" href="javascript:;">换一张</a>
+                            <div id="wrYxJ">
+                                <a class="g-button g-button-blue-large" data-button-id="b1"
+                                   data-button-index="" href="javascript:;" title="提取文件" id="sub">
+                                    <span class="g-button-right">
+                                            <span class="text" style="width: auto;">提取文件</span>
+                                    </span>
+                                </a>
+                            </div>
                         </dd>
                     </dl>
                 </div>
@@ -162,201 +158,6 @@
 <img style="position:absolute;top:-10px;left:-10px;width:1px;height:1px;display:none;" src="../tiqumima/file">
 <img style="position:absolute;top:-10px;left:-10px;width:1px;height:1px;display:none;" src="../tiqumima/file(1)">
 <img style="position:absolute;top:-10px;left:-10px;width:1px;height:1px;display:none;" src="../tiqumima/file(2)">
-<script type="text/javascript">require.resourceMap({
-    "res": {
-        "base:widget/clipboard/clipboard.js": {
-            "url": "/box-static/base/widget/clipboard/clipboard_9d878a2.js",
-            "pkg": "base:p0"
-        },
-        "base:widget/ZeroClipboard/ZeroClipboard.js": {
-            "url": "/box-static/base/widget/ZeroClipboard/ZeroClipboard_04c2a63.js",
-            "pkg": "base:p0",
-            "deps": ["base:widget/clipboard/clipboard.js"]
-        },
-        "base:widget/libs/jquery-1.12.4.js": {
-            "url": "/box-static/base/widget/libs/jquery-1.12.4_5df0c3c.js",
-            "pkg": "base:p0"
-        },
-        "base:widget/libs/jquerypacket.js": {
-            "url": "/box-static/base/widget/libs/jquerypacket_7dec715.js",
-            "pkg": "base:p0",
-            "deps": ["base:widget/libs/jquery-1.12.4.js"]
-        },
-        "base:widget/tools/service/tools.util.js": {
-            "url": "/box-static/base/widget/tools/service/tools.util_72562f7.js",
-            "pkg": "base:p0"
-        },
-        "base:widget/tools/service/tools.event.js": {
-            "url": "/box-static/base/widget/tools/service/tools.event_2f2c57d.js",
-            "pkg": "base:p0"
-        },
-        "base:widget/clipboard/myClipboard.js": {
-            "url": "/box-static/base/widget/clipboard/myClipboard_e74b5f8.js",
-            "pkg": "base:p0",
-            "deps": ["base:widget/libs/jquerypacket.js", "base:widget/clipboard/clipboard.js", "base:widget/tools/service/tools.util.js", "base:widget/tools/service/tools.event.js"]
-        },
-        "base:widget/crossDomainUtil/crossDomainInner.js": {
-            "url": "/box-static/base/widget/crossDomainUtil/crossDomainInner_84d5453.js",
-            "pkg": "base:p0"
-        },
-        "base:widget/crossDomainUtil/crossPanel.js": {
-            "url": "/box-static/base/widget/crossDomainUtil/crossPanel_29bab52.js",
-            "pkg": "base:p0"
-        },
-        "base:widget/fileSelector/fileSelector.js": {
-            "url": "/box-static/base/widget/fileSelector/fileSelector_4be1534.js",
-            "pkg": "base:p0",
-            "deps": ["base:widget/crossDomainUtil/crossPanel.js"]
-        },
-        "base:widget/hash/jquery.hash.js": {
-            "url": "/box-static/base/widget/hash/jquery.hash_c18024d.js",
-            "pkg": "base:p0",
-            "deps": ["base:widget/libs/jquerypacket.js"]
-        },
-        "base:widget/hash/hash.js": {
-            "url": "/box-static/base/widget/hash/hash_2332d51.js",
-            "pkg": "base:p0",
-            "deps": ["base:widget/hash/jquery.hash.js", "base:widget/libs/jquerypacket.js"]
-        },
-        "base:widget/historyManager/historyStackEmulator.js": {
-            "url": "/box-static/base/widget/historyManager/historyStackEmulator_d6b346a.js",
-            "pkg": "base:p0",
-            "deps": ["base:widget/tools/service/tools.util.js", "base:widget/tools/service/tools.event.js"]
-        },
-        "base:widget/historyManager/historyManager.js": {
-            "url": "/box-static/base/widget/historyManager/historyManager_b7ef3a3.js",
-            "pkg": "base:p0",
-            "deps": ["base:widget/historyManager/historyStackEmulator.js", "base:widget/tools/service/tools.util.js", "base:widget/tools/service/tools.event.js"]
-        },
-        "base:widget/storage/storage.js": {
-            "url": "/box-static/base/widget/storage/storage_fe98fbb.js",
-            "pkg": "base:p0"
-        },
-        "base:widget/httpProxy/swfobject.js": {
-            "url": "/box-static/base/widget/httpProxy/swfobject_e406d26.js",
-            "pkg": "base:p0"
-        },
-        "base:widget/httpProxy/httpProxy.js": {
-            "url": "/box-static/base/widget/httpProxy/httpProxy_671107e.js",
-            "pkg": "base:p0",
-            "deps": ["base:widget/libs/jquerypacket.js", "base:widget/storage/storage.js", "base:widget/httpProxy/swfobject.js"]
-        },
-        "base:widget/identify/identify.js": {
-            "url": "/box-static/base/widget/identify/identify_13352e2.js",
-            "pkg": "base:p0"
-        },
-        "base:widget/libs/MutationObserver.js": {
-            "url": "/box-static/base/widget/libs/MutationObserver_2996226.js",
-            "pkg": "base:p0"
-        },
-        "base:widget/libs/underscore.js": {
-            "url": "/box-static/base/widget/libs/underscore_2c2d5da.js",
-            "pkg": "base:p0"
-        },
-        "base:widget/scroll-utils/scroll-utils.js": {
-            "url": "/box-static/base/widget/scroll-utils/scroll-utils_8ccdbdf.js",
-            "pkg": "base:p0"
-        },
-        "base:widget/mouse-utils/mouse-drag.js": {
-            "url": "/box-static/base/widget/mouse-utils/mouse-drag_e58f878.js",
-            "pkg": "base:p0",
-            "deps": ["base:widget/scroll-utils/scroll-utils.js", "base:widget/libs/jquerypacket.js"]
-        },
-        "base:widget/mouse-utils/mouse-selection.js": {
-            "url": "/box-static/base/widget/mouse-utils/mouse-selection_d84260a.js",
-            "pkg": "base:p0",
-            "deps": ["base:widget/libs/jquerypacket.js"]
-        },
-        "base:widget/passAPI/passAPI.js": {
-            "url": "/box-static/base/widget/passAPI/passAPI_2ce8e5f.js",
-            "pkg": "base:p0",
-            "deps": ["base:widget/libs/jquerypacket.js"]
-        },
-        "base:widget/passAPI/wrapperPassAPI.js": {
-            "url": "/box-static/base/widget/passAPI/wrapperPassAPI_23385af.js",
-            "pkg": "base:p0",
-            "deps": ["base:widget/libs/jquerypacket.js"]
-        },
-        "base:widget/router/stateManager.js": {
-            "url": "/box-static/base/widget/router/stateManager_e2cee01.js",
-            "pkg": "base:p0",
-            "deps": ["base:widget/tools/service/tools.event.js"]
-        },
-        "base:widget/router/Query.js": {
-            "url": "/box-static/base/widget/router/Query_a1cb6f4.js",
-            "pkg": "base:p0",
-            "deps": ["base:widget/libs/underscore.js", "base:widget/tools/service/tools.util.js", "base:widget/router/stateManager.js"]
-        },
-        "base:widget/router/Router.js": {
-            "url": "/box-static/base/widget/router/Router_c700835.js",
-            "pkg": "base:p0",
-            "deps": ["base:widget/libs/underscore.js", "base:widget/router/stateManager.js", "base:widget/tools/service/tools.util.js", "base:widget/tools/service/tools.event.js", "base:widget/router/Query.js"]
-        },
-        "base:widget/tools/service/tools.browser.js": {
-            "url": "/box-static/base/widget/tools/service/tools.browser_6e7470e.js",
-            "pkg": "base:p0"
-        },
-        "base:widget/tools/service/tools.cookie.js": {
-            "url": "/box-static/base/widget/tools/service/tools.cookie_d1c840f.js",
-            "pkg": "base:p0"
-        },
-        "base:widget/tools/service/tools.date.js": {
-            "url": "/box-static/base/widget/tools/service/tools.date_49d758d.js",
-            "pkg": "base:p0",
-            "deps": ["base:widget/libs/underscore.js"]
-        },
-        "base:widget/tools/service/tools.flash.js": {
-            "url": "/box-static/base/widget/tools/service/tools.flash_bd7daf5.js",
-            "pkg": "base:p0",
-            "deps": ["base:widget/storage/storage.js"]
-        },
-        "base:widget/tools/service/tools.format.js": {
-            "url": "/box-static/base/widget/tools/service/tools.format_adf97d0.js",
-            "pkg": "base:p0"
-        },
-        "base:widget/tools/service/tools.html.js": {
-            "url": "/box-static/base/widget/tools/service/tools.html_e24cc2d.js",
-            "pkg": "base:p0"
-        },
-        "base:widget/tools/service/tools.object.js": {
-            "url": "/box-static/base/widget/tools/service/tools.object_eb717c4.js",
-            "pkg": "base:p0"
-        },
-        "base:widget/tools/service/tools.observer.js": {
-            "url": "/box-static/base/widget/tools/service/tools.observer_10cc8d8.js",
-            "pkg": "base:p0",
-            "deps": ["base:widget/libs/MutationObserver.js"]
-        },
-        "base:widget/tools/service/tools.path.js": {
-            "url": "/box-static/base/widget/tools/service/tools.path_4052a14.js",
-            "pkg": "base:p0"
-        },
-        "base:widget/tools/service/tools.string.js": {
-            "url": "/box-static/base/widget/tools/service/tools.string_f55f7f2.js",
-            "pkg": "base:p0"
-        },
-        "base:widget/tools/service/tools.throttle.js": {
-            "url": "/box-static/base/widget/tools/service/tools.throttle_0e8ca19.js",
-            "pkg": "base:p0"
-        },
-        "base:widget/tools/service/tools.tmpl.js": {
-            "url": "/box-static/base/widget/tools/service/tools.tmpl_f379f13.js",
-            "pkg": "base:p0",
-            "deps": ["base:widget/libs/underscore.js"]
-        },
-        "base:widget/tools/service/tools.url.js": {
-            "url": "/box-static/base/widget/tools/service/tools.url_c6d614e.js",
-            "pkg": "base:p0"
-        },
-        "base:widget/tools/tools.js": {
-            "url": "/box-static/base/widget/tools/tools_7e30640.js",
-            "pkg": "base:p0",
-            "deps": ["base:widget/libs/underscore.js", "base:widget/tools/service/tools.browser.js", "base:widget/tools/service/tools.cookie.js", "base:widget/tools/service/tools.date.js", "base:widget/tools/service/tools.flash.js", "base:widget/tools/service/tools.format.js", "base:widget/tools/service/tools.html.js", "base:widget/tools/service/tools.path.js", "base:widget/tools/service/tools.string.js", "base:widget/tools/service/tools.object.js", "base:widget/tools/service/tools.tmpl.js", "base:widget/tools/service/tools.url.js", "base:widget/tools/service/tools.event.js", "base:widget/tools/service/tools.observer.js", "base:widget/tools/service/tools.throttle.js", "base:widget/tools/service/tools.util.js"]
-        },
-        "disk-share:static/js/pcsDownloadUtil.js": {"url": "/box-static/disk-share/js/pcsDownloadUtil.js?t=1523597699070"},
-        "disk-share:static/js/baidu-tongji.js": {"url": "/box-static/disk-share/js/baidu-tongji.js?t=1523597699070"}
-    }, "pkg": {"base:p0": {"url": "/box-static/base/pkg/base_2aa05fc.js"}}
-});</script>
 <script type="text/javascript" src="../tiqumima/yunData_67f7dd4.js.下载"></script>
 <script type="text/javascript" src="../tiqumima/system_1e83001.js.下载"></script>
 <script type="text/javascript" src="../tiqumima/page-ui_d1df8e4.js.下载"></script>
@@ -406,9 +207,17 @@
 }();</script>
 <div style="display: none;">
     <script src="../tiqumima/h.js.下载" type="text/javascript"></script>
-    <script src="/plugins/jquery-3.3.1/jquery-3.3.1.min.js">
-
-    </script>
+    <script src="/plugins/jquery-3.3.1/jquery-3.3.1.min.js"></script>
 </div>
 </body>
+<script>
+    $("#sub").click(function () {
+        //点击提交判断密码是否一致
+        if ($("#pass").val() == $("#rrdf6L46").val()) {
+            window.location.href = "/file/fileDetail?id" + $("#fileId").val();
+        } else {
+            alert("密码不正确,请重新输入")
+        }
+    });
+</script>
 </html>

@@ -55,18 +55,18 @@ public class PageController {
         return "/mySource";
     }
 
-    @RequestMapping("/fileShare")
-    public ModelAndView fileShare(Long id) {
-        ResourceShare resourceShare = resourceShareMapper.selectByPrimaryKey(id);
-        ModelAndView modelAndView = new ModelAndView("/fileShare");
-        Integer jiami = 0;
-        if (!StringUtil.isEmpty(resourceShare.getPassword())) {
-            jiami = 1;
-        }
-        modelAndView.addObject("jiami", jiami);
-        modelAndView.addObject("share", resourceShare);
-        return modelAndView;
-    }
+//    @RequestMapping("/fileShare")
+//    public ModelAndView fileShare(Long id) {
+//        ResourceShare resourceShare = resourceShareMapper.selectByPrimaryKey(id);
+//        ModelAndView modelAndView = new ModelAndView("/fileShare");
+//        Integer jiami = 0;
+//        if (!StringUtil.isEmpty(resourceShare.getPassword())) {
+//            jiami = 1;
+//        }
+//        modelAndView.addObject("jiami", jiami);
+//        modelAndView.addObject("share", resourceShare);
+//        return modelAndView;
+//    }
 
     @RequestMapping("/upload")
 
@@ -87,8 +87,16 @@ public class PageController {
         return modelAndView;
     }
 
-    @RequestMapping("/tiqumima")
-    public String tiqumima() {
-        return "/tiqumima";
+    @RequestMapping("/fileShare")
+    public ModelAndView tiqumima(Long id) {
+        ResourceShare resourceShare = resourceShareMapper.selectByPrimaryKey(id);
+        ModelAndView modelAndView = new ModelAndView();
+        if (!StringUtil.isEmpty(resourceShare.getPassword())) {
+            modelAndView.addObject("share", resourceShare);
+            modelAndView.setViewName("/tiqumima");
+        } else {
+            modelAndView.setViewName("redirect:/fileShare?id=" + resourceShare.getFile_id());
+        }
+        return modelAndView;
     }
 }
