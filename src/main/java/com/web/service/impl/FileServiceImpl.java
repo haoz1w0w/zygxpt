@@ -130,4 +130,9 @@ public class FileServiceImpl implements FileService {
     public void delFile(Long fileId) {
         fileMapper.deleteByPrimaryKey(fileId);
     }
+
+    @Override
+    public List<File> findFileByFileName(String file_name) {
+        return fileMapper.findFilesByFileName(file_name);
+    }
 }

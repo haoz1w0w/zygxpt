@@ -147,10 +147,13 @@
     <select id="selectFileByName" parameterType="java.lang.String" resultType="com.web.po.File">
         select * from file where file_name=#{fileName}
     </select>
-    <select id="selectFilesByFolrderId" parameterType="java.lang.Long" resultType="com.web.po.File" >
+    <select id="selectFilesByFolrderId" parameterType="java.lang.Long" resultType="com.web.po.File">
         select * from file where folder_id=#{folderId}
     </select>
     <select id="findFilesByTag" parameterType="java.lang.Long" resultType="com.web.po.File">
         select * from file where file_tag=#{tagId}
+    </select>
+    <select id="findFilesByFileName" parameterType="java.lang.String" resultType="com.web.po.File">
+        SELECT * FROM file WHERE file_name LIKE CONCAT('%',#{fileName},'%')
     </select>
 </mapper>

@@ -26,5 +26,7 @@ public interface FileMapper {
 
     List<File> findFilesByTag(Long tagId);
 
+    List<File> findFilesByFileName(String fileName);
+
 
 }

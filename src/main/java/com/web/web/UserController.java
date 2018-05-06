@@ -29,15 +29,13 @@ public class UserController {
 
     @RequestMapping("/register")
     @ResponseBody
-    public Object register(String account, String password, String passwordtwo) {
-        if (!password.equals(passwordtwo)) {
-            return null;
-        }
+    public Object register(String account, String password, Integer role) {
         try {
             UserInfo userInfo = new UserInfo();
             userInfo.setPassword(password);
             userInfo.setAccount(account);
             userInfo.setPassword(MD5Util.md5Encode(userInfo.getPassword()));
+            userInfo.setRole(role);
             ServiceResult<Boolean> serviceResult = userService.registerUserInfo(userInfo);
             if (serviceResult.getResult() != null && serviceResult.getResult()) {
                 //注册成功
@@ -50,7 +48,8 @@ public class UserController {
     }
 
     @RequestMapping("/login")
-    public Object login(@RequestParam(required = true) String account, @RequestParam(required = true) String password, HttpServletRequest httpServletRequest) {
+    @ResponseBody
+    public Object login(String account, String password, HttpServletRequest httpServletRequest) {
         if (StringUtil.isEmpty(account) || StringUtil.isEmpty(password)) {
             return new BaseResult<String>("账号或密码不能为空", false);
         }
@@ -59,9 +58,9 @@ public class UserController {
             if (serviceResult.getSuccess()) {
                 UserInfo userInfo = userService.selectUserInfoByAccount(account);
                 httpServletRequest.getSession().setAttribute("userInfo", userInfo);
-                return "/main/baiduyunmain";
+                return true;
             }
-            return new BaseResult(serviceResult.getResult(), serviceResult.getSuccess());
+            return false;
         } catch (Exception e) {
             return new BaseResult("登录失败", false);
         }

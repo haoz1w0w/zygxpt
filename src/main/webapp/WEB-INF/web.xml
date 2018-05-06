@@ -4,8 +4,7 @@
          version="3.0">
     <display-name>Zygxpt 3.0 Web Application</display-name>
     <welcome-file-list>
-        <welcome-file>index.jsp</welcome-file>
-        <welcome-file>index.html</welcome-file>
+        <welcome-file>/login.jsp</welcome-file>
     </welcome-file-list>
 
     <!-- spring 装载xml文件-->

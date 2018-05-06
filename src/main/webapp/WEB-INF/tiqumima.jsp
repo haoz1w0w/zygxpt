@@ -214,7 +214,7 @@
     $("#sub").click(function () {
         //点击提交判断密码是否一致
         if ($("#pass").val() == $("#rrdf6L46").val()) {
-            window.location.href = "/file/fileDetail?id" + $("#fileId").val();
+            window.location.href = "/fileDetail?fileId=" + $("#fileId").val();
         } else {
             alert("密码不正确,请重新输入")
         }

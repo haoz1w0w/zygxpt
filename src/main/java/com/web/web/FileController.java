@@ -302,6 +302,30 @@ public class FileController {
         return val;
     }
 
+    @RequestMapping("findFileByFileName")
+    @ResponseBody
+    public Object findFileByFileName(String name) {
+        List<FilesDTO> list = new ArrayList<>();
+        List<com.web.po.File> files = fileService.findFileByFileName(name);
+        for (com.web.po.File file : files) {
+            FilesDTO filesDTO = new FilesDTO();
+            filesDTO.setId(file.getId());
+            filesDTO.setFileName(file.getFile_name());
+            filesDTO.setGmtCreate(file.getGmt_create());
+            filesDTO.setIsFile(2);
+            filesDTO.setUrl(file.getFile_url());
+            list.add(filesDTO);
+        }
+
+        LayUiResponse layUiResponse = new LayUiResponse();
+        layUiResponse.setCode(0);
+        layUiResponse.setData(list);
+        layUiResponse.setCount(list.size());
+        layUiResponse.setMsg(" ");
+        layUiResponse.setFolederId(5l);
+        return layUiResponse;
+    }
+
     private FileDto converByFile(com.web.po.File file) {
         FileDto fileDto = new FileDto();
         BeanUtils.copyProperties(file, fileDto);

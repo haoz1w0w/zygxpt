@@ -1,4 +1,3 @@
-
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
@@ -30,6 +29,13 @@
 
 </div>
 <div style="width: 80%;float: left;margin-top: 4px">
+    <div class="demoTable">
+        根据文件名搜索用户
+        <div class="layui-inline">
+            <input class="layui-input" name="id" id="demoReload" autocomplete="off">
+        </div>
+        <button class="layui-btn" data-type="reload">搜索</button>
+    </div>
     <table id="allSource" lay-filter="fileList"></table>
 </div>
 
@@ -41,37 +47,38 @@
     {{#  } }}
 
 </script>
+<script src="/plugins/jquery-3.3.1/jquery-3.3.1.min.js"></script>
+
 <script>
     var message;
     layui.config({
         base: '/build/js/'
-    }).use(['table'], function() {
+    }).use(['table'], function () {
 
         var table = layui.table;
-        var $ = layui.jquery;
 
         /**用户表格加载*/
         var tableIns = {
             elem: '#allSource'
             , url: '/file/fileList'
-            ,response: {
+            , response: {
                 statusName: 'code' //数据状态的字段名称，默认：code
-                ,statusCode: 0 //成功的状态码，默认：0
-                ,msgName: 'msg' //状态信息的字段名称，默认：msg
-                ,countName: 'count' //数据总数的字段名称，默认：count
-                ,dataName: 'data' //数据列表的字段名称，默认：data
-                ,folederId:1
+                , statusCode: 0 //成功的状态码，默认：0
+                , msgName: 'msg' //状态信息的字段名称，默认：msg
+                , countName: 'count' //数据总数的字段名称，默认：count
+                , dataName: 'data' //数据列表的字段名称，默认：data
+                , folederId: 1
             }
             , cellMinWidth: 80
             , cols: [[
-                {checkbox: 'true',width:150},
+                {checkbox: 'true', width: 150},
                 {
                     field: 'pic',
                     title: '类型',
                     width: 150,
                     templet: '#fileType'
                 }
-                , {field: 'fileName',width: 150, title: '文件名', templet: '#usernameTpl', event: 'setSign'}
+                , {field: 'fileName', width: 150, title: '文件名', templet: '#usernameTpl', event: 'setSign'}
                 , {
                     field: 'gmtCreate',
                     title: '创建时间',
@@ -85,31 +92,31 @@
         table.render(tableIns);
 
         //bing table setSign
-        table.on("tool(fileList)",function (even) {
+        table.on("tool(fileList)", function (even) {
             var evenName = even.event;
             var evenData = even.data;
-            if(evenName == 'setSign'){
+            if (evenName == 'setSign') {
 
                 console.log(evenData.password);
-                if(evenData.password != null){
+                if (evenData.password != null) {
                     layer.open({
                         content: '请输入密码:<input type="password" id="filePassword"/>'
-                        ,btn: ['确定','关闭']
-                        ,yes: function(index, layero){
+                        , btn: ['确定', '关闭']
+                        , yes: function (index, layero) {
                             var input = $("#filePassword").val();
-                            if(input == evenData.password){
+                            if (input == evenData.password) {
                                 tableFileClick(evenData["id"])
-                            }else{
+                            } else {
                                 layer.msg('密码错误，请从新输入！！！');
                             }
                             layer.close(index);
                         }
-                        ,btn2: function(index, layero){
+                        , btn2: function (index, layero) {
                             layer.close(index);
                         }
 
                     });
-                }else {
+                } else {
                     tableFileClick(evenData["id"])
                 }
 
@@ -119,7 +126,7 @@
         function tableFileClick(id) {
             //根据ID 重新渲染 table 数据
             tableIns.url = 'file/fileList';
-            tableIns.where = {folederId:id};
+            tableIns.where = {folederId: id};
             table.render(tableIns);
         }
 
@@ -156,43 +163,48 @@
         };
 
 
-
         //初始化加载 教师列表
-        $.get("/user/findTeacherList",function (data) {
+        $.get("/user/findTeacherList", function (data) {
             console.log(data);
-            for(var t = 0;t < data.length;t++){
-                var dd = $("<dd class='teach-term'><a>&nbsp;&nbsp;&nbsp;"+data[t]["account"]+"</a></dd>")
-                dd.attr("teach-id",data[t]["id"])
+            for (var t = 0; t < data.length; t++) {
+                var dd = $("<dd class='teach-term'><a>&nbsp;&nbsp;&nbsp;" + data[t]["account"] + "</a></dd>")
+                dd.attr("teach-id", data[t]["id"])
                 $("#teachList").append(dd)
             }
 
             //添加教师按钮函数
-            $(".teach-term").on("click",function () {
+            $(".teach-term").on("click", function () {
                 var teachId = $(this).attr("teach-id");
                 tableIns.url = "/file/findUserFile";
-                tableIns.where = {userId:teachId}
+                tableIns.where = {userId: teachId}
                 table.render(tableIns);
             })
         })
 
         //初始化加载 课程列表
-        $.get("/file/getAllTag",function (data) {
-            for(var t = 0;t < data.length;t++){
-                var dd = $("<dd class='subject-term'><a>&nbsp;&nbsp;&nbsp;"+data[t]["tag_name"]+"</a></dd>")
-                dd.attr("subject-id",data[t]["id"])
+        $.get("/file/getAllTag", function (data) {
+            for (var t = 0; t < data.length; t++) {
+                var dd = $("<dd class='subject-term'><a>&nbsp;&nbsp;&nbsp;" + data[t]["tag_name"] + "</a></dd>")
+                dd.attr("subject-id", data[t]["id"])
                 $("#subject").append(dd)
             }
 
             //添加教师按钮函数
-            $(".subject-term").on("click",function () {
+            $(".subject-term").on("click", function () {
                 var subject = $(this).attr("subject-id");
                 tableIns.url = "file/findSubjectFiles";
-                tableIns.where = {tagId:subject}
+                tableIns.where = {tagId: subject}
                 table.render(tableIns);
             })
         })
-
+        $('.demoTable .layui-btn').on('click', function () {
+            var fileName = $("#demoReload").val();
+            tableIns.url = "file/findFileByFileName";
+            tableIns.where = {name: fileName}
+            table.render(tableIns);
+        });
     });
+
 
 </script>
 </body>

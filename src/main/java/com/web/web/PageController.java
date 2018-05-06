@@ -69,7 +69,6 @@ public class PageController {
 //    }
 
     @RequestMapping("/upload")
-
     public ModelAndView upload(HttpServletRequest request) {
         ModelAndView modelAndView = new ModelAndView("/upload");
         List<Foleder> foleders = fileService.slectFolderByUserId(2l);
@@ -95,8 +94,25 @@ public class PageController {
             modelAndView.addObject("share", resourceShare);
             modelAndView.setViewName("/tiqumima");
         } else {
-            modelAndView.setViewName("redirect:/fileShare?id=" + resourceShare.getFile_id());
+            modelAndView.setViewName("redirect:/fileDetail?fileId=" + resourceShare.getFile_id());
         }
         return modelAndView;
+    }
+
+    @RequestMapping("/fileDetail")
+    public ModelAndView fileShare(Long fileId) {
+        ModelAndView modelAndView = new ModelAndView("/wenjianxiangqing");
+        File file = fileService.selectFileById(fileId);
+        modelAndView.addObject("file", file);
+        return modelAndView;
+    }
+
+    @RequestMapping("login")
+    public String login() {
+        return "/login";
+    }
+    @RequestMapping("register")
+    public String register() {
+        return "/register";
     }
 }

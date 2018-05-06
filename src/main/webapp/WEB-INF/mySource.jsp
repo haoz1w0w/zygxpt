@@ -20,7 +20,6 @@
     <!-- 注意：如果你直接复制所有代码到本地，上述css路径需要改成你本地的 -->
 </head>
 <body>
-
 <div class="layui-btn-group demoTable">
     <button class="layui-btn" data-type="getCheckData">批量删除</button>
     <button class="layui-btn" data-type="getCheckLength">上传文件</button>
