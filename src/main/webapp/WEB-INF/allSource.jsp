@@ -30,14 +30,18 @@
 </div>
 <div style="width: 80%;float: left;margin-top: 4px">
     <div class="demoTable">
-        根据文件名搜索用户
+        根据文件名搜索文件
         <div class="layui-inline">
             <input class="layui-input" name="id" id="demoReload" autocomplete="off">
         </div>
-        <button class="layui-btn" data-type="reload">搜索</button>
+        <button class="layui-btn" data-type="reload" id="search">搜索</button>
+    </div>
+    <div class="layui-btn-group demoTable">
+        <button class="layui-btn" data-type="getCheckLength" id="upload">上传文件</button>
     </div>
     <table id="allSource" lay-filter="fileList"></table>
 </div>
+
 
 <script id="fileType" type="text/html">
     {{#  if(d.isFile == 2){ }}
@@ -130,6 +134,20 @@
             table.render(tableIns);
         }
 
+        active = {
+            getCheckLength: function () { //上传文件
+
+                layer.open({
+                    type: 2,
+                    title: '上传文件',
+                    shadeClose: true,
+                    shade: 0.8,
+                    area: ['400px', '90%'],
+                    content: '/upload'
+                });
+            }
+
+        };
         //时间戳的处理
         layui.laytpl.toDateString = function (d, format) {
             var date = new Date(d || new Date())
@@ -197,12 +215,22 @@
                 table.render(tableIns);
             })
         })
-        $('.demoTable .layui-btn').on('click', function () {
+        $('#search').on('click', function () {
             var fileName = $("#demoReload").val();
             tableIns.url = "file/findFileByFileName";
             tableIns.where = {name: fileName}
             table.render(tableIns);
         });
+        $("#upload").on('click', function () {
+            layer.open({
+                type: 2,
+                title: '上传文件',
+                shadeClose: true,
+                shade: 0.8,
+                area: ['400px', '90%'],
+                content: '/uploadAll'
+            });
+        })
     });
 
 

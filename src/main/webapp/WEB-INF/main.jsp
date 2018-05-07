@@ -1,5 +1,7 @@
-
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+<%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
+<%@ taglib uri="http://java.sun.com/jsp/jstl/functions" prefix="fn" %>
 <html>
 <head>
     <title>文件管理系统</title>
@@ -10,31 +12,28 @@
 <body>
 <div class="layui-layout layui-layout-admin kit-layout-admin">
     <div class="layui-header">
-        <div class="layui-logo">KIT ADMIN</div>
+        <div class="layui-logo">资源共享平台</div>
         <div class="layui-logo kit-logo-mobile">K</div>
-        <ul class="layui-nav layui-layout-left kit-nav">
-            <li class="layui-nav-item"><a href="javascript:;">控制台</a></li>
-            <li class="layui-nav-item"><a href="javascript:;">商品管理</a></li>
-            <li class="layui-nav-item">
-                <a href="javascript:;">其它系统</a>
-                <dl class="layui-nav-child">
-                    <dd><a href="javascript:;">邮件管理</a></dd>
-                    <dd><a href="javascript:;">消息管理</a></dd>
-                    <dd><a href="javascript:;">授权管理</a></dd>
-                </dl>
-            </li>
-        </ul>
         <ul class="layui-nav layui-layout-right kit-nav">
             <li class="layui-nav-item">
                 <a href="javascript:;">
-                    <img src="http://m.zhengjinfan.cn/images/0.jpg" class="layui-nav-img"> Van
+                    <c:if test="${empty userInfo}">
+                        shabizjj
+                    </c:if>
+                    <c:if test="${not empty userInfo}">
+                        ${userInfo.nick_name}
+                    </c:if>
                 </a>
                 <dl class="layui-nav-child">
-                    <dd><a href="javascript:;">基本资料</a></dd>
-                    <dd><a href="javascript:;">安全设置</a></dd>
+                    <c:if test="${empty userInfo}">
+                        <dd><a href="/login">去登陆</a></dd>
+                    </c:if>
+                    <c:if test="${not empty userInfo}">
+                        <dd><a href="/user">基本资料</a></dd>
+                    </c:if>
                 </dl>
             </li>
-            <li class="layui-nav-item"><a href="javascript:;"><i class="fa fa-sign-out" aria-hidden="true"></i> 注销</a></li>
+
         </ul>
     </div>
 
@@ -47,37 +46,36 @@
                     <a class="" href="javascript:;"><i class="fa fa-plug" aria-hidden="true"></i><span> 基本元素</span></a>
                     <dl class="layui-nav-child">
                         <dd>
-                            <a href="javascript:;" kit-target data-options="{url:'test.html',icon:'&#xe6c6;',title:'表格',id:'1'}">
+                            <a href="javascript:;" kit-target
+                               data-options="{url:'test.html',icon:'&#xe6c6;',title:'表格',id:'1'}">
                                 <i class="layui-icon">&#xe6c6;</i><span> 表格</span></a>
-                        </dd>
-                        <dd>
-                            <a href="javascript:;" data-url="form.html" data-icon="fa-user" data-title="表单" kit-target data-id='2'><i class="fa fa-user" aria-hidden="true"></i><span> 表单</span></a>
-                        </dd>
-                        <dd>
-                            <a href="javascript:;" data-url="nav.html" data-icon="&#xe628;" data-title="导航栏" kit-target data-id='3'><i class="layui-icon">&#xe628;</i><span> 导航栏</span></a>
-                        </dd>
-                        <dd>
-                            <a href="javascript:;" data-url="list4.html" data-icon="&#xe614;" data-title="列表四" kit-target data-id='4'><i class="layui-icon">&#xe614;</i><span> 列表四</span></a>
-                        </dd>
-                        <dd>
-                            <a href="javascript:;" kit-target data-options="{url:'https://www.baidu.com',icon:'&#xe658;',title:'百度一下',id:'5'}"><i class="layui-icon">&#xe658;</i><span> 百度一下</span></a>
                         </dd>
                     </dl>
                 </li>
                 <li class="layui-nav-item layui-nav-itemed">
                     <a href="javascript:;"><i class="fa fa-plug" aria-hidden="true"></i><span> 组件</span></a>
                     <dl class="layui-nav-child">
-                        <dd><a href="javascript:;" kit-target data-options="{url:'navbar.html',icon:'&#xe658;',title:'Navbar',id:'6'}"><i class="layui-icon">&#xe658;</i><span> Navbar</span></a></dd>
-                        <dd><a href="javascript:;" kit-target data-options="{url:'tab.html',icon:'&#xe658;',title:'TAB',id:'7'}"><i class="layui-icon">&#xe658;</i><span> Tab</span></a></dd>
-                        <dd><a href="javascript:;" kit-target data-options="{url:'onelevel.html',icon:'&#xe658;',title:'OneLevel',id:'50'}"><i class="layui-icon">&#xe658;</i><span> OneLevel</span></a></dd>
-                        <dd><a href="javascript:;" kit-target data-options="{url:'app.html',icon:'&#xe658;',title:'App',id:'8'}"><i class="layui-icon">&#xe658;</i><span> app.js主入口</span></a></dd>
+                        <dd><a href="javascript:;" kit-target
+                               data-options="{url:'navbar.html',icon:'&#xe658;',title:'Navbar',id:'6'}"><i
+                                class="layui-icon">&#xe658;</i><span> Navbar</span></a></dd>
+                        <dd><a href="javascript:;" kit-target
+                               data-options="{url:'tab.html',icon:'&#xe658;',title:'TAB',id:'7'}"><i class="layui-icon">&#xe658;</i><span> Tab</span></a>
+                        </dd>
+                        <dd><a href="javascript:;" kit-target
+                               data-options="{url:'onelevel.html',icon:'&#xe658;',title:'OneLevel',id:'50'}"><i
+                                class="layui-icon">&#xe658;</i><span> OneLevel</span></a></dd>
+                        <dd><a href="javascript:;" kit-target
+                               data-options="{url:'app.html',icon:'&#xe658;',title:'App',id:'8'}"><i class="layui-icon">&#xe658;</i><span> app.js主入口</span></a>
+                        </dd>
                     </dl>
                 </li>
                 <li class="layui-nav-item">
-                    <a href="javascript:;" data-url="/components/table/table.html" data-name="table" kit-loader><i class="fa fa-plug" aria-hidden="true"></i><span> 表格(page)</span></a>
+                    <a href="javascript:;" data-url="/components/table/table.html" data-name="table" kit-loader><i
+                            class="fa fa-plug" aria-hidden="true"></i><span> 表格(page)</span></a>
                 </li>
                 <li class="layui-nav-item">
-                    <a href="javascript:;" data-url="/views/form.html" data-name="form" kit-loader><i class="fa fa-plug" aria-hidden="true"></i><span> 表单(page)</span></a>
+                    <a href="javascript:;" data-url="/views/form.html" data-name="form" kit-loader><i class="fa fa-plug"
+                                                                                                      aria-hidden="true"></i><span> 表单(page)</span></a>
                 </li>
             </ul>
         </div>
@@ -99,7 +97,7 @@
     var message;
     layui.config({
         base: '/build/js/'
-    }).use(['app', 'message'], function() {
+    }).use(['app', 'message'], function () {
         var app = layui.app,
             $ = layui.jquery,
             layer = layui.layer;

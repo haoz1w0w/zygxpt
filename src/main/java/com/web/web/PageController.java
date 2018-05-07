@@ -91,6 +91,18 @@ public class PageController {
         return modelAndView;
     }
 
+    @RequestMapping("/uploadAll")
+    public ModelAndView uploadAll(HttpServletRequest request) {
+        ModelAndView modelAndView = new ModelAndView("/uploadAll");
+        List<UserInfo> userInfos = userInfoMapper.findTeacherList();
+
+        List<Tag> allTag = fileService.findAllTag();
+        modelAndView.addObject("allTag", allTag);
+        modelAndView.addObject("userInfos", userInfos);
+        return modelAndView;
+    }
+
+
     @RequestMapping("/fileShare")
     public ModelAndView tiqumima(Long id) {
         ResourceShare resourceShare = resourceShareMapper.selectByPrimaryKey(id);

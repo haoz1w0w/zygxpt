@@ -74,9 +74,9 @@ public class FileController {
     @RequestMapping("findMyfile")
     @ResponseBody
     public Object findMyFile(HttpServletRequest request) {
-//        UserInfo userInfo = (UserInfo) request.getSession().getAttribute("userInfo");
+        Long userId = (Long) request.getSession().getAttribute("userId");
         List<FilesDTO> list = new ArrayList<>();
-        List<Foleder> foleders = fileService.slectFolderByUserId(2l);
+        List<Foleder> foleders = fileService.slectFolderByUserId(userId);
         for (Foleder foleder : foleders) {
             FilesDTO filesDTO = new FilesDTO();
             filesDTO.setId(foleder.getId());
@@ -151,8 +151,7 @@ public class FileController {
     @RequestMapping("uploadFile")
     @ResponseBody
     public Object uploadFile(MultipartFile file, Long folderId, HttpServletRequest request, Integer tagId) {
-        UserInfo userInfo = (UserInfo) request.getSession().getAttribute("userInfo");
-        folderId = 1l;
+        Long userId = (Long) request.getSession().getAttribute("userId");
         File file1 = null;
         try {
             file1 = multipartToFile(file);
@@ -162,7 +161,26 @@ public class FileController {
         }
         //上传之后将链接存入数据库
         if (folderId != null) {
-            ServiceResult<Boolean> file2 = fileService.createFile(file.getOriginalFilename(), url + file.getOriginalFilename(), 1l, 2l, tagId);
+            ServiceResult<Boolean> file2 = fileService.createFile(file.getOriginalFilename(), url + file.getOriginalFilename(), folderId, userId, tagId);
+            if (file2.getSuccess()) {
+                return new BaseResult(file2.getMessage(), true);
+            }
+        }
+        return new BaseResult(false, "文件上传失败，请重新上传", 20001);
+    }
+    @RequestMapping("uploadFileByUserId")
+    @ResponseBody
+    public Object uploadFile(MultipartFile file, Long folderId, HttpServletRequest request, Integer tagId,Long userId) {
+        File file1 = null;
+        try {
+            file1 = multipartToFile(file);
+            txCloudUtil.updload(file.getOriginalFilename(), file1);
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+        //上传之后将链接存入数据库
+        if (folderId != null) {
+            ServiceResult<Boolean> file2 = fileService.createFile(file.getOriginalFilename(), url + file.getOriginalFilename(), folderId, userId, tagId);
             if (file2.getSuccess()) {
                 return new BaseResult(file2.getMessage(), true);
             }
@@ -173,8 +191,8 @@ public class FileController {
     @RequestMapping("mkdirFolder")
     @ResponseBody
     public Object crateNewFolder(String folderName, Long fatherId, HttpServletRequest request) {
-        UserInfo userInfo = (UserInfo) request.getSession().getAttribute("userInfo");
-        fileService.createFolder(folderName, fatherId, userInfo.getId());
+        Long userId = (Long) request.getSession().getAttribute("userId");
+        fileService.createFolder(folderName, fatherId,userId);
         //创建文件夹
         return new BaseResult("存储成功", true);
     }
