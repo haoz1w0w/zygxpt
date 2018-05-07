@@ -7,6 +7,7 @@ import com.web.utils.BaseResult;
 import com.web.utils.MD5Util;
 import com.web.utils.ServiceResult;
 import com.web.utils.StringUtil;
+import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.util.CollectionUtils;
@@ -57,7 +58,7 @@ public class UserController {
             ServiceResult serviceResult = userService.CheckUserInfo(account, password);
             if (serviceResult.getSuccess()) {
                 UserInfo userInfo = userService.selectUserInfoByAccount(account);
-                httpServletRequest.getSession().setAttribute("userInfo", userInfo);
+                httpServletRequest.getSession().setAttribute("userId", userInfo.getId());
                 return true;
             }
             return false;
@@ -74,8 +75,8 @@ public class UserController {
         if (userInfo == null) {
             return new BaseResult(false, "参数不正确", 10001);
         }
-
-        return null;
+        userService.updateUserInfo(userInfo);
+        return true;
 
     }
 

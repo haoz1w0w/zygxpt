@@ -59,12 +59,7 @@ public class UserServiceImpl implements UserService {
 
     @Override
     public ServiceResult<Boolean> updateUserInfo(UserInfo userInfo) {
-        UserInfo userInfo1 = userInfoMapper.selectByPrimaryKey(userInfo.getId());
-        if (userInfo1 == null) {
-
-        }
-        BeanUtils.copyProperties(userInfo, userInfo1);
-        Integer flag = userInfoMapper.updateByPrimaryKey(userInfo1);
+        Integer flag = userInfoMapper.updateByPrimaryKeySelective(userInfo);
         if (flag == 0) {
             return null;
         }

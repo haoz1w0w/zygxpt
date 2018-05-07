@@ -262,6 +262,7 @@ public class FileController {
                 //自动生成
                 password = getStringRandom(4);
             }
+
         }
         resourceShare.setFile_id(fileId);
         resourceShare.setPassword(password);

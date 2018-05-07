@@ -1,6 +1,7 @@
 package com.web.web;
 
 import com.web.dao.ResourceShareMapper;
+import com.web.dao.UserInfoMapper;
 import com.web.po.*;
 import com.web.service.FileService;
 import com.web.utils.StringUtil;
@@ -27,11 +28,15 @@ public class PageController {
 
     @Autowired
     private ResourceShareMapper resourceShareMapper;
+    @Autowired
+    private UserInfoMapper userInfoMapper;
 
     @RequestMapping("/main")
-    public String toBaiDuYunMain() {
-
-        return "/main";
+    public ModelAndView toBaiDuYunMain(HttpServletRequest request) {
+        ModelAndView modelAndView = new ModelAndView("/main");
+        UserInfo userinfo = userInfoMapper.selectByPrimaryKey((Long) request.getSession().getAttribute("userId"));
+        modelAndView.addObject("userInfo", userinfo);
+        return modelAndView;
     }
 
     @RequestMapping("/allSource")
@@ -111,8 +116,18 @@ public class PageController {
     public String login() {
         return "/login";
     }
+
     @RequestMapping("register")
     public String register() {
         return "/register";
+    }
+
+    @RequestMapping("user")
+    public ModelAndView userInfo(HttpServletRequest request) {
+        Long userId = (Long) request.getSession().getAttribute("userId");
+        ModelAndView modelAndView = new ModelAndView("/user");
+        UserInfo userInfo = userInfoMapper.selectByPrimaryKey(userId);
+        modelAndView.addObject("userInfo", userInfo);
+        return modelAndView;
     }
 }

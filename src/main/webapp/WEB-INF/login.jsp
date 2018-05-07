@@ -100,14 +100,14 @@
         <div class="layui-form-item">
             <label class="layui-form-label">输入账号</label>
             <div class="layui-input-inline">
-                <input type="text" name="account" lay-verify="required" placeholder="请输入" autocomplete="off"
+                <input type="text" name="account" placeholder="请输入" autocomplete="off"
                        class="layui-input">
             </div>
         </div>
         <div class="layui-form-item">
             <label class="layui-form-label">输入密码</label>
             <div class="layui-input-inline">
-                <input type="password" name="pass" lay-verify="required" placeholder="请输入" autocomplete="off"
+                <input type="password" name="pass" placeholder="请输入" autocomplete="off"
                        class="layui-input">
             </div>
         </div>
@@ -184,7 +184,7 @@
                 success: function (data) {
                     console.log(data);
                     if (data) {
-                        window.location.href = "/main"
+                        window.location.href = "/user"
                     } else {
                         layer.alert("密码不正确");
                     }
