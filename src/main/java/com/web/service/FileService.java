@@ -12,7 +12,7 @@ public interface FileService {
     /**
      * 创建文件
      */
-    public ServiceResult<Boolean> createFile(String fileName, String fileUrl, Long folderId, Long userId, Integer tagId);
+    public ServiceResult<Boolean> createFile(File file);
 
     /**
      * 创建文件夹

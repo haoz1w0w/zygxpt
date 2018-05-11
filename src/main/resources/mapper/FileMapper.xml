@@ -37,6 +37,9 @@
       #{user_id,jdbcType=BIGINT})
   </insert>
     <insert id="insertSelective" parameterType="com.web.po.File">
+        <selectKey keyProperty="id" order="AFTER" resultType="java.lang.Long">
+            select LAST_INSERT_ID()
+        </selectKey>
         insert into file
         <trim prefix="(" suffix=")" suffixOverrides=",">
             <if test="id != null">

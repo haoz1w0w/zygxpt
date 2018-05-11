@@ -26,17 +26,9 @@ public class FileServiceImpl implements FileService {
     private TagMapper tagMapper;
 
     @Override
-    public ServiceResult<Boolean> createFile(String fileName, String fileUrl, Long folderId, Long userId, Integer tagId) {
+    public ServiceResult<Boolean> createFile(File file) {
         ServiceResult serviceResult = new ServiceResult();
-        File file = new File();
-        file.setFile_name(fileName);
-        file.setFile_url(fileUrl);
-        file.setFolder_id(folderId);
-        file.setIs_del(1);
-        file.setGmt_create(new Date());
-        file.setGmt_modify(new Date());
-        file.setUser_id(userId);
-        file.setFile_tag(tagId);
+
         try {
             int flag = fileMapper.insertSelective(file);
             if (flag == 0) {

@@ -142,4 +142,10 @@ public class PageController {
         modelAndView.addObject("userInfo", userInfo);
         return modelAndView;
     }
+
+    @RequestMapping("mkdirFoleder")
+    public ModelAndView mkdirFoleder(HttpServletRequest request) {
+        ModelAndView modelAndView = new ModelAndView("/mkdirFoleder");
+        return modelAndView;
+    }
 }

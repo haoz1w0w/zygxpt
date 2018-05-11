@@ -1,5 +1,6 @@
 package com.web.web;
 
+import com.web.dao.LoadListMapper;
 import com.web.dao.ResourceShareMapper;
 import com.web.po.*;
 import com.web.service.FileService;
@@ -10,6 +11,7 @@ import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.stereotype.Controller;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.multipart.MultipartFile;
@@ -30,6 +32,8 @@ public class FileController {
     TxCloudUtil txCloudUtil;
     @Autowired
     ResourceShareMapper resourceShareMapper;
+    @Autowired
+    LoadListMapper loadListMapper;
     private final static String url = "https://test-1256150574.cos.ap-beijing.myqcloud.com/";
 
     @RequestMapping("fileList")
@@ -161,16 +165,34 @@ public class FileController {
         }
         //上传之后将链接存入数据库
         if (folderId != null) {
-            ServiceResult<Boolean> file2 = fileService.createFile(file.getOriginalFilename(), url + file.getOriginalFilename(), folderId, userId, tagId);
-            if (file2.getSuccess()) {
-                return new BaseResult(file2.getMessage(), true);
+            com.web.po.File file2 = new com.web.po.File();
+            file2.setFile_name(file.getOriginalFilename());
+            file2.setFile_url(url + file.getOriginalFilename());
+            file2.setFolder_id(folderId);
+            file2.setIs_del(1);
+            file2.setGmt_create(new Date());
+            file2.setGmt_modify(new Date());
+            file2.setUser_id(userId);
+            file2.setFile_tag(tagId);
+            ServiceResult<Boolean> file3 = fileService.createFile(file2);
+            if (file3.getSuccess()) {
+                LoadList loadList = new LoadList();
+                loadList.setGmt_download(new Date());
+                loadList.setType(1);
+                loadList.setUser_id(userId);
+                loadList.setFile_name(file.getOriginalFilename());
+                loadListMapper.insertSelective(loadList);
+                return new BaseResult(file3.getMessage(), true);
             }
         }
         return new BaseResult(false, "文件上传失败，请重新上传", 20001);
     }
+
     @RequestMapping("uploadFileByUserId")
     @ResponseBody
-    public Object uploadFile(MultipartFile file, Long folderId, HttpServletRequest request, Integer tagId,Long userId) {
+    public Object uploadFile(MultipartFile file, Long folderId, HttpServletRequest request, Integer tagId, Long userId) {
+
+        Long userIdUpload = (Long) request.getSession().getAttribute("userId");
         File file1 = null;
         try {
             file1 = multipartToFile(file);
@@ -180,9 +202,24 @@ public class FileController {
         }
         //上传之后将链接存入数据库
         if (folderId != null) {
-            ServiceResult<Boolean> file2 = fileService.createFile(file.getOriginalFilename(), url + file.getOriginalFilename(), folderId, userId, tagId);
-            if (file2.getSuccess()) {
-                return new BaseResult(file2.getMessage(), true);
+            com.web.po.File file2 = new com.web.po.File();
+            file2.setFile_name(file.getOriginalFilename());
+            file2.setFile_url(url + file.getOriginalFilename());
+            file2.setFolder_id(folderId);
+            file2.setIs_del(1);
+            file2.setGmt_create(new Date());
+            file2.setGmt_modify(new Date());
+            file2.setUser_id(userId);
+            file2.setFile_tag(tagId);
+            ServiceResult<Boolean> file3 = fileService.createFile(file2);
+            if (file3.getSuccess()) {
+                LoadList loadList = new LoadList();
+                loadList.setGmt_download(new Date());
+                loadList.setType(1);
+                loadList.setUser_id(userIdUpload);
+                loadList.setFile_name(file.getOriginalFilename());
+                loadListMapper.insertSelective(loadList);
+                return new BaseResult(file3.getMessage(), true);
             }
         }
         return new BaseResult(false, "文件上传失败，请重新上传", 20001);
@@ -192,17 +229,36 @@ public class FileController {
     @ResponseBody
     public Object crateNewFolder(String folderName, Long fatherId, HttpServletRequest request) {
         Long userId = (Long) request.getSession().getAttribute("userId");
-        fileService.createFolder(folderName, fatherId,userId);
+        fileService.createFolder(folderName, fatherId, userId);
         //创建文件夹
         return new BaseResult("存储成功", true);
+    }
+
+    @RequestMapping("addLoadList")
+    @ResponseBody
+    public Object addLoadList(HttpServletRequest request, Long fileId, Integer type) {
+        Long userId = (Long) request.getSession().getAttribute("userId");
+        if (userId == null) {
+            return false;
+        }
+        com.web.po.File file = fileService.selectFileById(fileId);
+        LoadList loadList = new LoadList();
+        loadList.setFile_name(file.getFile_name());
+        loadList.setUser_id(userId);
+        loadList.setGmt_download(new Date());
+        loadList.setType(type);
+        loadList.setIs_del(1);
+        loadListMapper.insertSelective(loadList);
+        return true;
     }
 
     @RequestMapping("saveMyFile")
     @ResponseBody
     public Object saveMyFile(Long fileId, Long folderId, HttpServletRequest rquest) {
         com.web.po.File file = fileService.selectFileById(fileId);
-        UserInfo userInfo = (UserInfo) rquest.getSession().getAttribute("userInfo");
-        fileService.createFile(file.getFile_name(), file.getFile_url(), folderId, userInfo.getId(), file.getFile_tag());
+        Long userId = (Long) rquest.getSession().getAttribute("userId");
+        file.setUser_id(userId);
+        fileService.createFile(file);
         return new BaseResult("保存成功", true);
     }
 

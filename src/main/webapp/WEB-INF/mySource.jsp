@@ -23,6 +23,8 @@
 <div class="layui-btn-group demoTable">
     <button class="layui-btn" data-type="getCheckData">批量删除</button>
     <button class="layui-btn" data-type="getCheckLength">上传文件</button>
+    <button class="layui-btn" data-type="isAll">创建文件夹</button>
+
 </div>
 <table class="layui-table" id="tableLay" lay-filter="demo">
 </table>
@@ -114,7 +116,20 @@
                             content: '/fenxiang?fileId=' + data.id //iframe的url
                         });
                     } else if (obj.event === 'edit') {
-                        window.location.href = data.url;
+                        $.ajax({
+                            type: "post",
+                            url: "/file/addLoadList",
+                            data: {fileId: data.id, type: 2},//非常重要的一步
+                            success: function (data) {
+                                if (data) {
+                                    window.location.href = data.url;
+                                } else {
+                                    layer.msg("请登录");
+                                }
+
+                            }
+
+                        });
                     }
                 });
             }
@@ -144,6 +159,17 @@
                     shade: 0.8,
                     area: ['400px', '90%'],
                     content: '/upload'
+                });
+            },
+            isAll: function () {
+                //创建文件夹
+                layer.open({
+                    type: 2,
+                    title: '创建文件夹',
+                    shadeClose: true,
+                    shade: 0.8,
+                    area: ['400px', '90%'],
+                    content: '/mkdirFoleder'
                 });
             }
 
