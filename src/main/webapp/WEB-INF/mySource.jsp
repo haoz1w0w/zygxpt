@@ -116,13 +116,14 @@
                             content: '/fenxiang?fileId=' + data.id //iframe的url
                         });
                     } else if (obj.event === 'edit') {
+                        var url = data.url;
                         $.ajax({
                             type: "post",
                             url: "/file/addLoadList",
                             data: {fileId: data.id, type: 2},//非常重要的一步
                             success: function (data) {
                                 if (data) {
-                                    window.location.href = data.url;
+                                    window.location.href = url;
                                 } else {
                                     layer.msg("请登录");
                                 }

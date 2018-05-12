@@ -18,7 +18,7 @@
             <li class="layui-nav-item">
                 <a href="javascript:;">
                     <c:if test="${empty userInfo}">
-                        shabizjj
+                        未登录
                     </c:if>
                     <c:if test="${not empty userInfo}">
                         ${userInfo.nick_name}

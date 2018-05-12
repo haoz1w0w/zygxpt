@@ -100,30 +100,30 @@
             var evenName = even.event;
             var evenData = even.data;
             if (evenName == 'setSign') {
-
-                console.log(evenData.password);
-                if (evenData.password != null) {
-                    layer.open({
-                        content: '请输入密码:<input type="password" id="filePassword"/>'
-                        , btn: ['确定', '关闭']
-                        , yes: function (index, layero) {
-                            var input = $("#filePassword").val();
-                            if (input == evenData.password) {
-                                tableFileClick(evenData["id"])
-                            } else {
-                                layer.msg('密码错误，请从新输入！！！');
+                if (evenData.isFile == 1) {
+                    console.log(evenData.password);
+                    if (evenData.password != null) {
+                        layer.open({
+                            content: '请输入密码:<input type="password" id="filePassword"/>'
+                            , btn: ['确定', '关闭']
+                            , yes: function (index, layero) {
+                                var input = $("#filePassword").val();
+                                if (input == evenData.password) {
+                                    tableFileClick(evenData["id"])
+                                } else {
+                                    layer.msg('密码错误，请从新输入！！！');
+                                }
+                                layer.close(index);
                             }
-                            layer.close(index);
-                        }
-                        , btn2: function (index, layero) {
-                            layer.close(index);
-                        }
+                            , btn2: function (index, layero) {
+                                layer.close(index);
+                            }
 
-                    });
-                } else {
-                    tableFileClick(evenData["id"])
+                        });
+                    } else {
+                        tableFileClick(evenData["id"])
+                    }
                 }
-
             }
         })
 
@@ -185,7 +185,7 @@
         $.get("/user/findTeacherList", function (data) {
             console.log(data);
             for (var t = 0; t < data.length; t++) {
-                var dd = $("<dd class='teach-term'><a>&nbsp;&nbsp;&nbsp;" + data[t]["account"] + "</a></dd>")
+                var dd = $("<dd class='teach-term'><a>&nbsp;&nbsp;&nbsp;" + data[t]["nick_name"] + "</a></dd>")
                 dd.attr("teach-id", data[t]["id"])
                 $("#teachList").append(dd)
             }

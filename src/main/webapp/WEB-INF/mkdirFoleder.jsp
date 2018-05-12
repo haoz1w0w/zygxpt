@@ -28,7 +28,7 @@
 </fieldset>
 <form class="layui-form" action="">
     <div class="layui-form-item">
-        <label class="layui-form-label">短输入框</label>
+        <label class="layui-form-label">文件夹名称</label>
         <div class="layui-input-inline">
             <input type="text" name="username" lay-verify="required" placeholder="请输入" autocomplete="off"
                    class="layui-input">
@@ -47,14 +47,13 @@
             <input type="password" name="password" placeholder="请输入密码" autocomplete="off" class="layui-input"
                    lay-verify="pass" id="very">
         </div>
-        <div class="layui-form-mid layui-word-aux">输入4位密码</div>
     </div>
     <div class="layui-form-item">
         <div class="layui-input-block">
             <button class="layui-btn" lay-submit="" lay-filter="demo1">立即提交</button>
             <button type="reset" class="layui-btn layui-btn-primary">重置</button>
         </div>
-    </div>
+    </div dsssss>
 </form>
 
 
@@ -92,12 +91,6 @@
         form.on('radio(encode)', function (data) {
             console.log(data.value); //被点击的radio的value值
             if (data.value == 1) {
-                $("#code").css("display", "block");
-            }
-        });
-        form.on('radio(pass)', function (data) {
-            //被点击的radio的value值
-            if (data.value == 1) {
                 $("#password").css("display", "block");
                 form.verify({
                     title: function (value) {
@@ -111,20 +104,17 @@
                     }
                 });
             }
-
         });
+
         //监听提交
         form.on('submit(demo1)', function (data) {
             $.ajax({
                 type: 'POST',
-                url: 'file/ResourceShare?method=' + data.field.method + "&password=" + data.field.password + "&encode=" + data.field.encode + "&fileId=" + $("#fileId").val(),
+                url: 'file/mkdirFolder?folderName=' + data.field.username + "&pass=" + data.field.password + "&type=" + data.field.encode,
                 success: function (data) {
-                  
+                    layer.closeAll();
                 }
             });
-            // layer.alert(JSON.stringify(data.field.encode), {
-            //     title: '最终的提交信息'
-            // })
             return false;
         });
     });

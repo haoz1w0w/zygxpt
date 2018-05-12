@@ -1,15 +1,15 @@
 <?xml version="1.0" encoding="UTF-8" ?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
-<mapper namespace="com.web.dao.LoadListMapper" >
-  <resultMap id="BaseResultMap" type="com.web.po.LoadList" >
-    <result column="id" property="id" jdbcType="BIGINT" />
-    <result column="file_name" property="file_name" jdbcType="VARCHAR" />
-    <result column="gmt_download" property="gmt_download" jdbcType="DATE" />
-    <result column="is_del" property="is_del" jdbcType="INTEGER" />
-    <result column="user_id" property="user_id" jdbcType="BIGINT" />
-    <result column="type" property="type" jdbcType="INTEGER" />
-  </resultMap>
-  <insert id="insert" parameterType="com.web.po.LoadList" >
+<mapper namespace="com.web.dao.LoadListMapper">
+    <resultMap id="BaseResultMap" type="com.web.po.LoadList">
+        <result column="id" property="id" jdbcType="BIGINT"/>
+        <result column="file_name" property="file_name" jdbcType="VARCHAR"/>
+        <result column="gmt_download" property="gmt_download" jdbcType="DATE"/>
+        <result column="is_del" property="is_del" jdbcType="INTEGER"/>
+        <result column="user_id" property="user_id" jdbcType="BIGINT"/>
+        <result column="type" property="type" jdbcType="INTEGER"/>
+    </resultMap>
+    <insert id="insert" parameterType="com.web.po.LoadList">
     insert into load_list (id, file_name, gmt_download, 
       is_del, user_id, type
       )
@@ -17,47 +17,45 @@
       #{is_del,jdbcType=INTEGER}, #{user_id,jdbcType=BIGINT}, #{type,jdbcType=INTEGER}
       )
   </insert>
-  <insert id="insertSelective" parameterType="com.web.po.LoadList" >
-    insert into load_list
-    <trim prefix="(" suffix=")" suffixOverrides="," >
-      <if test="id != null" >
-        id,
-      </if>
-      <if test="file_name != null" >
-        file_name,
-      </if>
-      <if test="gmt_download != null" >
-        gmt_download,
-      </if>
-      <if test="is_del != null" >
-        is_del,
-      </if>
-      <if test="user_id != null" >
-        user_id,
-      </if>
-      <if test="type != null" >
-        type,
-      </if>
-    </trim>
-    <trim prefix="values (" suffix=")" suffixOverrides="," >
-      <if test="id != null" >
-        #{id,jdbcType=BIGINT},
-      </if>
-      <if test="file_name != null" >
-        #{file_name,jdbcType=VARCHAR},
-      </if>
-      <if test="gmt_download != null" >
-        #{gmt_download,jdbcType=DATE},
-      </if>
-      <if test="is_del != null" >
-        #{is_del,jdbcType=INTEGER},
-      </if>
-      <if test="user_id != null" >
-        #{user_id,jdbcType=BIGINT},
-      </if>
-      <if test="type != null" >
-        #{type,jdbcType=INTEGER},
-      </if>
-    </trim>
-  </insert>
+    <insert id="insertSelective" parameterType="com.web.po.LoadList">
+        insert into load_list
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test="id != null">
+                id,
+            </if>
+            <if test="file_name != null">
+                file_name,
+            </if>
+
+            <if test="is_del != null">
+                is_del,
+            </if>
+            <if test="user_id != null">
+                user_id,
+            </if>
+            <if test="type != null">
+                type,
+            </if>
+            gmt_download
+        </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides=",">
+            <if test="id != null">
+                #{id,jdbcType=BIGINT},
+            </if>
+            <if test="file_name != null">
+                #{file_name,jdbcType=VARCHAR},
+            </if>
+
+            <if test="is_del != null">
+                #{is_del,jdbcType=INTEGER},
+            </if>
+            <if test="user_id != null">
+                #{user_id,jdbcType=BIGINT},
+            </if>
+            <if test="type != null">
+                #{type,jdbcType=INTEGER},
+            </if>
+            now()
+        </trim>
+    </insert>
 </mapper>

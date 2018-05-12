@@ -17,7 +17,7 @@ public interface FileService {
     /**
      * 创建文件夹
      */
-    public ServiceResult<Boolean> createFolder(String folderName, Long fatherId, Long userId);
+    public ServiceResult<Boolean> createFolder(Foleder foleder);
 
     //根据文件ID查询
     public File selectFileById(Long fileId);

@@ -47,14 +47,8 @@ public class FileServiceImpl implements FileService {
     }
 
     @Override
-    public ServiceResult<Boolean> createFolder(String folderName, Long fatherId, Long userId) {
+    public ServiceResult<Boolean> createFolder(Foleder foleder) {
         ServiceResult serviceResult = new ServiceResult();
-        Foleder foleder = new Foleder();
-        foleder.setGmt_create(new Date());
-        foleder.setIs_del(1);
-        foleder.setFolder_name(folderName);
-        foleder.setFather_folder(fatherId);
-        foleder.setUser_id(userId);
         folederMapper.insertSelective(foleder);
         serviceResult.setSuccess(true);
         return serviceResult;

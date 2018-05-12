@@ -75,8 +75,9 @@ public class PageController {
 
     @RequestMapping("/upload")
     public ModelAndView upload(HttpServletRequest request) {
+        Long userId =(Long) request.getSession().getAttribute("userId");
         ModelAndView modelAndView = new ModelAndView("/upload");
-        List<Foleder> foleders = fileService.slectFolderByUserId(2l);
+        List<Foleder> foleders = fileService.slectFolderByUserId(userId);
         List<FolederDTO> foledersDto = new ArrayList<>();
         for (Foleder foleder : foleders) {
             FolederDTO folederDTO = new FolederDTO();

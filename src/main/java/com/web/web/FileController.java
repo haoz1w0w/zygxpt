@@ -227,9 +227,17 @@ public class FileController {
 
     @RequestMapping("mkdirFolder")
     @ResponseBody
-    public Object crateNewFolder(String folderName, Long fatherId, HttpServletRequest request) {
+    public Object crateNewFolder(String folderName, Long fatherId, Integer type, String pass, HttpServletRequest request) {
         Long userId = (Long) request.getSession().getAttribute("userId");
-        fileService.createFolder(folderName, fatherId, userId);
+        Foleder foleder = new Foleder();
+        foleder.setIs_del(1);
+        foleder.setFolder_name(folderName);
+        foleder.setFather_folder(fatherId);
+        foleder.setUser_id(userId);
+        if (type ==1 ) {
+            foleder.setFolder_password(pass);
+        }
+        fileService.createFolder(foleder);
         //创建文件夹
         return new BaseResult("存储成功", true);
     }
@@ -245,7 +253,6 @@ public class FileController {
         LoadList loadList = new LoadList();
         loadList.setFile_name(file.getFile_name());
         loadList.setUser_id(userId);
-        loadList.setGmt_download(new Date());
         loadList.setType(type);
         loadList.setIs_del(1);
         loadListMapper.insertSelective(loadList);

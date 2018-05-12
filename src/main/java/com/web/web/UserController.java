@@ -1,7 +1,9 @@
 package com.web.web;
 
 import com.web.dao.UserInfoMapper;
+import com.web.po.Foleder;
 import com.web.po.UserInfo;
+import com.web.service.FileService;
 import com.web.service.UserService;
 import com.web.utils.BaseResult;
 import com.web.utils.MD5Util;
@@ -28,6 +30,9 @@ public class UserController {
     @Resource
     private UserService userService;
 
+    @Resource
+    private FileService fileService;
+
     @RequestMapping("/register")
     @ResponseBody
     public Object register(String account, String password, Integer role) {
@@ -40,6 +45,11 @@ public class UserController {
             ServiceResult<Boolean> serviceResult = userService.registerUserInfo(userInfo);
             if (serviceResult.getResult() != null && serviceResult.getResult()) {
                 //注册成功
+                Foleder foleder = new Foleder();
+                foleder.setIs_del(1);
+                foleder.setFolder_name("默认文件夹");
+                foleder.setUser_id(userInfo.getId());
+                fileService.createFolder(foleder);
                 return new BaseResult<String>("注册成功", true);
             }
             return new BaseResult<String>("注册失败", false);

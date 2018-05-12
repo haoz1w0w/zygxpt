@@ -46,15 +46,14 @@
             <if test="is_del != null">
                 is_del,
             </if>
-            <if test="gmt_create != null">
-                gmt_create,
-            </if>
-            <if test="gmt_modify != null">
-                gmt_modify,
-            </if>
             <if test="user_id != null">
                 user_id,
             </if>
+            gmt_create,
+
+            gmt_modify
+
+
         </trim>
         <trim prefix="values (" suffix=")" suffixOverrides=",">
             <if test="id != null">
@@ -69,15 +68,11 @@
             <if test="is_del != null">
                 #{is_del,jdbcType=INTEGER},
             </if>
-            <if test="gmt_create != null">
-                #{gmt_create,jdbcType=DATE},
-            </if>
-            <if test="gmt_modify != null">
-                #{gmt_modify,jdbcType=DATE},
-            </if>
             <if test="user_id != null">
                 #{user_id,jdbcType=BIGINT},
             </if>
+            now(),now()
+
         </trim>
     </insert>
     <update id="updateByPrimaryKeySelective" parameterType="com.web.po.Foleder">
