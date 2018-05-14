@@ -95,7 +95,7 @@
 <link rel="stylesheet" href="/plugins/layui/css/layui.css" media="all">
 <body>
 <div class="login">
-    <h2 class="login-header">登陆资源共享</h2>
+    <h2 class="login-header">登陆资源共享平台</h2>
     <form class="layui-form login-container " action="">
         <div class="layui-form-item">
             <label class="layui-form-label">输入账号</label>
@@ -113,7 +113,7 @@
         </div>
         <div class="layui-form-item">
             <div class="layui-input-block">
-                <button class="layui-btn" lay-submit="" lay-filter="demo1">立即提交</button>
+                <button class="layui-btn" lay-submit="" lay-filter="demo1">登录</button>
                 <button class="layui-btn" lay-submit="" lay-filter="demo2">注册</button>
             </div>
         </div>

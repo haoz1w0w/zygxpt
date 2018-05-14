@@ -49,7 +49,6 @@
             <input type="password" name="password" placeholder="请输入密码" autocomplete="off" class="layui-input"
                    lay-verify="pass" id="very">
         </div>
-        <div class="layui-form-mid layui-word-aux">输入4位密码</div>
     </div>
     <div class="layui-form-item">
         <div class="layui-input-block">
@@ -95,23 +94,16 @@
             console.log(data.value); //被点击的radio的value值
             if (data.value == 1) {
                 $("#code").css("display", "block");
+            } else {
+                $("#code").css("display", "none");
             }
         });
         form.on('radio(pass)', function (data) {
             //被点击的radio的value值
             if (data.value == 1) {
                 $("#password").css("display", "block");
-                form.verify({
-                    title: function (value) {
-                        if (value.length < 5) {
-                            return '标题至少得5个字符啊';
-                        }
-                    }
-                    , pass: [/(.+){4}$/, '密码必须4位']
-                    , content: function (value) {
-                        layedit.sync(editIndex);
-                    }
-                });
+            } else {
+                $("#password").css("display", "none");
             }
 
         });
@@ -126,16 +118,16 @@
                     console.log(resourceShare.passwod);
                     var srt;
                     if (resourceShare.encode == 1) {
-                         srt = '<div style="padding: 50px; line-height: 22px; background-color: #393D49; color: #fff; font-weight: 300;">分享成功！<br>您的分享链接为<br>' + resourceShare.url + '<br>密码为:' + resourceShare.passwod + '</div>';
+                        srt = '<div style="padding: 50px; line-height: 22px; background-color: #393D49; color: #fff; font-weight: 300;">分享成功！<br>链接:' + resourceShare.url + '<br>密码:' + resourceShare.passwod + '</div>';
                     } else {
-                         srt = '<div style="padding: 50px; line-height: 22px; background-color: #393D49; color: #fff; font-weight: 300;">分享成功！<br>您的分享链接为<br>' + resourceShare.url + '</div>';
+                        srt = '<div style="padding: 50px; line-height: 22px; background-color: #393D49; color: #fff; font-weight: 300;">分享成功！<br>链接:' + resourceShare.url + '</div>';
 
                     }
                     layer.open({
                         type: 1
                         , title: false //不显示标题栏
                         , closeBtn: false
-                        , area: '350px;'
+                        , area: '370px;'
                         , shade: 0.8
                         , id: 'LAY_layuipro' //设定一个id，防止重复弹出
                         , btn: ['确认']

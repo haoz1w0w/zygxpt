@@ -18,6 +18,7 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.servlet.ModelAndView;
 
 import javax.annotation.Resource;
 import javax.servlet.http.HttpServletRequest;
@@ -76,6 +77,12 @@ public class UserController {
             return new BaseResult("登录失败", false);
         }
 
+    }
+
+    @RequestMapping("/logout")
+    public ModelAndView logout(String account, String password, HttpServletRequest httpServletRequest) {
+        httpServletRequest.getSession().removeAttribute("userId");
+        return new ModelAndView("main");
     }
 
     //修改个人信息

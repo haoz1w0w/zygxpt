@@ -30,8 +30,10 @@
                     </c:if>
                     <c:if test="${not empty userInfo}">
                         <dd><a href="/user">基本资料</a></dd>
+                        <dd><a href="/user/logout">登出</a></dd>
                     </c:if>
                 </dl>
+
             </li>
 
         </ul>
@@ -87,8 +89,7 @@
 
     <div class="layui-footer">
         <!-- 底部固定区域 -->
-        2017 &copy;
-        <a href="http://kit.zhengjinfan.cn/">kit.zhengjinfan.cn/</a> MIT license
+        <a href="http://cie.nwsuaf.edu.cn/">2017 西北农林科技大学 | 信息工程学院 @张京京</a>
 
     </div>
 </div>

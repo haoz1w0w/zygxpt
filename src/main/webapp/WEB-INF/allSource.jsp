@@ -29,9 +29,9 @@
 
 </div>
 <div style="width: 80%;float: left;margin-top: 4px">
-    <div class="demoTable">
+    <div class="demoTable" style="text-align: right">
         根据文件名搜索文件
-        <div class="layui-inline">
+        <div class="layui-inline" >
             <input class="layui-input" name="id" id="demoReload" autocomplete="off">
         </div>
         <button class="layui-btn" data-type="reload" id="search">搜索</button>
@@ -42,8 +42,8 @@
     <table id="allSource" lay-filter="fileList"></table>
     <script type="text/html" id="barDemo">
         {{#  if(d.isFile == 2){ }}
-        <a class="layui-btn layui-btn-xs" lay-event="edit">下载</a>
-        <a class="layui-btn layui-btn-danger layui-btn-xs" lay-event="del">分享到我的</a>
+        <a class="layui-btn layui-btn-xs" lay-event="edit" style="line-height: 30px">下载</a>
+        <a class="layui-btn layui-btn-danger layui-btn-xs" lay-event="del" style="line-height: 30px">保存至我的云盘</a>
         {{#  } else { }}
 
         {{#  } }}
@@ -99,7 +99,7 @@
                     templet: '<div>{{ layui.laytpl.toDateString(d.gmtCreate) }}</div>'
                 }
                 , {
-                    fixed: 'right', width: 300, align: 'center', toolbar: '#barDemo', height: 300
+                    fixed: 'right', width: 300, align: 'center', toolbar: '#barDemo', style:'height:50px'
                 }
             ]]
             , page: true
@@ -135,49 +135,50 @@
                     } else {
                         tableFileClick(evenData["id"])
                     }
-                    //监听工具条
-                    table.on('tool(fileList)', function (obj) {
-                        var data = obj.data;
-                        var id=data.id;
-                        if (obj.event === 'del') {
-                            $.ajax({
-                                type: 'POST',
-                                url: 'user/loginCheck',
-                                success: function (data) {
-                                    if (data) {
-                                        layer.open({
-                                            type: 2,
-                                            title: '分享到我的',
-                                            shadeClose: true,
-                                            shade: 0.8,
-                                            area: ['400px', '90%'],
-                                            content: '/fileTome?id='+id
-                                        });
-                                    } else {
-                                        layer.msg("请登录后使用上传文件功能")
-                                    }
-                                }
-                            });
-                        } else if (obj.event === 'edit') {
-                            var url = data.url;
-                            $.ajax({
-                                type: "post",
-                                url: "/file/addLoadList",
-                                data: {fileId: data.id, type: 2},//非常重要的一步
-                                success: function (data) {
-                                    if (data) {
-                                        window.location.href = url;
-                                    } else {
-                                        layer.msg("请登录");
-                                    }
 
-                                }
-
-                            });
-                        }
-                    });
                 }
             }
+            //监听工具条
+            table.on('tool(fileList)', function (obj) {
+                var data = obj.data;
+                var id=data.id;
+                if (obj.event === 'del') {
+                    $.ajax({
+                        type: 'POST',
+                        url: 'user/loginCheck',
+                        success: function (data) {
+                            if (data) {
+                                layer.open({
+                                    type: 2,
+                                    title: '分享到我的',
+                                    shadeClose: true,
+                                    shade: 0.8,
+                                    area: ['400px', '90%'],
+                                    content: '/fileTome?id='+id
+                                });
+                            } else {
+                                layer.msg("请登录后使用上传文件功能")
+                            }
+                        }
+                    });
+                } else if (obj.event === 'edit') {
+                    var url = data.url;
+                    $.ajax({
+                        type: "post",
+                        url: "/file/addLoadList",
+                        data: {fileId: data.id, type: 2},//非常重要的一步
+                        success: function (data) {
+                            if (data) {
+                                window.location.href = url;
+                            } else {
+                                layer.msg("请登录");
+                            }
+
+                        }
+
+                    });
+                }
+            });
         })
 
 
@@ -186,6 +187,79 @@
             tableIns.url = 'file/fileList';
             tableIns.where = {folederId: id};
             table.render(tableIns);
+            //bing table setSign
+            table.on("tool(fileList)", function (even) {
+                var evenName = even.event;
+                var evenData = even.data;
+                if (evenName == 'setSign') {
+                    if (evenData.isFile == 1) {
+                        console.log(evenData.password);
+                        if (evenData.password != null) {
+                            layer.open({
+                                content: '请输入密码:<input type="password" id="filePassword"/>'
+                                , btn: ['确定', '关闭']
+                                , yes: function (index, layero) {
+                                    var input = $("#filePassword").val();
+                                    if (input == evenData.password) {
+                                        tableFileClick(evenData["id"])
+                                    } else {
+                                        layer.msg('密码错误，请从新输入！！！');
+                                    }
+                                    layer.close(index);
+                                }
+                                , btn2: function (index, layero) {
+                                    layer.close(index);
+                                }
+
+                            });
+                        } else {
+                            tableFileClick(evenData["id"])
+                        }
+
+                    }
+                }
+                //监听工具条
+                table.on('tool(fileList)', function (obj) {
+                    var data = obj.data;
+                    var id=data.id;
+                    if (obj.event === 'del') {
+                        $.ajax({
+                            type: 'POST',
+                            url: 'user/loginCheck',
+                            success: function (data) {
+                                if (data) {
+                                    layer.open({
+                                        type: 2,
+                                        title: '分享到我的',
+                                        shadeClose: true,
+                                        shade: 0.8,
+                                        area: ['400px', '90%'],
+                                        content: '/fileTome?id='+id
+                                    });
+                                } else {
+                                    layer.msg("请登录后使用上传文件功能")
+                                }
+                            }
+                        });
+                    } else if (obj.event === 'edit') {
+                        var url = data.url;
+                        $.ajax({
+                            type: "post",
+                            url: "/file/addLoadList",
+                            data: {fileId: data.id, type: 2},//非常重要的一步
+                            success: function (data) {
+                                if (data) {
+                                    window.location.href = url;
+                                } else {
+                                    layer.msg("请登录");
+                                }
+
+                            }
+
+                        });
+                    }
+                });
+            })
         }
 
         active = {
@@ -267,6 +341,79 @@
                 tableIns.url = "file/findSubjectFiles";
                 tableIns.where = {tagId: subject}
                 table.render(tableIns);
+                //bing table setSign
+                table.on("tool(fileList)", function (even) {
+                    var evenName = even.event;
+                    var evenData = even.data;
+                    if (evenName == 'setSign') {
+                        if (evenData.isFile == 1) {
+                            console.log(evenData.password);
+                            if (evenData.password != null) {
+                                layer.open({
+                                    content: '请输入密码:<input type="password" id="filePassword"/>'
+                                    , btn: ['确定', '关闭']
+                                    , yes: function (index, layero) {
+                                        var input = $("#filePassword").val();
+                                        if (input == evenData.password) {
+                                            tableFileClick(evenData["id"])
+                                        } else {
+                                            layer.msg('密码错误，请从新输入！！！');
+                                        }
+                                        layer.close(index);
+                                    }
+                                    , btn2: function (index, layero) {
+                                        layer.close(index);
+                                    }
+
+                                });
+                            } else {
+                                tableFileClick(evenData["id"])
+                            }
+
+                        }
+                    }
+                    //监听工具条
+                    table.on('tool(fileList)', function (obj) {
+                        var data = obj.data;
+                        var id=data.id;
+                        if (obj.event === 'del') {
+                            $.ajax({
+                                type: 'POST',
+                                url: 'user/loginCheck',
+                                success: function (data) {
+                                    if (data) {
+                                        layer.open({
+                                            type: 2,
+                                            title: '分享到我的',
+                                            shadeClose: true,
+                                            shade: 0.8,
+                                            area: ['400px', '90%'],
+                                            content: '/fileTome?id='+id
+                                        });
+                                    } else {
+                                        layer.msg("请登录后使用上传文件功能")
+                                    }
+                                }
+                            });
+                        } else if (obj.event === 'edit') {
+                            var url = data.url;
+                            $.ajax({
+                                type: "post",
+                                url: "/file/addLoadList",
+                                data: {fileId: data.id, type: 2},//非常重要的一步
+                                success: function (data) {
+                                    if (data) {
+                                        window.location.href = url;
+                                    } else {
+                                        layer.msg("请登录");
+                                    }
+
+                                }
+
+                            });
+                        }
+                    });
+                })
             })
         })
         $('#search').on('click', function () {

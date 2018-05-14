@@ -20,7 +20,7 @@
     <!-- 注意：如果你直接复制所有代码到本地，上述css路径需要改成你本地的 -->
 </head>
 <body>
-<div class="layui-btn-group demoTable">
+<div class="layui-btn-group demoTable" style="padding-top: 15px">
     <button class="layui-btn" data-type="getCheckData">批量删除</button>
     <button class="layui-btn" data-type="getCheckLength">上传文件</button>
     <button class="layui-btn" data-type="isAll">创建文件夹</button>
@@ -31,9 +31,9 @@
 
 <script type="text/html" id="barDemo">
     {{#  if(d.isFile == 2){ }}
-    <a class="layui-btn layui-btn-primary layui-btn-xs" lay-event="detail">查看</a>
-    <a class="layui-btn layui-btn-xs" lay-event="edit">下载</a>
-    <a class="layui-btn layui-btn-danger layui-btn-xs" lay-event="del">分享</a>
+    <a class="layui-btn  layui-btn layui-btn-warm layui-btn-xs" lay-event="detail" style="line-height: 30px">移动</a>
+    <a class="layui-btn layui-btn-xs" lay-event="edit"  style="line-height: 30px">下载</a>
+    <a class="layui-btn layui-btn-danger layui-btn-xs" lay-event="del"  style="line-height: 30px">分享</a>
     {{#  } else { }}
 
     {{#  } }}
@@ -86,7 +86,7 @@
                     templet: '<div>{{ layui.laytpl.toDateString(d.gmtCreate) }}</div>'
                 },
                 {
-                    fixed: 'right', width: 300, align: 'center', toolbar: '#barDemo', height: 300
+                    fixed: 'right', width: 300, align: 'center', toolbar: '#barDemo', style:'height:50px'
                 }
             ]]
             , page: true
