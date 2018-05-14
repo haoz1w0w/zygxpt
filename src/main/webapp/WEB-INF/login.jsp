@@ -198,7 +198,6 @@
         form.on('submit(demo2)', function (data) {
 
             window.location.href = "/register";
-
             return false;
         });
     });

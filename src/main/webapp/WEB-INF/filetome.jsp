@@ -22,44 +22,27 @@
 
 
 <fieldset class="layui-elem-field layui-field-title" style="margin-top: 20px;">
-    <legend>上传文件</legend>
+    <legend>分享到我的</legend>
 </fieldset>
 <input type="hidden" id="folderId"/>
 <input type="hidden" id="tagId"/>
 <form class="layui-form" action="">
-    <div class="layui-form-item">
-        <label class="layui-form-label">选择老师</label>
-        <div class="layui-input-block">
-            <select name="folderId" lay-filter="teacher" id="teacherList">
-                <c:forEach items="${userInfos}" var="p">
-                    <option value="0">选择老师</option>
-                    <option value="${p.id}">${p.nick_name}</option>
-                </c:forEach>
-            </select>
-        </div>
-    </div>
+    <input type="hidden" value="${id}" id="fileId">
     <div class="layui-form-item">
         <label class="layui-form-label">选择文件夹</label>
         <div class="layui-input-block">
             <select name="folderId" lay-filter="aihao" id="folederSelect">
-            </select>
-        </div>
-    </div>
-    <div class="layui-form-item">
-        <label class="layui-form-label">选择标签</label>
-        <div class="layui-input-block">
-            <select name="tagId" lay-filter="aihao" id="tagSelect">
-                <c:forEach items="${allTag}" var="tags">
-                    <option value="${tags.id}">${tags.tag_name}</option>
+                <c:forEach items="${foleders}" var="p">
+                    <option value="${p.id}">${p.folder_name}</option>
                 </c:forEach>
             </select>
         </div>
     </div>
-    <div class="layui-upload" style="margin-left: 70px" id="choose">
-        <button type="button" class="layui-btn" id="test8">选择文件</button>
-    </div>
-    <div class="layui-upload" style="margin-top: 30px;margin-left: 70px">
-        <button type="button" class="layui-btn" id="test9">开始上传</button>
+    <div class="layui-form-item">
+        <div class="layui-input-block">
+            <button class="layui-btn" lay-submit="" lay-filter="demo1">立即提交</button>
+            <button type="reset" class="layui-btn layui-btn-primary">重置</button>
+        </div>
     </div>
 </form>
 
@@ -105,31 +88,16 @@
             });
             layer.tips('温馨提示：请注意开关状态的文字可以随意定义，而不仅仅是ON|OFF', data.othis)
         });
-        form.on('select(teacher)', function (data) {
-            console.log(data.value); //得到被选中的值
-            $.ajax({
-                type: 'POST',
-                url: 'file/findUserFile?userId=' + data.value,
-                success: function (data) {
-                    var files = data.data;
-                    var option = "";
-
-                    console.log(files);
-                    for (var i = 0; i < files.length; i++) {
-
-                        option += '<option value="' + files[i].id + '"  >' + files[i].fileName + '</option>';
-                    }
-                    $("#folederSelect").append(option);
-                    form.render();
-                }
-            });
-        });
 
         //监听提交
         form.on('submit(demo1)', function (data) {
-            layer.alert(JSON.stringify(data.field), {
-                title: '最终的提交信息'
-            })
+            $.ajax({
+                type: 'POST',
+                url: 'file/saveMyFile?fileId=' + $("#fileId").val() + '&folderId=' + data.field.folderId,
+                success: function (data) {
+                    layer.closeAll()
+                }
+            });
             return false;
         });
     });
@@ -141,18 +109,14 @@
         //选完文件后不自动上传
         upload.render({
             elem: '#test8'
-            , url: '/file/uploadFileByUserId'
+            , url: '/file/uploadFile'
             , auto: false
             //,multiple: true
             , bindAction: '#test9'
             , accept: 'file'
             , before: function (obj) {
                 layer.load(); //上传loading
-                this.data = {
-                    'folderId': $("#folederSelect").val(),
-                    'tagId': $("#tagSelect").val(),
-                    'userId': $("#teacherList").val()
-                };
+                this.data = {'folderId': $("#folederSelect").val(), 'tagId': $("#tagSelect").val()};
             }
             , choose: function (obj) {
                 folderId = 1;

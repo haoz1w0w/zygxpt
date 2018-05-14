@@ -54,12 +54,19 @@ public class PageController {
     }
 
     @RequestMapping("/mySource")
-    public String mySource() {
-
-
+    public String mySource(HttpServletRequest request) {
         return "/mySource";
     }
 
+    @RequestMapping("/uploadList")
+    public String uploadList() {
+        return "/uploadList";
+    }
+
+    @RequestMapping("/downLoadList")
+    public String downLoadList() {
+        return "/downloadList";
+    }
 //    @RequestMapping("/fileShare")
 //    public ModelAndView fileShare(Long id) {
 //        ResourceShare resourceShare = resourceShareMapper.selectByPrimaryKey(id);
@@ -75,7 +82,7 @@ public class PageController {
 
     @RequestMapping("/upload")
     public ModelAndView upload(HttpServletRequest request) {
-        Long userId =(Long) request.getSession().getAttribute("userId");
+        Long userId = (Long) request.getSession().getAttribute("userId");
         ModelAndView modelAndView = new ModelAndView("/upload");
         List<Foleder> foleders = fileService.slectFolderByUserId(userId);
         List<FolederDTO> foledersDto = new ArrayList<>();
@@ -147,6 +154,16 @@ public class PageController {
     @RequestMapping("mkdirFoleder")
     public ModelAndView mkdirFoleder(HttpServletRequest request) {
         ModelAndView modelAndView = new ModelAndView("/mkdirFoleder");
+        return modelAndView;
+    }
+
+    @RequestMapping("fileTome")
+    public ModelAndView modelAndView(HttpServletRequest request, Long id) {
+        Long userId = (Long) request.getSession().getAttribute("userId");
+        ModelAndView modelAndView = new ModelAndView("filetome");
+        List<Foleder> foleders = fileService.slectFolderByUserId(userId);
+        modelAndView.addObject("foleders", foleders);
+        modelAndView.addObject("id", id);
         return modelAndView;
     }
 }

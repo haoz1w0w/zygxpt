@@ -40,6 +40,7 @@ public class FileServiceImpl implements FileService {
             serviceResult.setMessage("插入成功");
             return serviceResult;
         } catch (Exception e) {
+            e.printStackTrace();
             serviceResult.setSuccess(false);
             serviceResult.setError("20001", "数据库插入失败");
             return serviceResult;

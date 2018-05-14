@@ -40,6 +40,15 @@
         <button class="layui-btn" data-type="getCheckLength" id="upload">上传文件</button>
     </div>
     <table id="allSource" lay-filter="fileList"></table>
+    <script type="text/html" id="barDemo">
+        {{#  if(d.isFile == 2){ }}
+        <a class="layui-btn layui-btn-xs" lay-event="edit">下载</a>
+        <a class="layui-btn layui-btn-danger layui-btn-xs" lay-event="del">分享到我的</a>
+        {{#  } else { }}
+
+        {{#  } }}
+
+    </script>
 </div>
 
 
@@ -89,6 +98,9 @@
                     width: 500,
                     templet: '<div>{{ layui.laytpl.toDateString(d.gmtCreate) }}</div>'
                 }
+                , {
+                    fixed: 'right', width: 300, align: 'center', toolbar: '#barDemo', height: 300
+                }
             ]]
             , page: true
         };
@@ -123,9 +135,51 @@
                     } else {
                         tableFileClick(evenData["id"])
                     }
+                    //监听工具条
+                    table.on('tool(fileList)', function (obj) {
+                        var data = obj.data;
+                        var id=data.id;
+                        if (obj.event === 'del') {
+                            $.ajax({
+                                type: 'POST',
+                                url: 'user/loginCheck',
+                                success: function (data) {
+                                    if (data) {
+                                        layer.open({
+                                            type: 2,
+                                            title: '分享到我的',
+                                            shadeClose: true,
+                                            shade: 0.8,
+                                            area: ['400px', '90%'],
+                                            content: '/fileTome?id='+id
+                                        });
+                                    } else {
+                                        layer.msg("请登录后使用上传文件功能")
+                                    }
+                                }
+                            });
+                        } else if (obj.event === 'edit') {
+                            var url = data.url;
+                            $.ajax({
+                                type: "post",
+                                url: "/file/addLoadList",
+                                data: {fileId: data.id, type: 2},//非常重要的一步
+                                success: function (data) {
+                                    if (data) {
+                                        window.location.href = url;
+                                    } else {
+                                        layer.msg("请登录");
+                                    }
+
+                                }
+
+                            });
+                        }
+                    });
                 }
             }
         })
+
 
         function tableFileClick(id) {
             //根据ID 重新渲染 table 数据
@@ -222,14 +276,25 @@
             table.render(tableIns);
         });
         $("#upload").on('click', function () {
-            layer.open({
-                type: 2,
-                title: '上传文件',
-                shadeClose: true,
-                shade: 0.8,
-                area: ['400px', '90%'],
-                content: '/uploadAll'
+            $.ajax({
+                type: 'POST',
+                url: 'user/loginCheck',
+                success: function (data) {
+                    if (data) {
+                        layer.open({
+                            type: 2,
+                            title: '上传文件',
+                            shadeClose: true,
+                            shade: 0.8,
+                            area: ['400px', '90%'],
+                            content: '/uploadAll'
+                        });
+                    } else {
+                        layer.msg("请登录后使用上传文件功能")
+                    }
+                }
             });
+
         })
     });
 

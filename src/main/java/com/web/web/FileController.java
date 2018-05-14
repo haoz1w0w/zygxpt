@@ -101,7 +101,6 @@ public class FileController {
     @RequestMapping("findUserFile")
     @ResponseBody
     public Object findUserFile(HttpServletRequest request, Long userId) {
-//        UserInfo userInfo = (UserInfo) request.getSession().getAttribute("userInfo");
         List<FilesDTO> list = new ArrayList<>();
         List<Foleder> foleders = fileService.slectFolderByUserId(userId);
         for (Foleder foleder : foleders) {
@@ -234,7 +233,7 @@ public class FileController {
         foleder.setFolder_name(folderName);
         foleder.setFather_folder(fatherId);
         foleder.setUser_id(userId);
-        if (type ==1 ) {
+        if (type == 1) {
             foleder.setFolder_password(pass);
         }
         fileService.createFolder(foleder);
@@ -265,6 +264,8 @@ public class FileController {
         com.web.po.File file = fileService.selectFileById(fileId);
         Long userId = (Long) rquest.getSession().getAttribute("userId");
         file.setUser_id(userId);
+        file.setFolder_id(folderId);
+        file.setId(null);
         fileService.createFile(file);
         return new BaseResult("保存成功", true);
     }
@@ -432,6 +433,50 @@ public class FileController {
         foleder.setFolder_password(password);
         fileService.updateFoleder(foleder);
         return new BaseResult("设置成功", true);
+    }
+
+    @RequestMapping("queryMyUpLoadList")
+    @ResponseBody
+    public Object queryMyUpLoadList() {
+        List<LoadList> loadListByType = loadListMapper.findLoadListByType(1);
+        List<FilesDTO> list = new ArrayList<>();
+        for (LoadList loadList : loadListByType) {
+            FilesDTO filesDTO = new FilesDTO();
+            filesDTO.setId(loadList.getId());
+            filesDTO.setFileName(loadList.getFile_name());
+            filesDTO.setGmtCreate(loadList.getGmt_download());
+            filesDTO.setIsFile(2);
+            list.add(filesDTO);
+        }
+        LayUiResponse layUiResponse = new LayUiResponse();
+        layUiResponse.setCode(0);
+        layUiResponse.setData(list);
+        layUiResponse.setCount(list.size());
+        layUiResponse.setMsg(" ");
+        layUiResponse.setFolederId(5l);
+        return layUiResponse;
+    }
+
+    @RequestMapping("queryMyDownLoadList")
+    @ResponseBody
+    public Object queryMyDownLoadList() {
+        List<LoadList> loadListByType = loadListMapper.findLoadListByType(2);
+        List<FilesDTO> list = new ArrayList<>();
+        for (LoadList loadList : loadListByType) {
+            FilesDTO filesDTO = new FilesDTO();
+            filesDTO.setId(loadList.getId());
+            filesDTO.setFileName(loadList.getFile_name());
+            filesDTO.setGmtCreate(loadList.getGmt_download());
+            filesDTO.setIsFile(2);
+            list.add(filesDTO);
+        }
+        LayUiResponse layUiResponse = new LayUiResponse();
+        layUiResponse.setCode(0);
+        layUiResponse.setData(list);
+        layUiResponse.setCount(list.size());
+        layUiResponse.setMsg(" ");
+        layUiResponse.setFolederId(5l);
+        return layUiResponse;
     }
 
     private File multipartToFile(MultipartFile multfile) throws IOException {

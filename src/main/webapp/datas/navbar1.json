@@ -38,13 +38,13 @@
         "id": "17",
         "title": "上传资源历史",
         "icon": "fa-github",
-        "url": "https://www.github.com/"
+        "url": "/uploadList"
       },
       {
         "id": "18",
         "title": "下载资源历史",
         "icon": "fa-qq",
-        "url": "http://www.qq.com/"
+        "url": "downLoadList"
       }
     ]
   }

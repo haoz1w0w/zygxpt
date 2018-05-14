@@ -90,6 +90,17 @@ public class UserController {
 
     }
 
+    @RequestMapping("/loginCheck")
+    @ResponseBody
+    public Object loginCheck(HttpServletRequest request) {
+        Long userId = (Long) request.getSession().getAttribute("userId");
+        if (userId == null) {
+            return false;
+        } else {
+            return true;
+        }
+    }
+
     //修改个人信息
     @RequestMapping("/editPassword")
     @ResponseBody

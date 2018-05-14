@@ -45,7 +45,7 @@
     <div id="center">
         <c:if test="${jiami==1}">
             <div id="wenben">
-                <form class="layui-form" action="" ">
+                <form class="layui-form" action="">
                     <div class="layui-form-item" id="password">
                         <label class="layui-form-label">请输入提取密码：</label>
                         <div class="layui-input-inline">
@@ -111,7 +111,6 @@
             console.log($("#pass").val());
             if (data.field.password == $("#pass").val()) {
                 window.location.href = "/main"
-
             } else {
                 layer.alert("匹配不成功 请重新输入");
 
