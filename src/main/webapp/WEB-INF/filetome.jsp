@@ -95,7 +95,8 @@
                 type: 'POST',
                 url: 'file/saveMyFile?fileId=' + $("#fileId").val() + '&folderId=' + data.field.folderId,
                 success: function (data) {
-                    layer.closeAll()
+                    layer.alert("修改成功")
+                    parent.layer.closeAll();
                 }
             });
             return false;

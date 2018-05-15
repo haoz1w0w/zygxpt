@@ -22,36 +22,27 @@
 
 
 <fieldset class="layui-elem-field layui-field-title" style="margin-top: 20px;">
-    <legend>上传文件</legend>
+    <legend>移动文件夹</legend>
 </fieldset>
 <input type="hidden" id="folderId"/>
 <input type="hidden" id="tagId"/>
+<input type="hidden" id="fileId" value="${fileId}">
 <form class="layui-form" action="">
     <div class="layui-form-item">
         <label class="layui-form-label">选择文件夹</label>
         <div class="layui-input-block">
             <select name="folderId" lay-filter="aihao" id="folederSelect">
                 <c:forEach items="${foleders}" var="p">
-                    <option value="${p.id}">${p.folderName}</option>
+                    <option value="${p.id}">${p.folder_name}</option>
                 </c:forEach>
             </select>
         </div>
     </div>
     <div class="layui-form-item">
-        <label class="layui-form-label">选择标签</label>
         <div class="layui-input-block">
-            <select name="tagId" lay-filter="aihao" id="tagSelect">
-                <c:forEach items="${allTag}" var="tags">
-                    <option value="${tags.id}">${tags.tag_name}</option>
-                </c:forEach>
-            </select>
+            <button class="layui-btn" lay-submit="" lay-filter="demo1">立即提交</button>
+            <button type="reset" class="layui-btn layui-btn-primary">重置</button>
         </div>
-    </div>
-    <div class="layui-upload" style="margin-left: 70px" id="choose">
-        <button type="button" class="layui-btn" id="test8">选择文件</button>
-    </div>
-    <div class="layui-upload" style="margin-top: 30px;margin-left: 70px">
-        <button type="button" class="layui-btn" id="test9">开始上传</button>
     </div>
 </form>
 
@@ -100,9 +91,14 @@
 
         //监听提交
         form.on('submit(demo1)', function (data) {
-            layer.alert(JSON.stringify(data.field), {
-                title: '最终的提交信息'
-            })
+            $.ajax({
+                type: 'POST',
+                url: 'file/moveMyFile?fileId=' + $("#fileId").val() + '&folderId=' + data.field.folderId,
+                success: function (data) {
+                    layer.alert("修改成功")
+                    parent.layer.closeAll();
+                }
+            });
             return false;
         });
     });
@@ -134,8 +130,7 @@
 
             }
             , done: function (res) {
-                layer.alert("修改成功")
-                parent.layer.closeAll();
+                layer.closeAll(); //关闭loading
             }
         });
     });

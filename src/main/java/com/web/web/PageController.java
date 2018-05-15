@@ -132,6 +132,16 @@ public class PageController {
         return modelAndView;
     }
 
+    @RequestMapping("moveMyFile")
+    public ModelAndView MoveMyFile(Long fileId, HttpServletRequest request) {
+        ModelAndView modelAndView = new ModelAndView("moveMyFile");
+        modelAndView.addObject("fileId", fileId);
+        Long userId = (Long) request.getSession().getAttribute("userId");
+        List<Foleder> foleders = fileService.slectFolderByUserId(userId);
+        modelAndView.addObject("foleders", foleders);
+        return modelAndView;
+    }
+
     @RequestMapping("login")
     public String login() {
         return "/login";

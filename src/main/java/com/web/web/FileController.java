@@ -287,6 +287,19 @@ public class FileController {
         return new BaseResult("保存成功", true);
     }
 
+    @RequestMapping("moveMyFile")
+    @ResponseBody
+    public Object moveMyFile(Long fileId, Long folderId, HttpServletRequest rquest) {
+        com.web.po.File file = fileService.selectFileById(fileId);
+        Long userId = (Long) rquest.getSession().getAttribute("userId");
+        file.setUser_id(userId);
+        file.setFolder_id(folderId);
+        file.setId(null);
+        fileService.createFile(file);
+        fileService.delFile(fileId);
+        return new BaseResult("保存成功", true);
+    }
+
     @RequestMapping("queryFileByCondition")
     @ResponseBody
     public Object queryFileByCondition(String fileName) {

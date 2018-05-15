@@ -135,7 +135,8 @@
                         , moveType: 1 //拖拽模式，0或者1
                         , content: srt
                         , yes: function (layero) {
-                            layer.closeAll();
+                            layer.alert("修改成功")
+                            parent.layer.closeAll();
                         }
                     });
                 }

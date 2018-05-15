@@ -105,7 +105,19 @@
                 table.on('tool(demo)', function (obj) {
                     var data = obj.data;
                     if (obj.event === 'detail') {
-                               
+                        //移动到我的
+                        layer.open({
+                            type: 2,
+                            title: '分享',
+                            shadeClose: true,
+                            shade: 0.8,
+                            area: ['380px', '90%'],
+                            content: '/moveMyFile?fileId=' + data.id,//iframe的url
+                            end: function () {
+                                window.location.href = "/mySource"
+                            }
+                        })
+                        ;
                     } else if (obj.event === 'del') {
                         layer.open({
                             type: 2,
@@ -114,6 +126,9 @@
                             shade: 0.8,
                             area: ['380px', '90%'],
                             content: '/fenxiang?fileId=' + data.id //iframe的url
+                            , end: function () {
+                                window.location.href = "/mySource"
+                            }
                         });
                     } else if (obj.event === 'edit') {
                         var url = data.url;
@@ -168,6 +183,9 @@
                     shade: 0.8,
                     area: ['400px', '90%'],
                     content: '/upload'
+                    ,end: function () {
+                        window.location.href = "/mySource"
+                    }
                 });
             },
             isAll: function () {
@@ -179,6 +197,9 @@
                     shade: 0.8,
                     area: ['400px', '90%'],
                     content: '/mkdirFoleder'
+                    ,end: function () {
+                        window.location.href = "/mySource"
+                    }
                 });
             }
 

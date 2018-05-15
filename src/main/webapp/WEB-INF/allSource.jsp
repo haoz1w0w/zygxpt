@@ -155,6 +155,9 @@
                                     shade: 0.8,
                                     area: ['400px', '90%'],
                                     content: '/fileTome?id=' + id
+                                    ,end: function () {
+                                        window.location.href = "/allSource"
+                                    }
                                 });
                             } else {
                                 layer.msg("请登录后使用分享功能")
@@ -235,6 +238,9 @@
                                         shade: 0.8,
                                         area: ['400px', '90%'],
                                         content: '/fileTome?id=' + id
+                                        ,end: function () {
+                                            window.location.href = "/allSource"
+                                        }
                                     });
                                 } else {
                                     layer.msg("请登录后使用上传文件功能")
@@ -271,7 +277,7 @@
                     shadeClose: true,
                     shade: 0.8,
                     area: ['400px', '90%'],
-                    content: '/upload'
+                    content: '/upload',
                 });
             }
 
