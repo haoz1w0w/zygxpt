@@ -112,7 +112,8 @@
                 type: 'POST',
                 url: 'file/mkdirFolder?folderName=' + data.field.username + "&pass=" + data.field.password + "&type=" + data.field.encode,
                 success: function (data) {
-                    layer.closeAll();
+                    layer.alert("创建成功");
+                    parent.layer.closeAll()
                 }
             });
             return false;

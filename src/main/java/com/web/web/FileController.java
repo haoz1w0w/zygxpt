@@ -1,5 +1,6 @@
 package com.web.web;
 
+import com.web.dao.FolederMapper;
 import com.web.dao.LoadListMapper;
 import com.web.dao.ResourceShareMapper;
 import com.web.po.*;
@@ -11,6 +12,7 @@ import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.stereotype.Controller;
+import org.springframework.util.CollectionUtils;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
@@ -34,12 +36,14 @@ public class FileController {
     ResourceShareMapper resourceShareMapper;
     @Autowired
     LoadListMapper loadListMapper;
+    @Autowired
+    FolederMapper folederMapper;
     private final static String url = "https://test-1256150574.cos.ap-beijing.myqcloud.com/";
 
     @RequestMapping("fileList")
     @ResponseBody
     public Object fileList(HttpServletRequest request, Long folederId) {
-//        UserInfo userInfo = (UserInfo) request.getSession().getAttribute("userInfo");
+        Long userId = (Long) request.getSession().getAttribute("userId");
         List<FilesDTO> list = new ArrayList<>();
         if (folederId == null) {
             List<Foleder> foleders = fileService.selectAllFoleder();
@@ -149,6 +153,19 @@ public class FileController {
 //        UserInfo userInfo = (UserInfo) request.getSession().getAttribute("userInfo");
         List<Tag> allTag = fileService.findAllTag();
         return allTag;
+    }
+
+    @RequestMapping("delFoleder")
+    @ResponseBody
+    public Object delFoleder(Long folederId) {
+        List<com.web.po.File> files = fileService.selectFilesByFolderId(folederId);
+        if (!CollectionUtils.isEmpty(files)) {
+            for (com.web.po.File file : files) {
+                fileService.delFile(file.getId());
+            }
+        }
+        folederMapper.deleteByPrimaryKey(folederId);
+        return true;
     }
 
     @RequestMapping("uploadFile")

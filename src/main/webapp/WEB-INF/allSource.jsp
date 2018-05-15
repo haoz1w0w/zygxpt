@@ -31,7 +31,7 @@
 <div style="width: 80%;float: left;margin-top: 4px">
     <div class="demoTable" style="text-align: right">
         根据文件名搜索文件
-        <div class="layui-inline" >
+        <div class="layui-inline">
             <input class="layui-input" name="id" id="demoReload" autocomplete="off">
         </div>
         <button class="layui-btn" data-type="reload" id="search">搜索</button>
@@ -99,7 +99,7 @@
                     templet: '<div>{{ layui.laytpl.toDateString(d.gmtCreate) }}</div>'
                 }
                 , {
-                    fixed: 'right', width: 300, align: 'center', toolbar: '#barDemo', style:'height:50px'
+                    fixed: 'right', width: 300, align: 'center', toolbar: '#barDemo', style: 'height:50px'
                 }
             ]]
             , page: true
@@ -141,7 +141,7 @@
             //监听工具条
             table.on('tool(fileList)', function (obj) {
                 var data = obj.data;
-                var id=data.id;
+                var id = data.id;
                 if (obj.event === 'del') {
                     $.ajax({
                         type: 'POST',
@@ -154,10 +154,10 @@
                                     shadeClose: true,
                                     shade: 0.8,
                                     area: ['400px', '90%'],
-                                    content: '/fileTome?id='+id
+                                    content: '/fileTome?id=' + id
                                 });
                             } else {
-                                layer.msg("请登录后使用上传文件功能")
+                                layer.msg("请登录后使用分享功能")
                             }
                         }
                     });
@@ -221,7 +221,7 @@
                 //监听工具条
                 table.on('tool(fileList)', function (obj) {
                     var data = obj.data;
-                    var id=data.id;
+                    var id = data.id;
                     if (obj.event === 'del') {
                         $.ajax({
                             type: 'POST',
@@ -234,7 +234,7 @@
                                         shadeClose: true,
                                         shade: 0.8,
                                         area: ['400px', '90%'],
-                                        content: '/fileTome?id='+id
+                                        content: '/fileTome?id=' + id
                                     });
                                 } else {
                                     layer.msg("请登录后使用上传文件功能")
@@ -375,7 +375,7 @@
                     //监听工具条
                     table.on('tool(fileList)', function (obj) {
                         var data = obj.data;
-                        var id=data.id;
+                        var id = data.id;
                         if (obj.event === 'del') {
                             $.ajax({
                                 type: 'POST',
@@ -388,7 +388,7 @@
                                             shadeClose: true,
                                             shade: 0.8,
                                             area: ['400px', '90%'],
-                                            content: '/fileTome?id='+id
+                                            content: '/fileTome?id=' + id
                                         });
                                     } else {
                                         layer.msg("请登录后使用上传文件功能")

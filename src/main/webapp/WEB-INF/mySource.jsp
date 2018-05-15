@@ -21,7 +21,7 @@
 </head>
 <body>
 <div class="layui-btn-group demoTable" style="padding-top: 15px">
-    <button class="layui-btn" data-type="getCheckData">批量删除</button>
+    <button class="layui-btn" data-type="getCheckData">删除</button>
     <button class="layui-btn" data-type="getCheckLength">上传文件</button>
     <button class="layui-btn" data-type="isAll">创建文件夹</button>
 
@@ -32,8 +32,8 @@
 <script type="text/html" id="barDemo">
     {{#  if(d.isFile == 2){ }}
     <a class="layui-btn  layui-btn layui-btn-warm layui-btn-xs" lay-event="detail" style="line-height: 30px">移动</a>
-    <a class="layui-btn layui-btn-xs" lay-event="edit"  style="line-height: 30px">下载</a>
-    <a class="layui-btn layui-btn-danger layui-btn-xs" lay-event="del"  style="line-height: 30px">分享</a>
+    <a class="layui-btn layui-btn-xs" lay-event="edit" style="line-height: 30px">下载</a>
+    <a class="layui-btn layui-btn-danger layui-btn-xs" lay-event="del" style="line-height: 30px">分享</a>
     {{#  } else { }}
 
     {{#  } }}
@@ -86,7 +86,7 @@
                     templet: '<div>{{ layui.laytpl.toDateString(d.gmtCreate) }}</div>'
                 },
                 {
-                    fixed: 'right', width: 300, align: 'center', toolbar: '#barDemo', style:'height:50px'
+                    fixed: 'right', width: 300, align: 'center', toolbar: '#barDemo', style: 'height:50px'
                 }
             ]]
             , page: true
@@ -105,7 +105,7 @@
                 table.on('tool(demo)', function (obj) {
                     var data = obj.data;
                     if (obj.event === 'detail') {
-                        layer.msg('ID：' + data.id + ' 的查看操作');
+                               
                     } else if (obj.event === 'del') {
                         layer.open({
                             type: 2,
@@ -145,10 +145,18 @@
                     return;
                 }
                 for (var i = 0; i < data.length; i++) {
-                    $.ajax({
-                        type: 'POST',
-                        url: 'file/delFile?fileId=' + data[i].id,
-                    });
+                    if (data[i].isFile == 1) {
+                        $.ajax({
+                            type: 'POST',
+                            url: 'file/delFoleder?folederId=' + data[i].id,
+                        });
+                    } else {
+                        $.ajax({
+                            type: 'POST',
+                            url: 'file/delFile?fileId=' + data[i].id,
+                        });
+                    }
+
                 }
                 tableFileClickMyFile()
             }

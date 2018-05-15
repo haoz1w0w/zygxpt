@@ -12,7 +12,7 @@
 <body>
 <div class="layui-layout layui-layout-admin kit-layout-admin">
     <div class="layui-header">
-        <div class="layui-logo">资源共享平台</div>
+        <div class="layui-logo" style="text-align: left;font-size: 20px;color: #999999;padding-left: 20px">资源共享平台</div>
         <div class="layui-logo kit-logo-mobile">K</div>
         <ul class="layui-nav layui-layout-right kit-nav">
             <li class="layui-nav-item">
