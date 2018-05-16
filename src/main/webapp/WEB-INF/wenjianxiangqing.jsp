@@ -9,7 +9,6 @@
     <meta http-equiv="X-UA-Compatible" content="IE=7,9,10,11">
     <meta name="renderer" content="webkit">
     <title>文件详情</title>
-    <link rel="shortcut icon" href="https://pan.baidu.com/res/static/images/favicon.ico">
     <script src="../wenjianxiangqing/mod.js.下载"></script>
     <link rel="stylesheet" type="text/css" href="../wenjianxiangqing/base.css">
     <link rel="stylesheet" type="text/css" href="../wenjianxiangqing/system-core.css">
