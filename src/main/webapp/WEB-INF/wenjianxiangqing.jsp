@@ -257,7 +257,7 @@
                             class="fileicon fileicon-large-zip" node-type="info-open-button"/>
                         <div class="unzip-box-bar"><span class="unzip-box" node-type="info-open-button"><a
                                 class="g-button g-button-blue-large" data-button-id="b9" data-button-index=""
-                                href="javascript:;" title="打开压缩包"><span class="g-button-right"><span class="text"
+                                href="javascript:;" title="打开压缩包" style="background-color: #1AA194;border: 1px solid #1AA194dddd"><span class="g-button-right" style="background-color: #1AA194"><span class="text"
                                                                                                      style="width: auto;"
                                                                                                      id="down">下载文件</span></span></a></span>
                         </div>

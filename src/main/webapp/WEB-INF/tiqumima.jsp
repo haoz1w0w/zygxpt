@@ -104,7 +104,7 @@
         <div class="verify-form">
             <form action="https://pan.baidu.com/share/init?surl=34l7XroOp54A5JfLT8gV0Q" class="clearfix"
                   name="accessForm" onsubmit="return false">
-                <div class="CMxQsC">
+                <div class="CMxQsC" style="background-color: #1E1E1E">
                     <div class="avatar">
                         <%--<div class="photo-frame">--%>
                         <%--<a href="https://yun.baidu.com/buy/center?tag=8&amp;from=sicon" class="v-icon unvip-icon"><em></em></a>--%>
@@ -114,7 +114,7 @@
                     <span class="verify-property">给您加密分享了文件</span>
                     <div class="cb"></div>
                 </div>
-                <div class="verify-input ac-close clearfix">
+                <div class="verify-input ac-close clearfix" style="background-color: #393D49">
                     <dl class="pickpw clearfix">
                         <dt>
                             请输入提取密码：
@@ -123,7 +123,7 @@
                             <input class="QKKaIE LxgeIt" id="rrdf6L46" tabindex="1" type="text">
                             <div id="wrYxJ">
                                 <a class="g-button g-button-blue-large" data-button-id="b1"
-                                   data-button-index="" href="javascript:;" title="提取文件" id="sub">
+                                   data-button-index="" href="javascript:;" title="提取文件" id="sub" style="background-color: #1AA194;border: 1px solid #1AA194">
                                     <span class="g-button-right">
                                             <span class="text" style="width: auto;">提取文件</span>
                                     </span>
