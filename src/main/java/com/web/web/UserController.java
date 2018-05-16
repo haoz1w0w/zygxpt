@@ -69,10 +69,15 @@ public class UserController {
             ServiceResult serviceResult = userService.CheckUserInfo(account, password);
             if (serviceResult.getSuccess()) {
                 UserInfo userInfo = userService.selectUserInfoByAccount(account);
-                httpServletRequest.getSession().setAttribute("userId", userInfo.getId());
-                return true;
+                if (StringUtil.isEmpty(userInfo.getNick_name())) {
+                    httpServletRequest.getSession().setAttribute("userId", userInfo.getId());
+                    return new BaseResult<>(1, true);
+                } else {
+                    httpServletRequest.getSession().setAttribute("userId", userInfo.getId());
+                    return new BaseResult<>(0, true);
+                }
             }
-            return false;
+            return new BaseResult<>(0, false);
         } catch (Exception e) {
             return new BaseResult("登录失败", false);
         }
@@ -111,19 +116,20 @@ public class UserController {
     //修改个人信息
     @RequestMapping("/editPassword")
     @ResponseBody
-    public Object editPassword(@RequestParam(required = true) String oldPassword, @RequestParam(required = true) String newPassword, HttpServletRequest request) {
+    public Object editPassword(String oldPassword, String newPassword, HttpServletRequest request) {
         if (StringUtil.isEmpty(oldPassword) || StringUtil.isEmpty(newPassword)) {
             return new BaseResult(false, "参数不正确", 10001);
         }
-        UserInfo userInfo = (UserInfo) request.getSession().getAttribute("userInfo");
+        Long userId = (Long) request.getSession().getAttribute("userId");
+        ServiceResult<UserInfo> serviceResult = userService.selectUserInfo(userId);
+        UserInfo userInfo = serviceResult.getResult();
         try {
             if (!userInfo.getPassword().equals(MD5Util.md5Encode(oldPassword))) {
                 return new BaseResult(false, "旧密码不正确", 10002);
             }
-            ServiceResult<UserInfo> serviceResult = userService.selectUserInfo(userInfo.getId());
-            if (!serviceResult.getSuccess()) {
-                return new BaseResult(false, "密码更新失败", 10003);
-            }
+            userInfo.setPassword(MD5Util.md5Encode(newPassword));
+            userService.updateUserInfo(userInfo);
+            request.getSession().removeAttribute("userId");
             return new BaseResult("更新成功", true);
         } catch (Exception e) {
             return new BaseResult(false, "密码更新失败", 10003);

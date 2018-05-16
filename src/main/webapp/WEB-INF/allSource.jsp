@@ -73,7 +73,7 @@
         /**用户表格加载*/
         var tableIns = {
             elem: '#allSource'
-            , url: '/file/fileList'
+            , url: '/file/getAllFile'
             , response: {
                 statusName: 'code' //数据状态的字段名称，默认：code
                 , statusCode: 0 //成功的状态码，默认：0
@@ -107,81 +107,50 @@
 
         table.render(tableIns);
         //bing table setSign
-        table.on("tool(fileList)", function (even) {
-            var evenName = even.event;
-            var evenData = even.data;
-            if (evenName == 'setSign') {
-                if (evenData.isFile == 1) {
-                    console.log(evenData.password);
-                    if (evenData.password != null) {
-                        layer.open({
-                            content: '请输入密码:<input type="password" id="filePassword"/>'
-                            , btn: ['确定', '关闭']
-                            , yes: function (index, layero) {
-                                var input = $("#filePassword").val();
-                                if (input == evenData.password) {
-                                    tableFileClick(evenData["id"])
-                                } else {
-                                    layer.msg('密码错误，请从新输入！！！');
+        //监听工具条
+        table.on('tool(fileList)', function (obj) {
+            var data = obj.data;
+            var id = data.id;
+            if (obj.event === 'del') {
+                $.ajax({
+                    type: 'POST',
+                    url: 'user/loginCheck',
+                    success: function (data) {
+                        if (data) {
+                            layer.open({
+                                type: 2,
+                                title: '分享到我的',
+                                shadeClose: true,
+                                shade: 0.8,
+                                area: ['400px', '90%'],
+                                content: '/fileTome?id=' + id
+                                ,end: function () {
+                                    window.location.href = "/allSource"
                                 }
-                                layer.close(index);
-                            }
-                            , btn2: function (index, layero) {
-                                layer.close(index);
-                            }
+                            });
+                        } else {
+                            layer.msg("请登录后使用分享功能")
+                        }
+                    }
+                });
+            } else if (obj.event === 'edit') {
+                var url = data.url;
+                $.ajax({
+                    type: "post",
+                    url: "/file/addLoadList",
+                    data: {fileId: data.id, type: 2},//非常重要的一步
+                    success: function (data) {
+                        if (data) {
+                            window.location.href = url;
+                        } else {
+                            layer.msg("请登录");
+                        }
 
-                        });
-                    } else {
-                        tableFileClick(evenData["id"])
                     }
 
-                }
+                });
             }
-            //监听工具条
-            table.on('tool(fileList)', function (obj) {
-                var data = obj.data;
-                var id = data.id;
-                if (obj.event === 'del') {
-                    $.ajax({
-                        type: 'POST',
-                        url: 'user/loginCheck',
-                        success: function (data) {
-                            if (data) {
-                                layer.open({
-                                    type: 2,
-                                    title: '分享到我的',
-                                    shadeClose: true,
-                                    shade: 0.8,
-                                    area: ['400px', '90%'],
-                                    content: '/fileTome?id=' + id
-                                    ,end: function () {
-                                        window.location.href = "/allSource"
-                                    }
-                                });
-                            } else {
-                                layer.msg("请登录后使用分享功能")
-                            }
-                        }
-                    });
-                } else if (obj.event === 'edit') {
-                    var url = data.url;
-                    $.ajax({
-                        type: "post",
-                        url: "/file/addLoadList",
-                        data: {fileId: data.id, type: 2},//非常重要的一步
-                        success: function (data) {
-                            if (data) {
-                                window.location.href = url;
-                            } else {
-                                layer.msg("请登录");
-                            }
-
-                        }
-
-                    });
-                }
-            });
-        })
+        });
 
 
         function tableFileClick(id) {
@@ -326,39 +295,10 @@
             //添加教师按钮函数
             $(".teach-term").on("click", function () {
                 var teachId = $(this).attr("teach-id");
-                tableIns.url = "/file/findUserFile";
+                tableIns.url = "/file/findMyFileListByUserId";
                 tableIns.where = {userId: teachId}
                 table.render(tableIns);
                 table.on("tool(fileList)", function (even) {
-                    var evenName = even.event;
-                    var evenData = even.data;
-                    if (evenName == 'setSign') {
-                        if (evenData.isFile == 1) {
-                            console.log(evenData.password);
-                            if (evenData.password != null) {
-                                layer.open({
-                                    content: '请输入密码:<input type="password" id="filePassword"/>'
-                                    , btn: ['确定', '关闭']
-                                    , yes: function (index, layero) {
-                                        var input = $("#filePassword").val();
-                                        if (input == evenData.password) {
-                                            tableFileClick(evenData["id"])
-                                        } else {
-                                            layer.msg('密码错误，请从新输入！！！');
-                                        }
-                                        layer.close(index);
-                                    }
-                                    , btn2: function (index, layero) {
-                                        layer.close(index);
-                                    }
-
-                                });
-                            } else {
-                                tableFileClick(evenData["id"])
-                            }
-
-                        }
-                    }
                     //监听工具条
                     table.on('tool(fileList)', function (obj) {
                         var data = obj.data;
@@ -494,10 +434,21 @@
             })
         })
         $('#search').on('click', function () {
-            var fileName = $("#demoReload").val();
-            tableIns.url = "file/findFileByFileName";
-            tableIns.where = {name: fileName}
-            table.render(tableIns);
+            $.ajax({
+                type: 'POST',
+                url: 'user/loginCheck',
+                success: function (data) {
+                    if (data) {
+                        var fileName = $("#demoReload").val();
+                        tableIns.url = "file/findFileByFileName";
+                        tableIns.where = {name: fileName}
+                        table.render(tableIns);
+                    } else {
+                        layer.msg("请登录后使用上传文件功能")
+                    }
+                }
+            });
+
         });
         $("#upload").on('click', function () {
             $.ajax({

@@ -9,6 +9,7 @@
     <meta http-equiv="X-UA-Compatible" content="IE=7,9,10,11">
     <meta name="renderer" content="webkit">
     <title>文件详情</title>
+    <link rel="shortcut icon" href="https://pan.baidu.com/res/static/images/favicon.ico">
     <script src="../wenjianxiangqing/mod.js.下载"></script>
     <link rel="stylesheet" type="text/css" href="../wenjianxiangqing/base.css">
     <link rel="stylesheet" type="text/css" href="../wenjianxiangqing/system-core.css">
@@ -256,7 +257,7 @@
                             class="fileicon fileicon-large-zip" node-type="info-open-button"/>
                         <div class="unzip-box-bar"><span class="unzip-box" node-type="info-open-button"><a
                                 class="g-button g-button-blue-large" data-button-id="b9" data-button-index=""
-                                href="javascript:;" title="打开压缩包" style="background-color: #1AA194;border: 1px solid #1AA194dddd"><span class="g-button-right" style="background-color: #1AA194"><span class="text"
+                                href="javascript:;" title="打开压缩包" style="background-color: #1AA194;border: 1px solid #1AA194"><span class="g-button-right" style="background-color: #1AA194"><span class="text"
                                                                                                      style="width: auto;"
                                                                                                      id="down">下载文件</span></span></a></span>
                         </div>

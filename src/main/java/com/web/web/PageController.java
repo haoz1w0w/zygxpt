@@ -131,7 +131,11 @@ public class PageController {
         modelAndView.addObject("file", file);
         return modelAndView;
     }
-
+    @RequestMapping("/editPassword")
+    public ModelAndView editPassword() {
+        ModelAndView modelAndView = new ModelAndView("/editPassword");
+        return modelAndView;
+    }
     @RequestMapping("moveMyFile")
     public ModelAndView MoveMyFile(Long fileId, HttpServletRequest request) {
         ModelAndView modelAndView = new ModelAndView("moveMyFile");

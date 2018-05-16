@@ -30,6 +30,7 @@
                     </c:if>
                     <c:if test="${not empty userInfo}">
                         <dd><a href="/user">基本资料</a></dd>
+                        <dd><a href="/editPassword">修改密码</a></dd>
                         <dd><a href="/user/logout">登出</a></dd>
                     </c:if>
                 </dl>

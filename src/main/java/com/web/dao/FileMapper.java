@@ -28,5 +28,9 @@ public interface FileMapper {
 
     List<File> findFilesByFileName(String fileName);
 
+    List<File> getAllFile();
+
+    List<File> findFileListByUserId(Long userId);
+
 
 }

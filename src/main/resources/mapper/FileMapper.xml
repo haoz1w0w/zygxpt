@@ -64,8 +64,8 @@
             <if test="user_id != null">
                 user_id,
             </if>
-                gmt_create,
-                gmt_modify
+            gmt_create,
+            gmt_modify
 
         </trim>
         <trim prefix="values (" suffix=")" suffixOverrides=",">
@@ -136,7 +136,7 @@
     where id = #{id,jdbcType=BIGINT}
   </update>
     <select id="selectFileByList" resultType="com.web.po.File">
-    select * from file ORDER by gmt_create desc limit 0,10
+    select * from file ORDER by gmt_create desc
   </select>
     <select id="selectFileByName" parameterType="java.lang.String" resultType="com.web.po.File">
         select * from file where file_name=#{fileName}
@@ -149,5 +149,11 @@
     </select>
     <select id="findFilesByFileName" parameterType="java.lang.String" resultType="com.web.po.File">
         SELECT * FROM file WHERE file_name LIKE CONCAT('%',#{fileName},'%')
+    </select>
+    <select id="getAllFile" resultType="com.web.po.File">
+        SELECT * from file ORDER by gmt_create desc
+    </select>
+    <select id="findFileListByUserId" parameterType="java.lang.Long" resultType="com.web.po.File">
+        SELECT * from file where user_id=#{userId} ORDER by gmt_create desc
     </select>
 </mapper>

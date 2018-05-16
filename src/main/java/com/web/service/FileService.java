@@ -43,5 +43,7 @@ public interface FileService {
     public List<Tag> findAllTag();
 
     public void delFile(Long fileId);
+
     public List<File> findFileByFileName(String file_name);
+
 }

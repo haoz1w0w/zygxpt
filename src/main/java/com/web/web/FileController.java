@@ -1,5 +1,6 @@
 package com.web.web;
 
+import com.web.dao.FileMapper;
 import com.web.dao.FolederMapper;
 import com.web.dao.LoadListMapper;
 import com.web.dao.ResourceShareMapper;
@@ -38,6 +39,8 @@ public class FileController {
     LoadListMapper loadListMapper;
     @Autowired
     FolederMapper folederMapper;
+    @Autowired
+    FileMapper fileMapper;
     private final static String url = "https://test-1256150574.cos.ap-beijing.myqcloud.com/";
 
     @RequestMapping("fileList")
@@ -137,6 +140,7 @@ public class FileController {
             filesDTO.setFileName(file.getFile_name());
             filesDTO.setGmtCreate(file.getGmt_create());
             filesDTO.setIsFile(2);
+            filesDTO.setUrl(file.getFile_url());
             list.add(filesDTO);
         }
         LayUiResponse layUiResponse = new LayUiResponse();
@@ -153,6 +157,28 @@ public class FileController {
 //        UserInfo userInfo = (UserInfo) request.getSession().getAttribute("userInfo");
         List<Tag> allTag = fileService.findAllTag();
         return allTag;
+    }
+
+    @RequestMapping("getAllFile")
+    @ResponseBody
+    public Object getAllFile() {
+        List<FilesDTO> list = new ArrayList<>();
+        List<com.web.po.File> files = fileMapper.getAllFile();
+        for (com.web.po.File file : files) {
+            FilesDTO filesDTO = new FilesDTO();
+            filesDTO.setId(file.getId());
+            filesDTO.setFileName(file.getFile_name());
+            filesDTO.setGmtCreate(file.getGmt_create());
+            filesDTO.setIsFile(2);
+            filesDTO.setUrl(file.getFile_url());
+            list.add(filesDTO);
+        }
+        LayUiResponse layUiResponse = new LayUiResponse();
+        layUiResponse.setCode(0);
+        layUiResponse.setData(list);
+        layUiResponse.setCount(list.size());
+        layUiResponse.setMsg(" ");
+        return layUiResponse;
     }
 
     @RequestMapping("delFoleder")
@@ -498,6 +524,30 @@ public class FileController {
             filesDTO.setFileName(loadList.getFile_name());
             filesDTO.setGmtCreate(loadList.getGmt_download());
             filesDTO.setIsFile(2);
+            list.add(filesDTO);
+        }
+        LayUiResponse layUiResponse = new LayUiResponse();
+        layUiResponse.setCode(0);
+        layUiResponse.setData(list);
+        layUiResponse.setCount(list.size());
+        layUiResponse.setMsg(" ");
+        layUiResponse.setFolederId(5l);
+        return layUiResponse;
+    }
+
+    @RequestMapping("findMyFileListByUserId")
+    @ResponseBody
+    public Object findMyFileListByUserId(Long userId) {
+        List<FilesDTO> list = new ArrayList<>();
+
+        List<com.web.po.File> files = fileMapper.findFileListByUserId(userId);
+        for (com.web.po.File file : files) {
+            FilesDTO filesDTO = new FilesDTO();
+            filesDTO.setId(file.getId());
+            filesDTO.setFileName(file.getFile_name());
+            filesDTO.setGmtCreate(file.getGmt_create());
+            filesDTO.setIsFile(2);
+            filesDTO.setUrl(file.getFile_url());
             list.add(filesDTO);
         }
         LayUiResponse layUiResponse = new LayUiResponse();

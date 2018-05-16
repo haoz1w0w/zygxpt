@@ -183,8 +183,12 @@
                 data: {account: data.field.account, password: data.field.pass},
                 success: function (data) {
                     console.log(data);
-                    if (data) {
-                        window.location.href = "/user"
+                    if (data.success) {
+                        if (data.data == 1) {
+                            window.location.href = "/user"
+                        } else {
+                            window.location.href = "/main"
+                        }
                     } else {
                         layer.alert("密码不正确");
                     }
