@@ -4,9 +4,11 @@ import com.web.dao.ResourceShareMapper;
 import com.web.dao.UserInfoMapper;
 import com.web.po.*;
 import com.web.service.FileService;
+import com.web.service.UserService;
 import com.web.utils.StringUtil;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
+import org.springframework.util.CollectionUtils;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.ModelAndView;
@@ -30,6 +32,9 @@ public class PageController {
     private ResourceShareMapper resourceShareMapper;
     @Autowired
     private UserInfoMapper userInfoMapper;
+
+    @Resource
+    private UserService userService;
 
     @RequestMapping("/main")
     public ModelAndView toBaiDuYunMain(HttpServletRequest request) {
@@ -131,11 +136,13 @@ public class PageController {
         modelAndView.addObject("file", file);
         return modelAndView;
     }
+
     @RequestMapping("/editPassword")
     public ModelAndView editPassword() {
         ModelAndView modelAndView = new ModelAndView("/editPassword");
         return modelAndView;
     }
+
     @RequestMapping("moveMyFile")
     public ModelAndView MoveMyFile(Long fileId, HttpServletRequest request) {
         ModelAndView modelAndView = new ModelAndView("moveMyFile");
@@ -146,6 +153,26 @@ public class PageController {
         return modelAndView;
     }
 
+    @RequestMapping("teacherSource")
+    public ModelAndView teacherSource() {
+
+        List<UserInfo> teacherList = userService.findTeacherList();
+        if (CollectionUtils.isEmpty(teacherList)) {
+            teacherList = new ArrayList<>();
+        }
+        ModelAndView modelAndView=new ModelAndView("/teacherSource");
+        modelAndView.addObject("teacherList",teacherList);
+        return modelAndView;
+    }
+    @RequestMapping("subjectSource")
+    public ModelAndView subjectSource() {
+
+        List<Tag> allTag = fileService.findAllTag();
+
+        ModelAndView modelAndView=new ModelAndView("/subjectSource");
+        modelAndView.addObject("allTag",allTag);
+        return modelAndView;
+    }
     @RequestMapping("login")
     public String login() {
         return "/login";

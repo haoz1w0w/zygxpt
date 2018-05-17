@@ -16,14 +16,14 @@
         "id": "7",
         "title": "- 按教师名称搜索",
         "icon": "",
-        "url": "/allSource",
+        "url": "/teacherSource",
         "spread": false
       },
       {
         "id": "8",
         "title": "- 按课程名称搜索",
         "icon": "",
-        "url": "/allSource",
+        "url": "/subjectSource",
         "spread": false
       }
     ]

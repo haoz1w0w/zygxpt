@@ -493,8 +493,9 @@ public class FileController {
 
     @RequestMapping("queryMyUpLoadList")
     @ResponseBody
-    public Object queryMyUpLoadList() {
-        List<LoadList> loadListByType = loadListMapper.findLoadListByType(1);
+    public Object queryMyUpLoadList(HttpServletRequest request) {
+        Long userId = (Long) request.getSession().getAttribute("userId");
+        List<LoadList> loadListByType = loadListMapper.findLoadListByType(1, userId);
         List<FilesDTO> list = new ArrayList<>();
         for (LoadList loadList : loadListByType) {
             FilesDTO filesDTO = new FilesDTO();
@@ -515,8 +516,9 @@ public class FileController {
 
     @RequestMapping("queryMyDownLoadList")
     @ResponseBody
-    public Object queryMyDownLoadList() {
-        List<LoadList> loadListByType = loadListMapper.findLoadListByType(2);
+    public Object queryMyDownLoadList(HttpServletRequest request) {
+        Long userId = (Long) request.getSession().getAttribute("userId");
+        List<LoadList> loadListByType = loadListMapper.findLoadListByType(2, userId);
         List<FilesDTO> list = new ArrayList<>();
         for (LoadList loadList : loadListByType) {
             FilesDTO filesDTO = new FilesDTO();

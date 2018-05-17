@@ -58,7 +58,7 @@
             now()
         </trim>
     </insert>
-    <select id="findLoadListByType" parameterType="java.lang.Integer" resultType="com.web.po.LoadList">
-        select * from load_list where type=#{type}
+    <select id="findLoadListByType"  resultType="com.web.po.LoadList">
+        select * from load_list where type=#{0} and user_id=#{1}
     </select>
 </mapper>

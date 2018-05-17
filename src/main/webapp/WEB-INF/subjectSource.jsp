@@ -12,16 +12,19 @@
 <body>
 
 <div style="width: 80%;float: left;margin-top: 4px">
-    <div class="demoTable" >
-        <div class="layui-btn-group demoTable" style="padding-left: 3px" >
-            <button class="layui-btn" data-type="getCheckLength" id="upload">上传文件</button>
-        </div>
-        <div class="layui-inline" style="padding-left:70%;">
-            <input class="layui-input" name="id" id="demoReload" autocomplete="off" placeholder="请输入文件名进行搜索">
-        </div>
-        <button class="layui-btn" data-type="reload" id="search">搜索</button>
-    </div>
+    <form class="layui-form" action="" style="padding-top: 10px">
 
+        <div class="layui-form-item" style="margin-left: -29px;margin-bottom: 5px">
+            <label class="layui-form-label">选择课程</label>
+            <div class="layui-input-block" style="width: 13%">
+                <select name="folderId" lay-filter="teacher" id="folederSelect">
+                    <c:forEach items="${allTag}" var="p">
+                        <option value="${p.id}">${p.tag_name}</option>
+                    </c:forEach>
+                </select>
+            </div>
+        </div>
+    </form>
     <table id="allSource" lay-filter="fileList"></table>
     <script type="text/html" id="barDemo">
         {{#  if(d.isFile == 2){ }}
@@ -278,8 +281,8 @@
             //添加教师按钮函数
             $(".teach-term").on("click", function () {
                 var teachId = $(this).attr("teach-id");
-                tableIns.url = "/file/findMyFileListByUserId";
-                tableIns.where = {userId: teachId}
+                tableIns.url = "file/findSubjectFiles";
+                tableIns.where = {tagId: subject}
                 table.render(tableIns);
                 table.on("tool(fileList)", function (even) {
                     //监听工具条
@@ -326,6 +329,105 @@
                 })
             })
         })
+        layui.use(['form', 'layedit', 'laydate'], function () {
+            var form = layui.form
+                , layer = layui.layer
+                , layedit = layui.layedit
+                , laydate = layui.laydate;
+
+            //日期
+            laydate.render({
+                elem: '#date'
+            });
+            laydate.render({
+                elem: '#date1'
+            });
+
+            //创建一个编辑器
+            var editIndex = layedit.build('LAY_demo_editor');
+
+            //自定义验证规则
+            form.verify({
+                title: function (value) {
+                    if (value.length < 5) {
+                        return '标题至少得5个字符啊';
+                    }
+                }
+                , pass: [/(.+){6,12}$/, '密码必须6到12位']
+                , content: function (value) {
+                    layedit.sync(editIndex);
+                }
+            });
+            form.on('select(teacher)', function (data) {
+                console.log(data);
+                tableIns.url = "file/findSubjectFiles";
+                tableIns.where = {tagId: data.value}
+                table.render(tableIns);
+                table.on("tool(fileList)", function (even) {
+                    //监听工具条
+                    table.on('tool(fileList)', function (obj) {
+                        var data = obj.data;
+                        var id = data.id;
+                        if (obj.event === 'del') {
+                            $.ajax({
+                                type: 'POST',
+                                url: 'user/loginCheck',
+                                success: function (data) {
+                                    if (data) {
+                                        layer.open({
+                                            type: 2,
+                                            title: '分享到我的',
+                                            shadeClose: true,
+                                            shade: 0.8,
+                                            area: ['400px', '90%'],
+                                            content: '/fileTome?id=' + id
+                                        });
+                                    } else {
+                                        layer.msg("请登录后使用上传文件功能")
+                                    }
+                                }
+                            });
+                        } else if (obj.event === 'edit') {
+                            var url = data.url;
+                            $.ajax({
+                                type: "post",
+                                url: "/file/addLoadList",
+                                data: {fileId: data.id, type: 2},//非常重要的一步
+                                success: function (data) {
+                                    if (data) {
+                                        window.location.href = url;
+                                    } else {
+                                        layer.msg("请登录");
+                                    }
+
+                                }
+
+                            });
+                        }
+                    });
+                })
+            });
+            //监听指定开关
+            form.on('switch(switchTest)', function (data) {
+                layer.msg('开关checked：' + (this.checked ? 'true' : 'false'), {
+                    offset: '6px'
+                });
+                layer.tips('温馨提示：请注意开关状态的文字可以随意定义，而不仅仅是ON|OFF', data.othis)
+            });
+
+            //监听提交
+            form.on('submit(demo1)', function (data) {
+                $.ajax({
+                    type: 'POST',
+                    url: 'file/saveMyFile?fileId=' + $("#fileId").val() + '&folderId=' + data.field.folderId,
+                    success: function (data) {
+                        layer.alert("修改成功")
+                        parent.layer.closeAll();
+                    }
+                });
+                return false;
+            });
+        });
 
         //初始化加载 课程列表
         $.get("/file/getAllTag", function (data) {

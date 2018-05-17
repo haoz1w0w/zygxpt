@@ -9,5 +9,5 @@ public interface LoadListMapper {
 
     int insertSelective(LoadList record);
 
-    List<LoadList> findLoadListByType(Integer type);
+    List<LoadList> findLoadListByType(Integer type,Long userId);
 }
