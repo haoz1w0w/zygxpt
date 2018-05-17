@@ -2,48 +2,56 @@
   {
     "id": "1",
     "title": "全部资源",
-    "icon": "fa-cubes",
+    "icon": "fa-plug",
+    "url": "/allSource",
+    "spread": true
+  },
+  {
+    "id": "3",
+    "title": "分类搜索",
+    "icon": "&#xe6c6;",
     "spread": true,
     "children": [
       {
         "id": "7",
-        "title": "全部资源",
-        "icon": "&#xe6c6;",
-        "url": "/allSource"
+        "title": "- 按教师名称搜索",
+        "icon": "",
+        "url": "/allSource",
+        "spread": false
+      },
+      {
+        "id": "8",
+        "title": "- 按课程名称搜索",
+        "icon": "",
+        "url": "/allSource",
+        "spread": false
       }
     ]
   },
   {
     "id": "2",
-    "title": "我的资源",
-    "icon": "fa-cogs",
+    "title": " 我的资源",
+    "icon": "fa-user",
     "spread": false,
-    "children": [
-      {
-        "id": "12",
-        "title": "我的资源",
-        "icon": "fa-table",
-        "url": "/mySource"
-      }
-    ]
+    "url": "/mySource"
   },
   {
     "id": "4",
-    "title": "资源记录",
-    "icon": "fa-address-book",
+    "title": " 资源记录",
+    "icon": "fa-bookmark",
     "url": "",
     "spread": false,
     "children": [
       {
         "id": "17",
-        "title": "上传资源历史",
-        "icon": "fa-github",
+        "title": "- 上传资源历史",
+        "icon": "",
         "url": "/uploadList"
       },
       {
         "id": "18",
-        "title": "下载资源历史",
-        "icon": "fa-qq",
+        "title": "- 下载资源历史",
+        "icon": "",
         "url": "downLoadList"
       }
     ]

@@ -55,6 +55,16 @@
                         </dd>
                     </dl>
                 </li>
+                <li class="layui-nav-item">
+                    <a class="" href="javascript:;"><i class="fa fa-plug" aria-hidden="true"></i><span> 基本元素</span></a>
+                    <dl class="layui-nav-child">
+                        <dd>
+                            <a href="javascript:;" kit-target
+                               data-options="{url:'test.html',icon:'&#xe6c6;',title:'表格',id:'3'}">
+                                <i class="layui-icon">&#xe6c6;</i><span> 表格</span></a>
+                        </dd>
+                    </dl>
+                </li>
                 <li class="layui-nav-item layui-nav-itemed">
                     <a href="javascript:;"><i class="fa fa-plug" aria-hidden="true"></i><span> 组件</span></a>
                     <dl class="layui-nav-child">
