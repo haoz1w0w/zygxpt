@@ -119,7 +119,7 @@
                         if (data) {
                             layer.open({
                                 type: 2,
-                                title: '分享到我的',
+                                title: '保存到我的云资源',
                                 shadeClose: true,
                                 shade: 0.8,
                                 area: ['400px', '90%'],
@@ -444,7 +444,7 @@
                         tableIns.where = {name: fileName}
                         table.render(tableIns);
                     } else {
-                        layer.msg("请登录后使用上传文件功能")
+                        layer.msg("请登录后使用搜索功能")
                     }
                 }
             });

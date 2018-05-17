@@ -22,7 +22,7 @@
 
 
 <fieldset class="layui-elem-field layui-field-title" style="margin-top: 20px;">
-    <legend>移动文件夹</legend>
+    <legend>移动文件</legend>
 </fieldset>
 <input type="hidden" id="folderId"/>
 <input type="hidden" id="tagId"/>
