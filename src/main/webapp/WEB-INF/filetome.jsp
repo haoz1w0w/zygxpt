@@ -22,7 +22,7 @@
 
 
 <fieldset class="layui-elem-field layui-field-title" style="margin-top: 20px;">
-    <legend>分享到我的</legend>
+    <legend>保存到我的云资源</legend>
 </fieldset>
 <input type="hidden" id="folderId"/>
 <input type="hidden" id="tagId"/>

@@ -31,8 +31,8 @@
         <label class="layui-form-label">选择老师</label>
         <div class="layui-input-block">
             <select name="folderId" lay-filter="teacher" id="teacherList">
+                <option value="0">选择老师</option>
                 <c:forEach items="${userInfos}" var="p">
-                    <option value="0">选择老师</option>
                     <option value="${p.id}">${p.nick_name}</option>
                 </c:forEach>
             </select>
